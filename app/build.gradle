@@ -12,6 +12,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ORIGIN_ENDPOINT", '"https://finance.tut.by/"'
+
     }
     buildTypes {
         release {
@@ -47,7 +50,7 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
