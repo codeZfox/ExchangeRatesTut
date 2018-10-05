@@ -15,9 +15,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
         android:background="@color/colorGray"
+        android:src="@drawable/ic_currency_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_currency_default"
         />
 
     <LinearLayout
@@ -31,51 +31,46 @@
 
         <TextView
             android:id="@+id/textViewName"
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="USD"
+            android:layout_marginBottom="6dp"
+            android:background="@color/colorGray"
+            android:textSize="12sp"
             />
 
         <TextView
             android:id="@+id/textViewAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            tools:text="100 рублей"
+            android:background="@color/colorGray"
+            android:textSize="12sp"
             />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textViewBuy"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:background="@color/colorGray"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/textViewSell"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/textViewSell"
-        tools:text="2.1575"
         />
 
     <TextView
         android:id="@+id/textViewSell"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:background="@color/colorGray"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewBCSERoot"
         app:layout_constraintEnd_toStartOf="@+id/textViewNb"
         app:layout_constraintHorizontal_bias="0.5"
@@ -83,35 +78,20 @@
         app:layout_constraintStart_toEndOf="@+id/textViewBuy"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
-        tools:text="2.1575"
         />
 
     <TextView
         android:id="@+id/textViewNb"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_marginRight="16dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:background="@color/colorGray"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewSell"
         app:layout_constraintTop_toTopOf="@+id/textViewSell"
-        tools:text="2.1575"
-        />
-
-    <TextView
-        android:id="@+id/textViewNbDiff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="12sp"
-        app:layout_constraintRight_toRightOf="@+id/textViewNb"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNb"
-        tools:text="2.1575"
         />
 
     <android.support.constraint.Barrier
@@ -119,17 +99,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="textViewNbDiff,textViewNb,textViewSell,textViewBuy"
+        app:constraint_referenced_ids="textViewNb,textViewSell,textViewBuy"
         />
 
     <LinearLayout
         android:id="@+id/textViewBCSERoot"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="16dp"
         android:background="@color/colorGray"
         android:gravity="center"
+        android:orientation="vertical"
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="8dp"
@@ -138,42 +119,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        >
-
-
-        <TextView
-            android:id="@+id/textViewBCSEDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            tools:text="Итоги торгов БВФБ 5 октября"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:id="@+id/textViewBCSERate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="12sp"
-                tools:text="3.2"
-                />
-
-            <TextView
-                android:id="@+id/textViewBCSEDiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                tools:text="+0.3555"
-                />
-        </LinearLayout>
-    </LinearLayout>
+        />
 
 
     <View

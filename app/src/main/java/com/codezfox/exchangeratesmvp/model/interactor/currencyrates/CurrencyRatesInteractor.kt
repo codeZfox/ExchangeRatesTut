@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.model.interactor.currencyrates
 import com.codezfox.exchangeratesmvp.di.DaggerUtils
 import com.codezfox.exchangeratesmvp.entity.CurrencyRate
 import com.codezfox.exchangeratesmvp.model.repository.currencyrates.CurrencyRatesRepository
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CurrencyRatesInteractor {
@@ -15,7 +16,15 @@ class CurrencyRatesInteractor {
     }
 
     fun loadCurrencyRates(): List<CurrencyRate> {
-        return repository.getCurrencyRates().exchangeRates!!
+        val currencies = repository.getCurrencies().data!!
+
+        val data = repository.getCurrencyRates().data!!
+
+        data.forEach { currencyRate ->
+            currencyRate.currency = currencies.find { it.code == currencyRate.currencyCode }
+        }
+
+        return data
     }
 
 }

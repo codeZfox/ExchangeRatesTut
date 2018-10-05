@@ -1,20 +1,25 @@
 package com.codezfox.exchangeratesmvp.model.data.server
 
+import com.codezfox.exchangeratesmvp.entity.BaseResponse
+import com.codezfox.exchangeratesmvp.entity.Currency
 import com.codezfox.exchangeratesmvp.entity.CurrencyRate
-import com.codezfox.exchangeratesmvp.entity.CurrencyRateResponse
 import retrofit2.Call
-import retrofit2.http.Field
+import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface FinanceApi {
 
+    companion object {
+        private const val URL = "export/info_for_pda.php"
+    }
+
     @FormUrlEncoded
-    @POST("export/info_for_pda.php")
-    fun getRates(
-            @Field("action") action: String,
-            @Field("auth_key") auth_key: String,
-            @Field("params") params: String
-    ): Call<CurrencyRateResponse>
+    @POST(URL)
+    fun getCurrencyRate(@FieldMap fields: Map<String, String>): Call<BaseResponse<CurrencyRate>>
+
+    @FormUrlEncoded
+    @POST(URL)
+    fun getCurrencies(@FieldMap fields: Map<String, String>): Call<BaseResponse<Currency>>
 
 }
