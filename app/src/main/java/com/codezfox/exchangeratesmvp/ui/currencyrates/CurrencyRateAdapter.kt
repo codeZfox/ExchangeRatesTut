@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.entity.CurrencyRate
+import com.codezfox.exchangeratesmvp.entity.Rate
+import com.codezfox.exchangeratesmvp.entity.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.gone
 import com.codezfox.exchangeratesmvp.extensions.resources
 import com.codezfox.exchangeratesmvp.extensions.visible
@@ -18,7 +19,7 @@ import java.util.*
 
 class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRateViewHolder>() {
 
-    private var items: List<CurrencyRate> = listOf()
+    private var items: List<RateCurrency> = listOf()
     private var mapFormats = hashMapOf<Int, String>()
 
     inner class CurrencyRateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,16 +38,18 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
             return string
         }
 
-        fun bind(rate: CurrencyRate) {
+        fun bind(rateCurrency: RateCurrency) {
 
-            scale = rate.currency?.scale ?: 4
+            val rate = rateCurrency.rate
+
+            scale = rateCurrency.currency?.scale ?: 4
 
             if (!mapFormats.containsKey(scale)) {
                 mapFormats[scale] = "%.${scale}f"
             }
 
             itemView.textViewName.text = rate.currencyCode
-            itemView.textViewAmount.text = rate.getAmountString()
+            itemView.textViewAmount.text = rateCurrency.getAmountString()
             itemView.textViewBuy.text = rateForUI(rate.sell)
             itemView.textViewSell.text = rateForUI(rate.buy)
             itemView.textViewNb.text = rateForUI(rate.nb)
@@ -75,7 +78,7 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
             }
 
             Picasso.with(itemView.context)
-                    .load(rate.currency?.flag)
+                    .load(rateCurrency.currency?.flag)
                     .placeholder(R.drawable.ic_currency_default)
                     .into(itemView.imageViewCurrencyFlag)
 
@@ -95,7 +98,7 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
         return items.size
     }
 
-    fun setItems(items: List<CurrencyRate>) {
+    fun setItems(items: List<RateCurrency>) {
         if (this.items.isEmpty()) {
             this.items = items
             notifyItemRangeInserted(0, items.size)

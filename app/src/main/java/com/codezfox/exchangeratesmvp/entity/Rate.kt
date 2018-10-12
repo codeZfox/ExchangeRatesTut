@@ -1,5 +1,8 @@
 package com.codezfox.exchangeratesmvp.entity
 
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -10,8 +13,10 @@ class BaseResponse<T> {
     var status: String? = null
 }
 
-data class CurrencyRate(
+@Entity
+data class Rate(
 
+        @PrimaryKey
         val currencyCode: String, // "USD",
         val buy: Double, // "2.151000",
         val sell: Double, // "2.165000",
@@ -27,8 +32,34 @@ data class CurrencyRate(
 
 ) {
 
-    var currency: Currency? = null
+//
+//    var currency: Currency? = null
+//
+//    fun getAmountString(): String? {
+//        currency?.let {
+//            return "${it.amount} ${it.plural_short}"
+//        }
+//        return null
+//    }
+}
 
+data class RateCurrency(
+
+        @Embedded
+        var rate: Rate,
+
+        @Embedded
+        var currency: Currency? = null
+
+
+) {
+
+    //    @Embedded
+//    var rate: Rate? = null
+//
+//    @Embedded
+//    var currency: Currency? = null
+//
     fun getAmountString(): String? {
         currency?.let {
             return "${it.amount} ${it.plural_short}"
@@ -37,8 +68,11 @@ data class CurrencyRate(
     }
 }
 
+
+@Entity
 data class Currency(
 
+        @PrimaryKey
         val id: String, // "USD",
         val name: String, // "Доллар США",
         val plural: String, // "доллар США",

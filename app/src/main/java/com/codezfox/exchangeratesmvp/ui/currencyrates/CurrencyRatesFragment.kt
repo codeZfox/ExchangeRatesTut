@@ -10,7 +10,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.entity.CurrencyRate
+import com.codezfox.exchangeratesmvp.entity.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.gone
 import com.codezfox.exchangeratesmvp.extensions.isRefreshing
 import com.codezfox.exchangeratesmvp.extensions.visible
@@ -18,6 +18,8 @@ import com.codezfox.exchangeratesmvp.extensions.visibleOrGone
 import com.codezfox.exchangeratesmvp.presentation.currencyrates.CurrencyRatesPresenter
 import com.codezfox.exchangeratesmvp.presentation.currencyrates.CurrencyRatesView
 import kotlinx.android.synthetic.main.screen_currency_rates.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
 
@@ -45,7 +47,7 @@ class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
         }
     }
 
-    override fun showRates(items: List<CurrencyRate>) {
+    override fun showRates(items: List<RateCurrency>) {
         recyclerView.visible()
         adapter.setItems(items)
     }
@@ -65,6 +67,15 @@ class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
 
     override fun showProgress(show: Boolean) {
         swipeRefreshLayout.isRefreshing(show)
+    }
+
+    var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
+
+    override fun showLastDateUpdated(date: Date?) {
+        textViewLastDateData.visibleOrGone(date != null)
+        if (date != null) {
+            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
+        }
     }
 
 }

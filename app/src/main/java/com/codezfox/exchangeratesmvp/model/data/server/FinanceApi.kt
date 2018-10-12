@@ -2,7 +2,7 @@ package com.codezfox.exchangeratesmvp.model.data.server
 
 import com.codezfox.exchangeratesmvp.entity.BaseResponse
 import com.codezfox.exchangeratesmvp.entity.Currency
-import com.codezfox.exchangeratesmvp.entity.CurrencyRate
+import com.codezfox.exchangeratesmvp.entity.Rate
 import retrofit2.Call
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
@@ -16,7 +16,7 @@ interface FinanceApi {
 
     @FormUrlEncoded
     @POST(URL)
-    fun getCurrencyRate(@FieldMap fields: Map<String, String>): Call<BaseResponse<CurrencyRate>>
+    fun getCurrencyRate(@FieldMap fields: Map<String, String>): Call<BaseResponse<Rate>>
 
     @FormUrlEncoded
     @POST(URL)

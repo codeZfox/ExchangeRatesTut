@@ -8,56 +8,6 @@
     android:orientation="vertical"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGray"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingTop="4dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        >
-
-
-        <TextView
-            android:id="@+id/textViewAmount"
-            android:layout_width="126dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewName"
-            android:gravity="center"
-            android:text="Валюта"
-            />
-
-
-        <TextView
-            android:id="@+id/textViewBuy"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:text="Купить"
-            />
-
-        <TextView
-            android:id="@+id/textViewSell"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Продать"
-            />
-
-        <TextView
-            android:id="@+id/textViewNb"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:text="НБРБ"
-            />
-
-    </LinearLayout>
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,6 +55,7 @@
                 android:layout_height="match_parent"
                 >
 
+
                 <TextView
                     android:id="@+id/textViewEmptyList"
                     android:layout_width="wrap_content"
@@ -115,12 +66,81 @@
                     tools:text="textViewEmptyList"
                     />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/item_currency_rate"
-                    />
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/textViewLastDateData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:background="#f4d9d9"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        tools:text="lastDateData"
+                        tools:visibility="visible"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorGray"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="4dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="4dp"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/textViewAmount"
+                            android:layout_width="126dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewName"
+                            android:gravity="center"
+                            android:text="Валюта"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/textViewBuy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="4dp"
+                            android:text="Купить"
+                            />
+
+                        <TextView
+                            android:id="@+id/textViewSell"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Продать"
+                            />
+
+                        <TextView
+                            android:id="@+id/textViewNb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="8dp"
+                            android:text="НБРБ"
+                            />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:listitem="@layout/item_currency_rate"
+                        />
+                </LinearLayout>
             </FrameLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
 

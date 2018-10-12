@@ -3,7 +3,7 @@ package com.codezfox.exchangeratesmvp.presentation.currencyrates
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.codezfox.exchangeratesmvp.di.DaggerUtils
-import com.codezfox.exchangeratesmvp.entity.CurrencyRate
+import com.codezfox.exchangeratesmvp.entity.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.launchUIR
 import com.codezfox.exchangeratesmvp.extensions.showMessage
 import com.codezfox.exchangeratesmvp.model.interactor.currencyrates.CurrencyRatesInteractor
@@ -18,7 +18,7 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
 
     private var interactor = CurrencyRatesInteractor()
 
-    var list: List<CurrencyRate> = listOf()
+    var list: List<RateCurrency> = listOf()
 
     init {
         DaggerUtils.appComponent.inject(this)
@@ -33,9 +33,43 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
 
         launchUIR({
             interactor.loadCurrencyRates()
+        }, { (list, date) ->
+
+            this.list = list
+
+            viewState.showRates(list)
+
+            viewState.showProgress(false)
+            viewState.showShimmerEffect(false)
+            viewState.hideEmptyText()
+            viewState.showLastDateUpdated(date)
+
+
+        }, {
+            it.printStackTrace()
+
+//            loadLocalRates()
+            viewState.showLastDateUpdated(null)
+
+            viewState.showProgress(false)
+            viewState.showShimmerEffect(false)
+
+            if (list.isEmpty()) {
+                viewState.showEmptyText(it.toString())
+            } else {
+                viewState.hideEmptyText()
+                viewState.showMessage(it.toString())
+            }
+        })
+    }
+
+    fun loadLocalRates() {
+
+        launchUIR({
+            //            interactor.loadLocalCurrencyRates()
         }, {
 
-            list = it
+            //            list = it.l
 
             viewState.showRates(list)
 
@@ -56,5 +90,13 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
                 viewState.showMessage(it.toString())
             }
         })
+    }
+
+    private fun showRates(list: List<RateCurrency>) {
+        viewState.showRates(list)
+
+        viewState.showProgress(false)
+        viewState.showShimmerEffect(false)
+        viewState.hideEmptyText()
     }
 }

@@ -1,4 +1,12 @@
 package com.codezfox.exchangeratesmvp.model.repository.preferences
 
-interface PreferencesRepository
+import java.util.*
+
+interface PreferencesRepository {
+
+    fun saveLastDateData(date: Date)
+
+    fun getLastDateData(): Date?
+
+}
 

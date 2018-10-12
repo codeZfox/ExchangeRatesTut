@@ -48,6 +48,10 @@ dependencies {
     //Navigation
     implementation "ru.terrakok.cicerone:cicerone:$rootProject.ciceroneVersion"
 
+    //Database
+    implementation "android.arch.persistence.room:runtime:$rootProject.archLifecycleVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.archLifecycleVersion"
+
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
