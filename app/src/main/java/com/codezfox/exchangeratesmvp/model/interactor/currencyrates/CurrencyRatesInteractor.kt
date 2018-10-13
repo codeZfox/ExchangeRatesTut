@@ -47,21 +47,7 @@ class CurrencyRatesInteractor {
         }
 
 
-        return database.get() to lastDateData
+        return database.getBestRates() to lastDateData
     }
-
-
-//    fun loadLocalCurrencyRates(): Pair<List<RateCurrency>, Date> {
-//
-//        val rates = repository.getCurrencyRates().data!!
-//        database.saveRates(rates)
-//
-//        val currencies = repository.getCurrencies().data!!
-//        database.saveCurrencies(currencies)
-//
-//
-//        return database.get()
-//    }
-
 
 }

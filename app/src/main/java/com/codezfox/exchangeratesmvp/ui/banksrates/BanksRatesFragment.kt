@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.currencyrates
+package com.codezfox.exchangeratesmvp.ui.banksrates
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -10,28 +10,25 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.entity.RateCurrency
+import com.codezfox.exchangeratesmvp.entity.Currency
+import com.codezfox.exchangeratesmvp.entity.RateBank
 import com.codezfox.exchangeratesmvp.extensions.gone
 import com.codezfox.exchangeratesmvp.extensions.isRefreshing
 import com.codezfox.exchangeratesmvp.extensions.visible
 import com.codezfox.exchangeratesmvp.extensions.visibleOrGone
-import com.codezfox.exchangeratesmvp.presentation.currencyrates.CurrencyRatesPresenter
-import com.codezfox.exchangeratesmvp.presentation.currencyrates.CurrencyRatesView
+import com.codezfox.exchangeratesmvp.presentation.banksrates.BanksRatesPresenter
+import com.codezfox.exchangeratesmvp.presentation.banksrates.BanksRatesView
 import kotlinx.android.synthetic.main.screen_currency_rates.*
-import java.text.SimpleDateFormat
-import java.util.*
 
-class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
+class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
 
-    private val adapter = CurrencyRateAdapter().apply {
-        this.onClick = { presenter.openCurrency(it) }
-    }
+    private val adapter = BanksRateAdapter()
 
     @ProvidePresenter
-    fun providePresenter() = CurrencyRatesPresenter()
+    fun providePresenter() = BanksRatesPresenter(arguments?.getSerializable("Currency") as Currency)
 
     @InjectPresenter
-    lateinit var presenter: CurrencyRatesPresenter
+    lateinit var presenter: BanksRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.screen_currency_rates, container, false)
@@ -49,7 +46,7 @@ class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
         }
     }
 
-    override fun showRates(items: List<RateCurrency>) {
+    override fun showRates(items: List<RateBank>) {
         recyclerView.visible()
         adapter.setItems(items)
     }
@@ -69,15 +66,6 @@ class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
 
     override fun showProgress(show: Boolean) {
         swipeRefreshLayout.isRefreshing(show)
-    }
-
-    var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
-
-    override fun showLastDateUpdated(date: Date?) {
-        textViewLastDateData.visibleOrGone(date != null)
-        if (date != null) {
-            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
-        }
     }
 
 }

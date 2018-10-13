@@ -7,6 +7,8 @@ import android.widget.FrameLayout
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.di.DaggerUtils
+import com.codezfox.exchangeratesmvp.entity.Currency
+import com.codezfox.exchangeratesmvp.ui.banksrates.BanksRatesFragment
 import com.codezfox.exchangeratesmvp.ui.currencyrates.CurrencyRatesFragment
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
@@ -30,10 +32,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun createFragment(screenKey: String, data: Any?): Fragment? {
-            when (screenKey) {
-                Screens.CURRENCY_RATES -> return CurrencyRatesFragment()
+            return when (screenKey) {
+                Screens.CURRENCY_RATES -> CurrencyRatesFragment()
+                Screens.CURRENCY_BANKS -> BanksRatesFragment().also { fragment ->
+                    fragment.arguments = Bundle().also {
+                        if (data is Currency) {
+                            it.putSerializable("Currency", data)
+                        }
+                    }
+                }
+                else -> null
             }
-            return null
         }
 
     }

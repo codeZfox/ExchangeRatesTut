@@ -1,25 +1,29 @@
-package com.codezfox.exchangeratesmvp.presentation.currencyrates
+package com.codezfox.exchangeratesmvp.presentation.banksrates
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.di.DaggerUtils
-import com.codezfox.exchangeratesmvp.entity.RateCurrency
+import com.codezfox.exchangeratesmvp.entity.Currency
+import com.codezfox.exchangeratesmvp.entity.RateBank
 import com.codezfox.exchangeratesmvp.extensions.launchUIR
 import com.codezfox.exchangeratesmvp.extensions.showMessage
-import com.codezfox.exchangeratesmvp.model.interactor.currencyrates.CurrencyRatesInteractor
+import com.codezfox.exchangeratesmvp.model.interactor.banksrates.BanksRatesInteractor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
-class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
+class BanksRatesPresenter(
+
+        private val currency: Currency
+
+) : MvpPresenter<BanksRatesView>() {
 
     @Inject
     lateinit var router: Router
 
-    private var interactor = CurrencyRatesInteractor()
+    private var interactor = BanksRatesInteractor(currency)
 
-    var list: List<RateCurrency> = listOf()
+    var list: List<RateBank> = listOf()
 
     init {
         DaggerUtils.appComponent.inject(this)
@@ -33,8 +37,10 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
     fun loadRates() {
 
         launchUIR({
-            interactor.loadCurrencyRates()
-        }, { (list, date) ->
+
+            interactor.loadBanksRates()
+
+        }, { list ->
 
             this.list = list
 
@@ -43,14 +49,10 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
             viewState.showProgress(false)
             viewState.showShimmerEffect(false)
             viewState.hideEmptyText()
-            viewState.showLastDateUpdated(date)
 
 
         }, {
             it.printStackTrace()
-
-//            loadLocalRates()
-            viewState.showLastDateUpdated(null)
 
             viewState.showProgress(false)
             viewState.showShimmerEffect(false)
@@ -62,10 +64,6 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
                 viewState.showMessage(it.toString())
             }
         })
-    }
-
-    fun openCurrency(rateCurrency: RateCurrency) {
-        router.navigateTo(Screens.CURRENCY_BANKS, rateCurrency.currency!!)
     }
 
 }

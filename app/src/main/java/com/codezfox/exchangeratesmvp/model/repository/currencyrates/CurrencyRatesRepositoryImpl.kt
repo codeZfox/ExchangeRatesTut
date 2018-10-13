@@ -3,37 +3,57 @@ package com.codezfox.exchangeratesmvp.model.repository.currencyrates
 import com.codezfox.exchangeratesmvp.entity.BaseResponse
 import com.codezfox.exchangeratesmvp.entity.Currency
 import com.codezfox.exchangeratesmvp.entity.Rate
+import com.codezfox.exchangeratesmvp.entity.RateBank
 import com.codezfox.exchangeratesmvp.extensions.bodyOrError
 import com.codezfox.exchangeratesmvp.model.data.server.FinanceApi
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+
 
 class CurrencyRatesRepositoryImpl(
 
-        private val api: FinanceApi
+        private val api: FinanceApi,
+
+        private val gson: Gson
 
 ) : CurrencyRatesRepository {
 
     companion object {
-        private const val GET_BEST_RATES = "get_best_rates"
         private const val GET_CURRENCIES = "get_currencies"
+        private const val GET_BEST_RATES = "get_best_rates"
+        private const val GET_BANKS_RATES = "get_banks_rates"
     }
 
-    private fun getFields(action: String): Map<String, String> {
-//        val fields = mutableMapOf<String, String>()
-//        fields["action"] = action
-//        fields["auth_key"] = "hiLlo77mAul94oINk19ANile"
-//        fields["params"] = """[{"key":"params","value":"{\"api-version\":3, \"test_data\":0,\"ts\":\"0\", \"city_id\":15800}","type":"text","enabled":true,"description":""}]"""
+    private fun getFields(action: String, vararg params: Pair<String, String>): Map<String, String> {
+
+        val paramsList: MutableList<Pair<String, String>> = params.toMutableList()
+        paramsList.add("city_id" to "24248")
+
         return mapOf(
                 "action" to action,
                 "auth_key" to "hiLlo77mAul94oINk19ANile",
-                "params" to """[{"key":"params","value":"{\"api-version\":3, \"test_data\":0,\"ts\":\"0\", \"city_id\":15800}","type":"text","enabled":true,"description":""}]""")
-    }
-
-    override fun getCurrencyRates(): BaseResponse<Rate> {
-        return api.getCurrencyRate(getFields(GET_BEST_RATES)).bodyOrError()
+                "params" to gson.toJson(paramsList))
     }
 
     override fun getCurrencies(): BaseResponse<Currency> {
-        return api.getCurrencies(getFields(GET_CURRENCIES)).bodyOrError()
+        val response = api.getInfo(getFields(GET_CURRENCIES)).bodyOrError()
+        return parseResponse(response)
+    }
+
+
+    override fun getCurrencyRates(): BaseResponse<Rate> {
+        val response = api.getInfo(getFields(GET_BEST_RATES)).bodyOrError()
+        return parseResponse(response)
+    }
+
+    override fun getBanksRates(currency: Currency): BaseResponse<RateBank> {
+        val response = api.getInfo(getFields(GET_BANKS_RATES, "currencyCode" to currency.id)).bodyOrError()
+        return parseResponse(response)
+    }
+
+    private inline fun <reified T> parseResponse(error: JsonObject): T {
+        return gson.fromJson(error, object : TypeToken<T>() {}.type)
     }
 
 }

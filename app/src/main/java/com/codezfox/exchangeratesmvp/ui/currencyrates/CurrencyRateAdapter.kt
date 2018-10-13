@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.entity.Rate
+import com.codezfox.exchangeratesmvp.entity.Currency.Companion.rateDiffForUI
+import com.codezfox.exchangeratesmvp.entity.Currency.Companion.rateForUI
 import com.codezfox.exchangeratesmvp.entity.RateCurrency
-import com.codezfox.exchangeratesmvp.extensions.gone
-import com.codezfox.exchangeratesmvp.extensions.resources
-import com.codezfox.exchangeratesmvp.extensions.visible
-import com.codezfox.exchangeratesmvp.extensions.visibleOrInvisible
+import com.codezfox.exchangeratesmvp.extensions.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_currency_rate.view.*
 import java.util.*
@@ -22,37 +20,26 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
     private var items: List<RateCurrency> = listOf()
     private var mapFormats = hashMapOf<Int, String>()
 
+    var onClick: ((rateCurrency: RateCurrency) -> Unit)? = null
+
     inner class CurrencyRateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        private var scale: Int = 4
-
-        private fun rateForUI(value: Double): String {
-            return String.format(Locale.UK, mapFormats[scale]!!, value)
-        }
-
-        private fun rateDiffForUI(value: Double): String {
-            val string = String.format(Locale.UK, mapFormats[scale]!!, value)
-            if (value > 0) {
-                return "+$string"
-            }
-            return string
-        }
 
         fun bind(rateCurrency: RateCurrency) {
 
+            itemView.onClick {
+                onClick?.invoke(rateCurrency)
+            }
+
             val rate = rateCurrency.rate
 
-            scale = rateCurrency.currency?.scale ?: 4
+            val scale = rateCurrency.currency.scale
 
-            if (!mapFormats.containsKey(scale)) {
-                mapFormats[scale] = "%.${scale}f"
-            }
 
             itemView.textViewName.text = rate.currencyCode
             itemView.textViewAmount.text = rateCurrency.getAmountString()
-            itemView.textViewBuy.text = rateForUI(rate.sell)
-            itemView.textViewSell.text = rateForUI(rate.buy)
-            itemView.textViewNb.text = rateForUI(rate.nb)
+            itemView.textViewBuy.text = rateForUI(rate.sell, scale)
+            itemView.textViewSell.text = rateForUI(rate.buy, scale)
+            itemView.textViewNb.text = rateForUI(rate.nb, scale)
 
             if (rate.bcse_date == null || rate.bcse_date != rate.nb_date && rate.nb == rate.bcse_rate) {
 
@@ -60,7 +47,7 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
 
                 itemView.textViewNbDiff.visibleOrInvisible(rate.nb_diff != 0.0)
                 itemView.textViewNbDiff.setTextColor(resources.getColor(if (rate.nb_diff >= 0) R.color.colorGreen else R.color.colorRed))
-                itemView.textViewNbDiff.text = rateDiffForUI(rate.nb_diff)
+                itemView.textViewNbDiff.text = rateDiffForUI(rate.nb_diff, scale)
 
             } else {
 
@@ -69,10 +56,10 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
                 itemView.textViewBCSERoot.visible()
 
                 itemView.textViewBCSEDate.text = String.format(Locale("ru"), itemView.context.getString(R.string.BCSE_date), rate.bcse_date)
-                itemView.textViewBCSERate.text = rateDiffForUI(rate.bcse_rate)
+                itemView.textViewBCSERate.text = rateForUI(rate.bcse_rate, scale)
 
                 itemView.textViewBCSEDiff.visibleOrInvisible(rate.bcse_diff != 0.0)
-                itemView.textViewBCSEDiff.text = rateDiffForUI(rate.bcse_diff)
+                itemView.textViewBCSEDiff.text = rateDiffForUI(rate.bcse_diff, scale)
                 itemView.textViewBCSEDiff.setTextColor(resources.getColor(if (rate.bcse_diff >= 0) R.color.colorGreen else R.color.colorRed))
 
             }

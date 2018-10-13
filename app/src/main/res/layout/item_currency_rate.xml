@@ -184,7 +184,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/barrier"
-        tools:layout_editor_absoluteY="80dp"
         />
 
     <android.support.constraint.Barrier
