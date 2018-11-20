@@ -8,131 +8,130 @@
     android:orientation="vertical"
     >
 
-    <FrameLayout
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            shimmer:shimmer_duration="800"
             >
+
+            <TextView
+                android:id="@+id/textViewEmptyList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:text="textViewEmptyList"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
 
-                <include layout="@layout/item_currency_rate_shimmer" />
-
-                <include layout="@layout/item_currency_rate_shimmer" />
-
-                <include layout="@layout/item_currency_rate_shimmer" />
-
-                <include layout="@layout/item_currency_rate_shimmer" />
-
-                <include layout="@layout/item_currency_rate_shimmer" />
-
-                <include layout="@layout/item_currency_rate_shimmer" />
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-
                 <TextView
-                    android:id="@+id/textViewEmptyList"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewLastDateData"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
+                    android:background="#f4d9d9"
                     android:gravity="center"
+                    android:padding="2dp"
                     android:visibility="gone"
-                    tools:text="textViewEmptyList"
+                    tools:text="lastDateData"
+                    tools:visibility="visible"
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorGray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
                     >
 
+
                     <TextView
-                        android:id="@+id/textViewLastDateData"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textViewAmount"
+                        android:layout_width="126dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:background="#f4d9d9"
+                        android:layout_below="@+id/textViewName"
                         android:gravity="center"
-                        android:padding="2dp"
-                        android:visibility="gone"
-                        tools:text="lastDateData"
-                        tools:visibility="visible"
+                        android:text="Валюта"
                         />
 
-                    <LinearLayout
+
+                    <TextView
+                        android:id="@+id/textViewBuy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:text="Купить"
+                        />
+
+                    <TextView
+                        android:id="@+id/textViewSell"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorGray"
-                        android:orientation="horizontal"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="4dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="4dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Продать"
+                        />
+
+                    <TextView
+                        android:id="@+id/textViewNb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:text="НБРБ"
+                        />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        shimmer:shimmer_duration="800"
                         >
 
-
-                        <TextView
-                            android:id="@+id/textViewAmount"
-                            android:layout_width="126dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/textViewName"
-                            android:gravity="center"
-                            android:text="Валюта"
-                            />
-
-
-                        <TextView
-                            android:id="@+id/textViewBuy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="4dp"
-                            android:text="Купить"
-                            />
-
-                        <TextView
-                            android:id="@+id/textViewSell"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Продать"
-                            />
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
 
-                        <TextView
-                            android:id="@+id/textViewNb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="8dp"
-                            android:text="НБРБ"
-                            />
+                            <include layout="@layout/item_currency_rate_shimmer" />
 
-                    </LinearLayout>
+                            <include layout="@layout/item_currency_rate_shimmer" />
+
+                            <include layout="@layout/item_currency_rate_shimmer" />
+
+                            <include layout="@layout/item_currency_rate_shimmer" />
+
+                            <include layout="@layout/item_currency_rate_shimmer" />
+
+                            <include layout="@layout/item_currency_rate_shimmer" />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
@@ -140,9 +139,9 @@
                         android:layout_height="match_parent"
                         tools:listitem="@layout/item_currency_rate"
                         />
-                </LinearLayout>
-            </FrameLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    </FrameLayout>
 </LinearLayout>
