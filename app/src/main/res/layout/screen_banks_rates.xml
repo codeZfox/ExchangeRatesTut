@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="0dp"
-        app:title="@string/app_name"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back_24dp"
         />
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -70,12 +71,11 @@
 
 
                     <TextView
-                        android:id="@+id/textViewAmount"
-                        android:layout_width="126dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewName"
-                        android:gravity="center"
-                        android:text="Валюта"
+                        android:layout_weight="1"
+                        android:text="Банк"
                         />
 
 
@@ -83,25 +83,18 @@
                         android:id="@+id/textViewBuy"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="4dp"
+                        android:gravity="center"
+                        android:minWidth="66dp"
                         android:text="Купить"
                         />
 
                     <TextView
                         android:id="@+id/textViewSell"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Продать"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewNb"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="8dp"
-                        android:text="НБРБ"
+                        android:gravity="center"
+                        android:minWidth="66dp"
+                        android:text="Продать"
                         />
 
                 </LinearLayout>
@@ -127,17 +120,17 @@
                             android:orientation="vertical"
                             >
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
 
-                            <include layout="@layout/item_currency_rate_shimmer" />
+                            <include layout="@layout/item_bank_rate_shimmer" />
                         </LinearLayout>
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -145,7 +138,7 @@
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:listitem="@layout/item_currency_rate"
+                        tools:listitem="@layout/item_bank_rate"
                         />
                 </FrameLayout>
             </LinearLayout>

@@ -31,6 +31,7 @@ class BanksRatesPresenter(
 
     override fun onFirstViewAttach() {
         viewState.showShimmerEffect(true)
+        viewState.showCurrencyInfo(currency)
         loadRates()
     }
 
@@ -64,6 +65,10 @@ class BanksRatesPresenter(
                 viewState.showMessage(it.toString())
             }
         })
+    }
+
+    fun onBackPressed() {
+        router.exit()
     }
 
 }

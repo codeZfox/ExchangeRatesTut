@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.entity.Currency
 import com.codezfox.exchangeratesmvp.entity.RateBank
+import com.codezfox.exchangeratesmvp.extensions.compareWithToday
 import kotlinx.android.synthetic.main.item_bank_rate.view.*
+import java.util.*
 
 
 class BanksRateAdapter : RecyclerView.Adapter<BanksRateAdapter.CurrencyRateViewHolder>() {
@@ -19,9 +21,17 @@ class BanksRateAdapter : RecyclerView.Adapter<BanksRateAdapter.CurrencyRateViewH
 
         fun bind(rate: RateBank) {
             itemView.textViewName.text = rate.bank.name
-            itemView.textViewUpdate.text = "Актуально на сегодня в 19:00"
+            itemView.textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
             itemView.textViewBuy.text = Currency.rateForUI(rate.buy)
             itemView.textViewSell.text = Currency.rateForUI(rate.sell)
+        }
+    }
+
+    private fun buildActualTimeString(date: Date): String {
+        return if (date.compareWithToday() == 0) {
+            String.format("Актуально на сегодня в %1\$tH:%1\$tM", date)
+        } else {
+            String.format("Актуально на %1\$te %1\$tB в %1\$tH:%1\$tM", date)
         }
     }
 

@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.presentation.banksrates
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import com.codezfox.exchangeratesmvp.entity.Currency
 import com.codezfox.exchangeratesmvp.entity.RateBank
 import com.codezfox.exchangeratesmvp.extensions.AddToEndSingleByTagStateStrategy
 import java.util.*
@@ -21,6 +22,8 @@ interface BanksRatesView : MvpView {
 
     @StateStrategyType(AddToEndSingleByTagStateStrategy::class, tag = "EmptyText")
     fun hideEmptyText()
+
+    fun showCurrencyInfo(currency: Currency)
 
 
 }

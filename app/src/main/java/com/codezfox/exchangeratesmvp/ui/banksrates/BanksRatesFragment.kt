@@ -18,7 +18,7 @@ import com.codezfox.exchangeratesmvp.extensions.visible
 import com.codezfox.exchangeratesmvp.extensions.visibleOrGone
 import com.codezfox.exchangeratesmvp.presentation.banksrates.BanksRatesPresenter
 import com.codezfox.exchangeratesmvp.presentation.banksrates.BanksRatesView
-import kotlinx.android.synthetic.main.screen_currency_rates.*
+import kotlinx.android.synthetic.main.screen_banks_rates.*
 
 class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
 
@@ -31,7 +31,12 @@ class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
     lateinit var presenter: BanksRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.screen_currency_rates, container, false)
+        return inflater.inflate(R.layout.screen_banks_rates, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +49,10 @@ class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
         swipeRefreshLayout.setOnRefreshListener {
             presenter.loadRates()
         }
+    }
+
+    override fun showCurrencyInfo(currency: Currency) {
+        toolbar.title = currency.name
     }
 
     override fun showRates(items: List<RateBank>) {
