@@ -2,11 +2,11 @@ package com.codezfox.exchangeratesmvp.di
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.codezfox.exchangeratesmvp.model.repository.database.DataBaseRepositoryImpl
-import com.codezfox.exchangeratesmvp.model.data.database.RoomDatabase
-import com.codezfox.exchangeratesmvp.model.repository.database.DataBaseRepository
-import com.codezfox.exchangeratesmvp.model.repository.preferences.PreferencesRepository
-import com.codezfox.exchangeratesmvp.model.repository.preferences.PreferencesRepositoryImpl
+import com.codezfox.exchangeratesmvp.data.repositories.database.DataBaseRepositoryImpl
+import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
+import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
+import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
+import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Cicerone

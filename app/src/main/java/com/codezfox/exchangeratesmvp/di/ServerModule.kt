@@ -1,9 +1,9 @@
 package com.codezfox.exchangeratesmvp.di
 
-import com.codezfox.exchangeratesmvp.model.data.server.ApiProvider
-import com.codezfox.exchangeratesmvp.model.data.server.FinanceApi
-import com.codezfox.exchangeratesmvp.model.repository.currencyrates.CurrencyRatesRepository
-import com.codezfox.exchangeratesmvp.model.repository.currencyrates.CurrencyRatesRepositoryImpl
+import com.codezfox.exchangeratesmvp.data.server.ApiProvider
+import com.codezfox.exchangeratesmvp.data.server.FinanceApi
+import com.codezfox.exchangeratesmvp.domain.CurrencyRatesRepository
+import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepositoryImpl
 import com.google.gson.*
 import dagger.Module
 import dagger.Provides
