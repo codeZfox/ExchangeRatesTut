@@ -27,9 +27,7 @@ class CurrencyRatesInteractor {
     }
 
     fun loadCurrencyRates(): Pair<List<RateCurrency>, Date?> {
-        var lastDateData: Date? = null
-
-        try {
+        return try {
 
             val rates = repository.getCurrencyRates().data!!
             database.saveRates(rates)
@@ -39,15 +37,24 @@ class CurrencyRatesInteractor {
 
             preferencesRepository.saveLastDateData(Date())
 
+            database.getBestRates() to null
+
         } catch (e: Exception) {
             e.printStackTrace()
+
             if (e is SocketTimeoutException || e is UnknownHostException || e is ConnectException) {
-                lastDateData = preferencesRepository.getLastDateData()
+
+                database.getBestRates().also {
+                    if (it.isEmpty()) {
+                        throw e
+                    }
+                } to preferencesRepository.getLastDateData()
+
+            } else {
+                throw e
             }
         }
 
-
-        return database.getBestRates() to lastDateData
     }
 
 }

@@ -27,20 +27,23 @@ class BanksRatesInteractor(
     }
 
     fun loadBanksRates(): List<RateBank> {
-
-        try {
-
-            val list = repository.getBanksRates(currency).data!!
-            database.saveBanksRates(list)
-
-            return list
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            if (e is SocketTimeoutException || e is UnknownHostException || e is ConnectException) {
-                return database.getBanksRates(currency)
+        return try {
+            repository.getBanksRates(currency).data!!.also {
+                database.saveBanksRates(it)
             }
-            throw e
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+
+            if (e is SocketTimeoutException || e is UnknownHostException || e is ConnectException) {
+                database.getBanksRates(currency).also {
+                    if (it.isEmpty()) {
+                        throw e
+                    }
+                }
+            } else {
+                throw e
+            }
         }
 
     }
