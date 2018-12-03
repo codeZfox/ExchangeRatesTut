@@ -26,7 +26,7 @@ class BanksRatesInteractor(
         DaggerUtils.appComponent.inject(this)
     }
 
-    fun loadBanksRates(): List<RateBank> {
+    fun loadBanksRates(sort: RateCurrencySort): List<RateBank> {
         return try {
             repository.getBanksRates(currency).data!!.also {
                 database.saveBanksRates(it)
@@ -44,8 +44,20 @@ class BanksRatesInteractor(
             } else {
                 throw e
             }
-        }
+        }.sort(sort)
 
+    }
+
+    private fun List<RateBank>.sort(sort: RateCurrencySort): List<RateBank> {
+        return if (sort == RateCurrencySort.BUY) {
+            this.sortedBy { it.sell }
+        } else {
+            this.sortedByDescending { it.buy }
+        }
+    }
+
+    fun sortBanksRates(list: List<RateBank>, sort: RateCurrencySort): List<RateBank> {
+        return list.sort(sort)
     }
 
 }

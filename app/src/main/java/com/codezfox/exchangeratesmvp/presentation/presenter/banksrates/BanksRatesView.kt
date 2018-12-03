@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.presentation.presenter.banksrates
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.AddToEndSingleByTagStateStrategy
@@ -23,6 +24,8 @@ interface BanksRatesView : MvpView {
     fun hideEmptyText()
 
     fun showCurrencyInfo(currency: Currency)
+
+    fun showSortType(sort: RateCurrencySort)
 
 
 }

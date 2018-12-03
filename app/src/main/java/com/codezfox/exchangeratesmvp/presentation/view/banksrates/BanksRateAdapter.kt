@@ -22,8 +22,8 @@ class BanksRateAdapter : RecyclerView.Adapter<BanksRateAdapter.CurrencyRateViewH
         fun bind(rate: RateBank) {
             itemView.textViewName.text = rate.bank.name
             itemView.textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
-            itemView.textViewBuy.text = Currency.rateForUI(rate.buy)
-            itemView.textViewSell.text = Currency.rateForUI(rate.sell)
+            itemView.textViewBuy.text = Currency.rateForUI(rate.sell)
+            itemView.textViewSell.text = Currency.rateForUI(rate.buy)
         }
     }
 

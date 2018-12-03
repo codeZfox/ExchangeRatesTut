@@ -12,13 +12,13 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
-import com.codezfox.exchangeratesmvp.extensions.gone
-import com.codezfox.exchangeratesmvp.extensions.isRefreshing
-import com.codezfox.exchangeratesmvp.extensions.visible
-import com.codezfox.exchangeratesmvp.extensions.visibleOrGone
+import com.codezfox.exchangeratesmvp.extensions.*
 import com.codezfox.exchangeratesmvp.presentation.presenter.banksrates.BanksRatesPresenter
 import com.codezfox.exchangeratesmvp.presentation.presenter.banksrates.BanksRatesView
 import kotlinx.android.synthetic.main.screen_banks_rates.*
+import android.support.annotation.ColorInt
+import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
+
 
 class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
 
@@ -42,12 +42,53 @@ class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        textViewBuy.onClick {
+            presenter.changeSort(RateCurrencySort.BUY)
+        }
+
+        textViewSell.onClick {
+            presenter.changeSort(RateCurrencySort.SELL)
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
         swipeRefreshLayout.setOnRefreshListener {
             presenter.loadRates()
+        }
+    }
+
+    private val d :Int by lazy {
+//        val attrs = intArrayOf(android.R.attr.textColorSecondary)
+//        val a = activity!!.obtainStyledAttributes(R.style.AppTheme, attrs)
+//         a.getColor(0, Color.RED)
+//        a.recycle()
+        getDefaultThemeColor(android.R.attr.textColorSecondary)
+    }
+
+    @ColorInt
+    fun getDefaultThemeColor(attribute: Int): Int {
+        val themeArray = context!!.getTheme().obtainStyledAttributes(intArrayOf(attribute))
+        try {
+            val index = 0
+            val defaultColourValue = 0
+            return themeArray.getColor(index, defaultColourValue)
+        } finally {
+            themeArray.recycle()
+        }
+    }
+
+    override fun showSortType(sort: RateCurrencySort) {
+        when (sort) {
+            RateCurrencySort.BUY -> {
+                textViewBuy.setTextColor(resources.getColor(R.color.colorRed))
+                textViewSell.setTextColor(d)
+            }
+            RateCurrencySort.SELL -> {
+                textViewBuy.setTextColor(d)
+                textViewSell.setTextColor(resources.getColor(R.color.colorRed))
+            }
         }
     }
 

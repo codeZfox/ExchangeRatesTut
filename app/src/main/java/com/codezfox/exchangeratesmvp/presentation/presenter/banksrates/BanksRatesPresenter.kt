@@ -8,6 +8,7 @@ import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.launchUIR
 import com.codezfox.exchangeratesmvp.extensions.showMessage
 import com.codezfox.exchangeratesmvp.domain.banksrates.BanksRatesInteractor
+import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -17,6 +18,8 @@ class BanksRatesPresenter(
         private val currency: Currency
 
 ) : MvpPresenter<BanksRatesView>() {
+
+    private var sort = RateCurrencySort.BUY
 
     @Inject
     lateinit var router: Router
@@ -30,16 +33,24 @@ class BanksRatesPresenter(
     }
 
     override fun onFirstViewAttach() {
+        viewState.showSortType(this.sort)
         viewState.showShimmerEffect(true)
         viewState.showCurrencyInfo(currency)
         loadRates()
+    }
+
+    fun changeSort(sort: RateCurrencySort) {
+        this.list = interactor.sortBanksRates(this.list, sort)
+        this.sort = sort
+        viewState.showRates(this.list)
+        viewState.showSortType(this.sort)
     }
 
     fun loadRates() {
 
         launchUIR({
 
-            interactor.loadBanksRates()
+            interactor.loadBanksRates(sort)
 
         }, { list ->
 
