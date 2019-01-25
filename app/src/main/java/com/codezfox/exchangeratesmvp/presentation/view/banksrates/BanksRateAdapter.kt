@@ -9,7 +9,8 @@ import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.compareWithToday
-import kotlinx.android.synthetic.main.item_bank_rate.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_bank_rate.*
 import java.util.*
 
 
@@ -17,13 +18,13 @@ class BanksRateAdapter : RecyclerView.Adapter<BanksRateAdapter.CurrencyRateViewH
 
     private var items: List<RateBank> = listOf()
 
-    inner class CurrencyRateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class CurrencyRateViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(rate: RateBank) {
-            itemView.textViewName.text = rate.bank.name
-            itemView.textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
-            itemView.textViewBuy.text = Currency.rateForUI(rate.sell)
-            itemView.textViewSell.text = Currency.rateForUI(rate.buy)
+            textViewName.text = rate.bank.name
+            textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
+            textViewBuy.text = Currency.rateForUI(rate.sell)
+            textViewSell.text = Currency.rateForUI(rate.buy)
         }
     }
 

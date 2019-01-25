@@ -11,7 +11,8 @@ import com.codezfox.exchangeratesmvp.domain.models.Currency.Companion.rateForUI
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.*
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_currency_rate.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_currency_rate.*
 import java.util.*
 
 
@@ -22,11 +23,11 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
 
     var onClick: ((rateCurrency: RateCurrency) -> Unit)? = null
 
-    inner class CurrencyRateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class CurrencyRateViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(rateCurrency: RateCurrency) {
 
-            itemView.onClick {
+            containerView.onClick {
                 onClick?.invoke(rateCurrency)
             }
 
@@ -34,40 +35,39 @@ class CurrencyRateAdapter : RecyclerView.Adapter<CurrencyRateAdapter.CurrencyRat
 
             val scale = rateCurrency.currency.scale
 
-
-            itemView.textViewName.text = rate.currencyCode
-            itemView.textViewAmount.text = rateCurrency.getAmountString()
-            itemView.textViewBuy.text = rateForUI(rate.sell, scale)
-            itemView.textViewSell.text = rateForUI(rate.buy, scale)
-            itemView.textViewNb.text = rateForUI(rate.nb, scale)
+            textViewName.text = rate.currencyCode
+            textViewAmount.text = rateCurrency.getAmountString()
+            textViewBuy.text = rateForUI(rate.sell, scale)
+            textViewSell.text = rateForUI(rate.buy, scale)
+            textViewNb.text = rateForUI(rate.nb, scale)
 
             if (rate.bcse_date == null || rate.bcse_date != rate.nb_date && rate.nb == rate.bcse_rate) {
 
-                itemView.textViewBCSERoot.gone()
+                textViewBCSERoot.gone()
 
-                itemView.textViewNbDiff.visibleOrInvisible(rate.nb_diff != 0.0)
-                itemView.textViewNbDiff.setTextColor(resources.getColor(if (rate.nb_diff >= 0) R.color.colorGreen else R.color.colorRed))
-                itemView.textViewNbDiff.text = rateDiffForUI(rate.nb_diff, scale)
+                textViewNbDiff.visibleOrInvisible(rate.nb_diff != 0.0)
+                textViewNbDiff.setTextColor(resources.getColor(if (rate.nb_diff >= 0) R.color.colorGreen else R.color.colorRed))
+                textViewNbDiff.text = rateDiffForUI(rate.nb_diff, scale)
 
             } else {
 
-                itemView.textViewNbDiff.gone()
+                textViewNbDiff.gone()
 
-                itemView.textViewBCSERoot.visible()
+                textViewBCSERoot.visible()
 
-                itemView.textViewBCSEDate.text = String.format(Locale("ru"), itemView.context.getString(R.string.BCSE_date), rate.bcse_date)
-                itemView.textViewBCSERate.text = rateForUI(rate.bcse_rate, scale)
+                textViewBCSEDate.text = String.format(Locale("ru"), itemView.context.getString(R.string.BCSE_date), rate.bcse_date)
+                textViewBCSERate.text = rateForUI(rate.bcse_rate, scale)
 
-                itemView.textViewBCSEDiff.visibleOrInvisible(rate.bcse_diff != 0.0)
-                itemView.textViewBCSEDiff.text = rateDiffForUI(rate.bcse_diff, scale)
-                itemView.textViewBCSEDiff.setTextColor(resources.getColor(if (rate.bcse_diff >= 0) R.color.colorGreen else R.color.colorRed))
+                textViewBCSEDiff.visibleOrInvisible(rate.bcse_diff != 0.0)
+                textViewBCSEDiff.text = rateDiffForUI(rate.bcse_diff, scale)
+                textViewBCSEDiff.setTextColor(resources.getColor(if (rate.bcse_diff >= 0) R.color.colorGreen else R.color.colorRed))
 
             }
 
             Picasso.with(itemView.context)
                     .load(rateCurrency.currency?.flag)
                     .placeholder(R.drawable.ic_currency_default)
-                    .into(itemView.imageViewCurrencyFlag)
+                    .into(imageViewCurrencyFlag)
 
         }
     }
