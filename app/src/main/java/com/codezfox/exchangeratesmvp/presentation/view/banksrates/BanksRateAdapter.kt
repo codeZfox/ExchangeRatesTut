@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
-import com.codezfox.exchangeratesmvp.extensions.compareWithToday
+import com.codezfox.exchangeratesmvp.extensions.isToday
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bank_rate.*
 import java.util.*
@@ -29,7 +29,7 @@ class BanksRateAdapter : RecyclerView.Adapter<BanksRateAdapter.CurrencyRateViewH
     }
 
     private fun buildActualTimeString(date: Date): String {
-        return if (date.compareWithToday() == 0) {
+        return if (date.isToday()) {
             String.format("Актуально на сегодня в %1\$tH:%1\$tM", date)
         } else {
             String.format("Актуально на %1\$te %1\$tB в %1\$tH:%1\$tM", date)

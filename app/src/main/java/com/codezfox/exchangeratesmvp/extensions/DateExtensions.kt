@@ -22,6 +22,8 @@ fun Calendar.compareDay(calendar: Calendar): Int {
 
 
 
+fun Date.isToday() = toCalendar().compareWithToday() == 0
+
 fun Date.compareWithToday() = toCalendar().compareWithToday()
 
 fun Calendar.compareWithToday() = compareDay(Calendar.getInstance())
