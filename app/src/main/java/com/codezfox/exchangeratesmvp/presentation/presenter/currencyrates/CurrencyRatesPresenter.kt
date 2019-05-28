@@ -65,7 +65,7 @@ class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
     }
 
     fun openCurrency(rateCurrency: RateCurrency) {
-        router.navigateTo(Screens.CURRENCY_BANKS, rateCurrency.currency!!)
+        router.navigateTo(Screens.BanksRates(rateCurrency.currency))
     }
 
 }

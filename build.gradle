@@ -42,7 +42,7 @@ ext {
     daggerVersion = "2.15"
     retrofitVersion = "2.4.0"
     moxyVersion = "1.5.5"
-    ciceroneVersion = "3.0.0"
+    ciceroneVersion = "4.0.2"
     toothpickVersion = "1.0.6"
 
     // Architecture Components dependencies
