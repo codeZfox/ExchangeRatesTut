@@ -6,29 +6,30 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
+import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
-import com.codezfox.exchangeratesmvp.extensions.gone
-import com.codezfox.exchangeratesmvp.extensions.isRefreshing
-import com.codezfox.exchangeratesmvp.extensions.visible
-import com.codezfox.exchangeratesmvp.extensions.visibleOrGone
+import com.codezfox.exchangeratesmvp.extensions.*
 import com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates.CurrencyRatesPresenter
 import com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates.CurrencyRatesView
+import com.codezfox.exchangeratesmvp.presentation.view.BaseMvpFragment
 import kotlinx.android.synthetic.main.screen_currency_rates.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CurrencyRatesFragment : MvpAppCompatFragment(), CurrencyRatesView {
+
+class CurrencyRatesFragment : BaseMvpFragment(), CurrencyRatesView {
 
     private val adapter = CurrencyRateAdapter().apply {
         this.onClick = { presenter.openCurrency(it) }
     }
 
     @ProvidePresenter
-    fun providePresenter() = CurrencyRatesPresenter()
+    fun providePresenter(): CurrencyRatesPresenter {
+        return CurrencyRatesPresenter(get(), CurrencyRatesInteractor(get(), get(), get()))
+    }
 
     @InjectPresenter
     lateinit var presenter: CurrencyRatesPresenter

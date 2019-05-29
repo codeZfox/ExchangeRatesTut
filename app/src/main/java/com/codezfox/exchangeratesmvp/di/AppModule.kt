@@ -1,47 +1,36 @@
 package com.codezfox.exchangeratesmvp.di
 
 import android.arch.persistence.room.Room
-import android.content.Context
 import com.codezfox.exchangeratesmvp.data.repositories.database.DataBaseRepositoryImpl
+import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepositoryImpl
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
 import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
 import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
-import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepositoryImpl
-import dagger.Module
-import dagger.Provides
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.eagerSingleton
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
-import javax.inject.Singleton
 
-@Module
-class AppModule(private val context: Context) {
+val appModule = Kodein.Module("appModule") {
 
-    private val cicerone: Cicerone<Router> = Cicerone.create()
+    val cicerone: Cicerone<Router> = Cicerone.create()
 
-    @Provides
-    @Singleton
-    fun providePreferencesRepository(): PreferencesRepository = PreferencesRepositoryImpl(context)
+    bind<PreferencesRepository>() with singleton { PreferencesRepositoryImpl(instance()) }
 
-    @Provides
-    @Singleton
-    fun provideNavigatorHolder() = cicerone.navigatorHolder
+    bind() from eagerSingleton { cicerone.navigatorHolder }
 
-    @Provides
-    @Singleton
-    fun provideRouter() = cicerone.router
+    bind() from eagerSingleton { cicerone.router }
 
-    @Singleton
-    @Provides
-    fun provideDatabase(): RoomDatabase {
-        return Room.databaseBuilder(context,
+    bind() from eagerSingleton {
+        Room.databaseBuilder(instance(),
                 RoomDatabase::class.java, "exchangerates.db")
                 .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideDataBaseRepository(roomDatabase: RoomDatabase): DataBaseRepository {
-        return DataBaseRepositoryImpl(roomDatabase)
-    }
+    bind<DataBaseRepository>() with singleton { DataBaseRepositoryImpl(instance()) }
+
 
 }

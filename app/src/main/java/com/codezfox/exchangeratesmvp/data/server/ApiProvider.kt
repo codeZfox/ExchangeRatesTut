@@ -5,14 +5,13 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Provider
 
 class ApiProvider(
         private val baseUrl: String,
         private val gson: Gson
-) : Provider<FinanceApi> {
+) {
 
-    override fun get() =
+    fun get() =
             Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(buildOkHttpClient())

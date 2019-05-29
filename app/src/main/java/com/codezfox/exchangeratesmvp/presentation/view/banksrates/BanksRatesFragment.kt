@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
@@ -17,15 +16,21 @@ import com.codezfox.exchangeratesmvp.presentation.presenter.banksrates.BanksRate
 import com.codezfox.exchangeratesmvp.presentation.presenter.banksrates.BanksRatesView
 import kotlinx.android.synthetic.main.screen_banks_rates.*
 import android.support.annotation.ColorInt
+import com.codezfox.exchangeratesmvp.domain.banksrates.BanksRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
+import com.codezfox.exchangeratesmvp.presentation.view.BaseMvpFragment
 
 
-class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
+class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {
 
     private val adapter = BanksRateAdapter()
 
     @ProvidePresenter
-    fun providePresenter() = BanksRatesPresenter(arguments?.getSerializable("Currency") as Currency)
+    fun providePresenter(): BanksRatesPresenter {
+        val currency = arguments?.getSerializable("Currency") as Currency
+        val interactor = BanksRatesInteractor(get(), get())
+        return BanksRatesPresenter(currency, interactor, get())
+    }
 
     @InjectPresenter
     lateinit var presenter: BanksRatesPresenter
@@ -59,8 +64,8 @@ class BanksRatesFragment : MvpAppCompatFragment(), BanksRatesView {
         }
     }
 
-    private val d :Int by lazy {
-//        val attrs = intArrayOf(android.R.attr.textColorSecondary)
+    private val d: Int by lazy {
+        //        val attrs = intArrayOf(android.R.attr.textColorSecondary)
 //        val a = activity!!.obtainStyledAttributes(R.style.AppTheme, attrs)
 //         a.getColor(0, Color.RED)
 //        a.recycle()

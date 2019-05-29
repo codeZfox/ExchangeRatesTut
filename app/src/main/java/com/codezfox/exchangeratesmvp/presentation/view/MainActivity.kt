@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.di.DaggerUtils
 import com.codezfox.exchangeratesmvp.presentation.Screens
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
-import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KodeinAware {
 
-    @Inject
-    lateinit var navigatorHolder: NavigatorHolder
+    override val kodein by kodein()
 
-    @Inject
-    lateinit var router: Router
+    private val navigatorHolder: NavigatorHolder by instance()
+
+    private val router: Router by instance()
 
     private val navigator = SupportAppNavigator(this, R.id.container)
 
@@ -28,8 +29,6 @@ class MainActivity : AppCompatActivity() {
             it.id = R.id.container
         }
         setContentView(frameLayout)
-
-        DaggerUtils.appComponent.inject(this)
 
         if (savedInstanceState == null) {
             router.newRootScreen(Screens.CurrencyRates())

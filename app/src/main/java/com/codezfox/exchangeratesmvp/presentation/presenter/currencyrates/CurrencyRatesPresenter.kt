@@ -2,28 +2,20 @@ package com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.codezfox.exchangeratesmvp.presentation.Screens
-import com.codezfox.exchangeratesmvp.di.DaggerUtils
+import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.launchUIR
 import com.codezfox.exchangeratesmvp.extensions.showMessage
-import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteractor
+import com.codezfox.exchangeratesmvp.presentation.Screens
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
 @InjectViewState
-class CurrencyRatesPresenter : MvpPresenter<CurrencyRatesView>() {
-
-    @Inject
-    lateinit var router: Router
-
-    private var interactor = CurrencyRatesInteractor()
+class CurrencyRatesPresenter(
+        private val router: Router,
+        private val interactor: CurrencyRatesInteractor
+) : MvpPresenter<CurrencyRatesView>() {
 
     var list: List<RateCurrency> = listOf()
-
-    init {
-        DaggerUtils.appComponent.inject(this)
-    }
 
     override fun onFirstViewAttach() {
         viewState.showShimmerEffect(true)
