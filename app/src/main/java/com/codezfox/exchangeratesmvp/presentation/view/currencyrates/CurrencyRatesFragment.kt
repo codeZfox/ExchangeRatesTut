@@ -28,7 +28,7 @@ class CurrencyRatesFragment : BaseMvpFragment(), CurrencyRatesView {
 
     @ProvidePresenter
     fun providePresenter(): CurrencyRatesPresenter {
-        return CurrencyRatesPresenter(get(), CurrencyRatesInteractor(get(), get(), get()))
+        return CurrencyRatesPresenter(getRouter(), CurrencyRatesInteractor(get(), get(), get()))
     }
 
     @InjectPresenter

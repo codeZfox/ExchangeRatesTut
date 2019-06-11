@@ -7,22 +7,20 @@ import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
 import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
 import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
 import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.eagerSingleton
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.android.ActivityRetainedScope
+import org.kodein.di.generic.*
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
 val appModule = Kodein.Module("appModule") {
 
-    val cicerone: Cicerone<Router> = Cicerone.create()
+    bind() from scoped(ActivityRetainedScope).singleton { Cicerone.create() }
+
+    bind() from scoped(ActivityRetainedScope).singleton { instance<Cicerone<Router>>().navigatorHolder }
+
+    bind() from scoped(ActivityRetainedScope).singleton { instance<Cicerone<Router>>().router }
 
     bind<PreferencesRepository>() with singleton { PreferencesRepositoryImpl(instance()) }
-
-    bind() from eagerSingleton { cicerone.navigatorHolder }
-
-    bind() from eagerSingleton { cicerone.router }
 
     bind() from eagerSingleton {
         Room.databaseBuilder(instance(),

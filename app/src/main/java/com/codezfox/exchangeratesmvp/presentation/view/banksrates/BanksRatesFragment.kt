@@ -29,7 +29,7 @@ class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {
     fun providePresenter(): BanksRatesPresenter {
         val currency = arguments?.getSerializable("Currency") as Currency
         val interactor = BanksRatesInteractor(get(), get())
-        return BanksRatesPresenter(currency, interactor, get())
+        return BanksRatesPresenter(currency, interactor, getRouter())
     }
 
     @InjectPresenter
