@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.codezfox.exchangeratesmvp.domain.models.Rate
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
+import io.reactivex.Single
 
 @Dao
 interface RateDao {
@@ -22,7 +23,7 @@ interface RateDao {
     fun deleteRates()
 
     @Query("SELECT Rate.*, Currency.* FROM Rate INNER JOIN Currency ON Rate.currencyCode = Currency.id")
-    fun getRatess(): List<RateCurrency>
+    fun getRatess(): Single<List<RateCurrency>>
 
 
 }

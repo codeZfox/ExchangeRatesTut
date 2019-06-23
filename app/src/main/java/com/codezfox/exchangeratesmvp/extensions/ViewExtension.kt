@@ -56,9 +56,30 @@ inline val RecyclerView.ViewHolder.resources: Resources
 
 fun SwipeRefreshLayout.isRefreshing(refresh: Boolean) {
     if (refresh) {
-        this.isRefreshing = refresh
+        if (!isRefreshing) post {
+            isRefreshing = true
+        }
     } else {
         this.post { this.isRefreshing = refresh }
     }
 }
 
+
+fun View.setHeight(height: Int) {
+    this.layoutParams = this.layoutParams.apply {
+        this.height = height
+    }
+}
+
+fun View.setWidth(width: Int) {
+    this.layoutParams = this.layoutParams.apply {
+        this.width = width
+    }
+}
+
+fun View.setImageSize(height: Int, width: Int) {
+    this.layoutParams = this.layoutParams.apply {
+        this.height = height
+        this.width = width
+    }
+}

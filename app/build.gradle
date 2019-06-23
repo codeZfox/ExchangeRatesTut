@@ -59,16 +59,24 @@ dependencies {
 
     //Database
     implementation "android.arch.persistence.room:runtime:$rootProject.archLifecycleVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.archLifecycleVersion"
     kapt "android.arch.persistence.room:compiler:$rootProject.archLifecycleVersion"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
+
+    //RxJava2
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+
+    implementation "me.drakeet.multitype:multitype-kotlin:3.4.4"
 
 }

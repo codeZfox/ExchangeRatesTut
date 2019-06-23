@@ -10,6 +10,7 @@ import com.codezfox.exchangeratesmvp.domain.CurrencyRatesRepository
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Single
 
 
 class CurrencyRatesRepositoryImpl(
@@ -42,10 +43,9 @@ class CurrencyRatesRepositoryImpl(
         return parseResponse(response)
     }
 
-
-    override fun getCurrencyRates(): BaseResponse<Rate> {
-        val response = api.getInfo(getFields(GET_BEST_RATES)).bodyOrError()
-        return parseResponse(response)
+    override fun getCurrencyRatesSingle(): Single<BaseResponse<Rate>> {
+        return api.getInfoSingle(getFields(GET_BEST_RATES))
+                .map { parseResponse<BaseResponse<Rate>>(it) }
     }
 
     override fun getBanksRates(currency: Currency): BaseResponse<RateBank> {

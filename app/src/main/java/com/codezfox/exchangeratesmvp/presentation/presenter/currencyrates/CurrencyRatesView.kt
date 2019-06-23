@@ -1,26 +1,13 @@
 package com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates
 
-import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
-import com.codezfox.exchangeratesmvp.extensions.AddToEndSingleByTagStateStrategy
+import com.codezfox.exchangeratesmvp.presentation.paginator.screen.PaginatorView
 import java.util.*
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface CurrencyRatesView : MvpView {
-
-    fun showRates(items: List<RateCurrency>)
-
-    fun showShimmerEffect(show: Boolean)
-
-    fun showProgress(show: Boolean)
-
-    @StateStrategyType(AddToEndSingleByTagStateStrategy::class, tag = "EmptyText")
-    fun showEmptyText(text: String)
-
-    @StateStrategyType(AddToEndSingleByTagStateStrategy::class, tag = "EmptyText")
-    fun hideEmptyText()
+interface CurrencyRatesView : PaginatorView<RateCurrency> {
 
     fun showLastDateUpdated(date: Date?)
 

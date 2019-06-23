@@ -19,6 +19,15 @@ val Float.dp: Float
     get() = (this * Resources.getSystem().displayMetrics.density)
 
 
+fun Context.getDisplayWidth(): Int {
+    return resources.displayMetrics.widthPixels
+}
+
+fun Context.getDisplayHeight(): Int {
+    return resources.displayMetrics.heightPixels
+}
+
+
 fun Context.isNetworkConnected() = (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
 
 fun Context.isIntentAvailable(action: String): Boolean {

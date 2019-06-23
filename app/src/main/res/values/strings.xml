@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">ExchangeRates</string>
+    <string name="app_name">App</string>
 
     <string name="BCSE_date">Итоги торгов БВФБ %1$te\u00A0%1$tB</string>
+
+    <string name="data_not_found">Данные не найдены</string>
+
+    <string name="repeat">Повторить</string>
 
 </resources>

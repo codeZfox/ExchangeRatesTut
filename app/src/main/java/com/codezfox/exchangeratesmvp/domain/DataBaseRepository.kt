@@ -4,6 +4,7 @@ import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.Rate
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
+import io.reactivex.Single
 
 interface DataBaseRepository {
 
@@ -11,7 +12,7 @@ interface DataBaseRepository {
 
     fun saveRates(rates: List<Rate>)
 
-    fun getBestRates(): List<RateCurrency>
+    fun getBestRates(): Single<List<RateCurrency>>
 
     fun saveBanksRates(rates: List<RateBank>)
 

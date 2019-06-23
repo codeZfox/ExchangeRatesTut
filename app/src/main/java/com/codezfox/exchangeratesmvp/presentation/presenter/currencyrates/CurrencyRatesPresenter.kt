@@ -1,59 +1,45 @@
 package com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates
 
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
+import com.codezfox.exchangeratesmvp.data.repositories.SystemRepository
 import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
-import com.codezfox.exchangeratesmvp.extensions.launchUIR
-import com.codezfox.exchangeratesmvp.extensions.showMessage
 import com.codezfox.exchangeratesmvp.presentation.Screens
+import com.codezfox.exchangeratesmvp.presentation.paginator.screen.IMvpPaginatorPresenter
+import com.codezfox.exchangeratesmvp.presentation.paginator.screen.MvpPaginatorPresenter
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class CurrencyRatesPresenter(
         private val router: Router,
-        private val interactor: CurrencyRatesInteractor
-) : MvpPresenter<CurrencyRatesView>() {
+        private val interactor: CurrencyRatesInteractor,
+        private val systemRepository: SystemRepository
+) : MvpPaginatorPresenter<RateCurrency, CurrencyRatesView>(), IMvpPaginatorPresenter<RateCurrency, CurrencyRatesView> {
 
-    var list: List<RateCurrency> = listOf()
-
-    override fun onFirstViewAttach() {
-        viewState.showShimmerEffect(true)
-        loadRates()
+    override fun requestFactory(page: Int): Single<List<RateCurrency>> {
+        return interactor.loadRates()
+                .map {
+                    if (page == 1) {
+                        it
+                    } else {
+                        emptyList()
+                    }
+                }
     }
 
-    fun loadRates() {
+    override fun onFirstViewAttach() {
+        subscribeToNetworkConnected(systemRepository)
+        pagination.refresh()
 
-        launchUIR({
-            interactor.loadCurrencyRates()
-        }, { (list, date) ->
-
-            this.list = list
-
-            viewState.showRates(list)
-
-            viewState.showProgress(false)
-            viewState.showShimmerEffect(false)
-            viewState.hideEmptyText()
-            viewState.showLastDateUpdated(date)
-
-
-        }, {
-            it.printStackTrace()
-
-//            loadLocalRates()
-            viewState.showLastDateUpdated(null)
-
-            viewState.showProgress(false)
-            viewState.showShimmerEffect(false)
-
-            if (list.isEmpty()) {
-                viewState.showEmptyText(it.toString())
-            } else {
-                viewState.hideEmptyText()
-                viewState.showMessage(it.toString())
-            }
-        })
+        disposable.add(interactor.subjectDate
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showLastDateUpdated(it.get())
+                }, {
+                    it.printStackTrace()
+                }))
     }
 
     fun openCurrency(rateCurrency: RateCurrency) {

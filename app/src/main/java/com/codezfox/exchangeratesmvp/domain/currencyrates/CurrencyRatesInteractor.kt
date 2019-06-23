@@ -1,12 +1,12 @@
 package com.codezfox.exchangeratesmvp.domain.currencyrates
 
-import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.domain.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
 import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
+import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
+import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import java.util.*
 
 class CurrencyRatesInteractor(
@@ -15,34 +15,41 @@ class CurrencyRatesInteractor(
         private val preferencesRepository: PreferencesRepository
 ) {
 
-    fun loadCurrencyRates(): Pair<List<RateCurrency>, Date?> {
-        return try {
+    val subjectDate: Subject<Optional<Date>> = BehaviorSubject.create()
 
-            val rates = repository.getCurrencyRates().data!!
-            database.saveRates(rates)
+    fun loadRates(): Single<List<RateCurrency>> {
 
-            val currencies = repository.getCurrencies().data!!
-            database.saveCurrencies(currencies)
+        return repository.getCurrencyRatesSingle()
+                .map { it.data }
+                .flatMap { data ->
 
-            preferencesRepository.saveLastDateData(Date())
+                    database.saveRates(data)
 
-            database.getBestRates() to null
+                    val currencies = repository.getCurrencies().data!!
+                    database.saveCurrencies(currencies)
 
-        } catch (e: Exception) {
-            e.printStackTrace()
+                    val date = Date()
 
-            if (e is SocketTimeoutException || e is UnknownHostException || e is ConnectException) {
+                    subjectDate.onNext(Optional.of(date))
 
-                database.getBestRates().also {
-                    if (it.isEmpty()) {
-                        throw e
+                    preferencesRepository.saveLastDateData(date)
+
+                    database.getBestRates()
+
+                }.onErrorResumeNext { exception ->
+
+                    val data = preferencesRepository.getLastDateData()
+
+                    subjectDate.onNext(Optional.ofNullable(data))
+
+                    database.getBestRates().map { list ->
+                        if (list.isEmpty()) {
+                            throw exception
+                        } else {
+                            list
+                        }
                     }
-                } to preferencesRepository.getLastDateData()
-
-            } else {
-                throw e
-            }
-        }
+                }
 
     }
 

@@ -6,6 +6,7 @@ import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
 import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
+import io.reactivex.Single
 
 class DataBaseRepositoryImpl(roomDatabase: RoomDatabase) : DataBaseRepository {
 
@@ -23,7 +24,7 @@ class DataBaseRepositoryImpl(roomDatabase: RoomDatabase) : DataBaseRepository {
         rateDao.insertRates(rates)
     }
 
-    override fun getBestRates(): List<RateCurrency> {
+    override fun getBestRates(): Single<List<RateCurrency>> {
         return rateDao.getRatess()
     }
 

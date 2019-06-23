@@ -1,6 +1,7 @@
 package com.codezfox.exchangeratesmvp.di
 
 import android.arch.persistence.room.Room
+import com.codezfox.exchangeratesmvp.data.repositories.SystemRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DataBaseRepositoryImpl
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepositoryImpl
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
@@ -29,6 +30,8 @@ val appModule = Kodein.Module("appModule") {
     }
 
     bind<DataBaseRepository>() with singleton { DataBaseRepositoryImpl(instance()) }
+
+    bind<SystemRepository>() with singleton { SystemRepository(instance()) }
 
 
 }

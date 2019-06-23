@@ -4,10 +4,11 @@ import com.codezfox.exchangeratesmvp.domain.models.BaseResponse
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.Rate
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
+import io.reactivex.Single
 
 interface CurrencyRatesRepository {
 
-    fun getCurrencyRates(): BaseResponse<Rate>
+    fun getCurrencyRatesSingle(): Single<BaseResponse<Rate>>
 
     fun getCurrencies(): BaseResponse<Currency>
 
