@@ -1,12 +1,12 @@
 package com.codezfox.exchangeratesmvp.di
 
 import android.arch.persistence.room.Room
-import com.codezfox.exchangeratesmvp.data.repositories.SystemRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DataBaseRepositoryImpl
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepositoryImpl
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
 import com.codezfox.exchangeratesmvp.domain.DataBaseRepository
 import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
+import com.codezfox.paginator.NetworkManager
 import org.kodein.di.Kodein
 import org.kodein.di.android.ActivityRetainedScope
 import org.kodein.di.generic.*
@@ -31,7 +31,7 @@ val appModule = Kodein.Module("appModule") {
 
     bind<DataBaseRepository>() with singleton { DataBaseRepositoryImpl(instance()) }
 
-    bind<SystemRepository>() with singleton { SystemRepository(instance()) }
+    bind<NetworkManager>() with singleton { NetworkManager(instance()) }
 
 
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
-import com.codezfox.exchangeratesmvp.extensions.*
+import com.codezfox.extensions.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_currency_rate.*

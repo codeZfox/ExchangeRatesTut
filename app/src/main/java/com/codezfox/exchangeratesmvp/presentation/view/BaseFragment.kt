@@ -3,9 +3,9 @@ package com.codezfox.exchangeratesmvp.presentation.view
 import android.support.v4.app.Fragment
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.codezfox.exchangeratesmvp.extensions.get
-import com.codezfox.exchangeratesmvp.presentation.paginator.screen.IMvpPaginatorPresenter
-import com.codezfox.exchangeratesmvp.presentation.paginator.screen.PaginatorFragment
-import com.codezfox.exchangeratesmvp.presentation.paginator.screen.PaginatorView
+import com.codezfox.paginator.screen.IMvpPaginatorPresenter
+import com.codezfox.paginator.screen.PaginatorFragment
+import com.codezfox.paginator.screen.PaginatorView
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.android.support.kodein

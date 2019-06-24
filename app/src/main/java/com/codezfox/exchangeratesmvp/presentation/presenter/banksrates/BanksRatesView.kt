@@ -6,7 +6,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
-import com.codezfox.exchangeratesmvp.extensions.AddToEndSingleByTagStateStrategy
+import com.codezfox.extensions.AddToEndSingleByTagStateStrategy
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface BanksRatesView : MvpView {

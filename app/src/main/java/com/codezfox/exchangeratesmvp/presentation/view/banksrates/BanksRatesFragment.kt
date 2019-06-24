@@ -19,6 +19,7 @@ import android.support.annotation.ColorInt
 import com.codezfox.exchangeratesmvp.domain.banksrates.BanksRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
 import com.codezfox.exchangeratesmvp.presentation.view.BaseMvpFragment
+import com.codezfox.extensions.*
 
 
 class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {

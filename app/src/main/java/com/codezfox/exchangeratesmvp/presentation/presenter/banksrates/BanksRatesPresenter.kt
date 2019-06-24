@@ -5,9 +5,9 @@ import com.arellomobile.mvp.MvpPresenter
 import com.codezfox.exchangeratesmvp.domain.models.Currency
 import com.codezfox.exchangeratesmvp.domain.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.launchUIR
-import com.codezfox.exchangeratesmvp.extensions.showMessage
 import com.codezfox.exchangeratesmvp.domain.banksrates.BanksRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.banksrates.RateCurrencySort
+import com.codezfox.extensions.showMessage
 import ru.terrakok.cicerone.Router
 
 @InjectViewState

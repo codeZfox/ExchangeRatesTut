@@ -10,11 +10,12 @@ import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteractor
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.extensions.*
-import com.codezfox.exchangeratesmvp.presentation.paginator.screen.EmptyViewHolder
-import com.codezfox.exchangeratesmvp.presentation.paginator.screen.ErrorViewHolder
+import com.codezfox.paginator.screen.EmptyViewHolder
+import com.codezfox.paginator.screen.ErrorViewHolder
 import com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates.CurrencyRatesPresenter
 import com.codezfox.exchangeratesmvp.presentation.presenter.currencyrates.CurrencyRatesView
 import com.codezfox.exchangeratesmvp.presentation.view.BasePaginatorFragment
+import com.codezfox.extensions.visibleOrGone
 import kotlinx.android.synthetic.main.screen_currency_rates.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
