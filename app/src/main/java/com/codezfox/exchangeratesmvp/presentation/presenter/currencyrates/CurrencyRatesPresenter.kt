@@ -9,6 +9,7 @@ import com.codezfox.paginator.screen.IMvpPaginatorPresenter
 import com.codezfox.paginator.screen.MvpPaginatorPresenter
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
@@ -20,7 +21,12 @@ class CurrencyRatesPresenter(
 
     override fun requestFactory(page: Int): Single<List<RateCurrency>> {
         return interactor.loadRates()
-                .map {
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess { (_, date) ->
+                    viewState.showLastDateUpdated(date)
+                }
+                .observeOn(Schedulers.io())
+                .map { (it, _) ->
                     if (page == 1) {
                         it
                     } else {
@@ -32,14 +38,6 @@ class CurrencyRatesPresenter(
     override fun onFirstViewAttach() {
         subscribeToNetworkConnected(networkManager)
         pagination.refresh()
-
-        disposable.add(interactor.subjectDate
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.showLastDateUpdated(it.get())
-                }, {
-                    it.printStackTrace()
-                }))
     }
 
     fun openCurrency(rateCurrency: RateCurrency) {
