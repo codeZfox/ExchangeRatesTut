@@ -37,10 +37,6 @@ class CurrencyRatesFragment : BasePaginatorFragment<RateCurrency, CurrencyRatesV
         return inflater.inflate(R.layout.screen_currency_rates, container, false)
     }
 
-    override fun onInitPlaceHolderView(errorViewHolder: ErrorViewHolder, emptyViewHolder: EmptyViewHolder) {
-
-    }
-
     override fun registerTypes(adapter: MultiTypeAdapter) {
         super.registerTypes(adapter)
         adapter.register(RateCurrencyViewBinder({
