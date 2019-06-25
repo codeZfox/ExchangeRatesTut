@@ -19,7 +19,7 @@ class CurrencyRatesInteractor(
 
     private var currencies: List<Currency> = listOf()
 
-    fun loadRates(): Single<Pair<List<RateCurrency>, Date?>> {
+    fun loadRates(): Single<Triple<List<RateCurrency>, Date?, Boolean>> {
 
         return repository.getCurrencyRatesSingle()
                 .map { it.data }
@@ -36,7 +36,7 @@ class CurrencyRatesInteractor(
 
                     preferencesRepository.saveLastDateData(date)
 
-                    database.getBestRates().map { Pair<List<RateCurrency>, Date?>(it, null) }
+                    database.getBestRates().map { Triple<List<RateCurrency>, Date?, Boolean>(it, null, false) }
 //                }
                 }.onErrorResumeNext { exception ->
 
@@ -46,7 +46,7 @@ class CurrencyRatesInteractor(
                         if (list.isEmpty()) {
                             throw exception
                         } else {
-                            list to date
+                            Triple(list, date, true)
                         }
                     }
                 }

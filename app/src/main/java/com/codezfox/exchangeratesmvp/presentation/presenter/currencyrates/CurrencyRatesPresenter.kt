@@ -5,6 +5,7 @@ import com.codezfox.exchangeratesmvp.domain.currencyrates.CurrencyRatesInteracto
 import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
 import com.codezfox.exchangeratesmvp.presentation.Screens
 import com.codezfox.paginator.NetworkManager
+import com.codezfox.paginator.screen.PageContent
 import com.codezfox.paginator.screen.IMvpPaginatorPresenter
 import com.codezfox.paginator.screen.MvpPaginatorPresenter
 import io.reactivex.Single
@@ -19,19 +20,15 @@ class CurrencyRatesPresenter(
         private val networkManager: NetworkManager
 ) : MvpPaginatorPresenter<RateCurrency, CurrencyRatesView>(), IMvpPaginatorPresenter<RateCurrency, CurrencyRatesView> {
 
-    override fun requestFactory(page: Int): Single<List<RateCurrency>> {
+    override fun requestFactory(page: Int): Single<PageContent<RateCurrency>> {
         return interactor.loadRates()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { (_, date) ->
                     viewState.showLastDateUpdated(date)
                 }
                 .observeOn(Schedulers.io())
-                .map { (it, _) ->
-                    if (page == 1) {
-                        it
-                    } else {
-                        emptyList()
-                    }
+                .map { (it, _, isOfflineSource) ->
+                    PageContent(it, true, isOfflineSource)
                 }
     }
 

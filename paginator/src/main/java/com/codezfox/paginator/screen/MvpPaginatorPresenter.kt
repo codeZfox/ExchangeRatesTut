@@ -3,14 +3,14 @@ package com.codezfox.paginator.screen
 import com.arellomobile.mvp.MvpPresenter
 import com.codezfox.extensions.showMessage
 import com.codezfox.paginator.NetworkManager
-import com.minsk2019.android.minsk2019.paginator.Paginator
+import com.codezfox.paginator.Paginator
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class MvpPaginatorPresenter<T, V : PaginatorView<T>> : MvpPresenter<V>(), IMvpPaginatorPresenter<T, V> {
 
-    abstract fun requestFactory(page: Int): Single<List<T>>
+    abstract fun requestFactory(page: Int): Single<PageContent<T>>
 
     private var isFirstAttach = true
 

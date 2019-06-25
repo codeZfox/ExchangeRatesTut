@@ -1,5 +1,6 @@
-package com.minsk2019.android.minsk2019.paginator
+package com.codezfox.paginator
 
+import com.codezfox.paginator.screen.PageContent
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -7,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 class Paginator<T>(
-        private val requestFactory: (Int) -> Single<List<T>>,
+        private val requestFactory: (Int) -> Single<PageContent<T>>,
         private val viewController: ViewController<T>
 ) {
 
@@ -65,7 +66,11 @@ class Paginator<T>(
     }
 
     fun networkAvailable() {
-        currentState.networkAvailable()
+        if (isOfflineSource) {
+            currentState.refresh()
+        } else {
+            currentState.networkAvailable()
+        }
     }
 
     fun loadNewPage() {
@@ -76,6 +81,8 @@ class Paginator<T>(
         currentState.release()
     }
 
+    private var isOfflineSource: Boolean = false
+
     private fun loadPage(page: Int) {
         disposable?.dispose()
         disposable = requestFactory
@@ -83,7 +90,8 @@ class Paginator<T>(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    currentState.newData(it)
+                    isOfflineSource = it.isOfflineSource
+                    currentState.newData(it.list, it.isLast)
                 }, {
                     currentState.fail(it)
                     it.printStackTrace()
@@ -102,7 +110,7 @@ class Paginator<T>(
         fun networkAvailable() {}
         fun loadNewPage() {}
         fun release() {}
-        fun newData(data: List<T>) {}
+        fun newData(data: List<T>, isLast: Boolean) {}
         fun fail(error: Throwable) {}
     }
 
@@ -155,11 +163,15 @@ class Paginator<T>(
             currentState = EMPTY_PROGRESS()
         }
 
-        override fun newData(data: List<T>) {
+        override fun newData(data: List<T>, isLast: Boolean) {
             if (data.isNotEmpty()) {
                 currentData.clear()
                 currentData.addAll(data)
-                currentState = DATA(FIRST_PAGE, true)
+                if (isLast) {
+                    currentState = ALL_DATA(true)
+                } else {
+                    currentState = DATA(FIRST_PAGE, true)
+                }
             } else {
                 currentState = EMPTY_DATA()
             }
@@ -195,11 +207,15 @@ class Paginator<T>(
             currentState = EMPTY_PROGRESS()
         }
 
-        override fun newData(data: List<T>) {
+        override fun newData(data: List<T>, isLast: Boolean) {
             if (data.isNotEmpty()) {
                 currentData.clear()
                 currentData.addAll(data)
-                currentState = DATA(FIRST_PAGE, true)
+                if (isLast) {
+                    currentState = ALL_DATA(true)
+                } else {
+                    currentState = DATA(FIRST_PAGE, true)
+                }
             } else {
                 currentState = EMPTY_DATA()
             }
@@ -369,11 +385,15 @@ class Paginator<T>(
             currentState = DATA_RESTART_PROGRESS()
         }
 
-        override fun newData(data: List<T>) {
+        override fun newData(data: List<T>, isLast: Boolean) {
             if (data.isNotEmpty()) {
                 currentData.clear()
                 currentData.addAll(data)
-                currentState = DATA(FIRST_PAGE, true)
+                if (isLast) {
+                    currentState = ALL_DATA(true)
+                } else {
+                    currentState = DATA(FIRST_PAGE, true)
+                }
             } else {
                 currentState = EMPTY_DATA()
             }
@@ -410,12 +430,16 @@ class Paginator<T>(
             currentState = DATA_RESTART_PROGRESS()
         }
 
-        override fun newData(data: List<T>) {
+        override fun newData(data: List<T>, isLast: Boolean) {
             if (data.isNotEmpty()) {
                 currentData.addAll(data)
                 currentState = DATA(currentPage + 1)
             } else {
-                currentState = ALL_DATA()
+                if (isLast) {
+                    currentState = ALL_DATA()
+                } else {
+                    currentState = DATA(FIRST_PAGE)
+                }
             }
         }
 
@@ -453,11 +477,15 @@ class Paginator<T>(
             currentState = DATA_RESTART_PROGRESS()
         }
 
-        override fun newData(data: List<T>) {
+        override fun newData(data: List<T>, isLast: Boolean) {
             currentData.clear()
             if (data.isNotEmpty()) {
                 currentData.addAll(data)
-                currentState = DATA(currentPage + 1, true)
+                if (isLast) {
+                    currentState = ALL_DATA(true)
+                } else {
+                    currentState = DATA(currentPage + 1, true)
+                }
             } else {
                 currentState = EMPTY_DATA()
             }
