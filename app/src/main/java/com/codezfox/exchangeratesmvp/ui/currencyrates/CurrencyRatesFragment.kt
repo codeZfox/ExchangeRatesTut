@@ -42,6 +42,7 @@ class CurrencyRatesFragment : BasePaginatorFragment<RateCurrency, CurrencyRatesV
     var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
 
     override fun showLastDateUpdated(date: Date?) {
+        //todo blink after backPressed
         textViewLastDateData.visibleOrGone(date != null)
         if (date != null) {
             textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)

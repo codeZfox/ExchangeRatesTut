@@ -32,7 +32,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         rateBankDao.insertRates(rates)
     }
 
-    override fun getBanksRates(currency: Currency): List<RateBank> {
+    override fun getBanksRates(currency: Currency): Single<List<RateBank>> {
         return rateBankDao.getRates(currency.id)
     }
 }

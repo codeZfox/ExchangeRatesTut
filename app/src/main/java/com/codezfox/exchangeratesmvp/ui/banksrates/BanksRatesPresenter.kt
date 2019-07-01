@@ -1,11 +1,14 @@
 package com.codezfox.exchangeratesmvp.ui.banksrates
 
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.RateBank
-import com.codezfox.exchangeratesmvp.extensions.launchUIR
-import com.codezfox.extensions.showMessage
+import com.codezfox.paginator.NetworkManager
+import com.codezfox.paginator.screen.MvpPaginatorPresenter
+import com.codezfox.paginator.screen.PageContent
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
@@ -13,58 +16,41 @@ class BanksRatesPresenter(
 
         private val currency: Currency,
         private val interactor: BanksRatesInteractor,
+        private val networkManager: NetworkManager,
         private var router: Router
 
-) : MvpPresenter<BanksRatesView>() {
+) : MvpPaginatorPresenter<RateBank, BanksRatesView>() {
 
     private var sort = RateCurrencySort.BUY
 
-    var list: List<RateBank> = listOf()
+    private var list: List<RateBank> = emptyList()
+
+    override fun requestFactory(page: Int): Single<PageContent<RateBank>> {
+        return interactor.loadBanksRates(currency, sort)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess { (list, date, _) ->
+                    viewState.showLastDateUpdated(date)
+                    this.list = list
+                }
+                .observeOn(Schedulers.io())
+                .map { (it, _, isOfflineSource) ->
+                    PageContent(it, true, isOfflineSource)
+                }
+    }
 
     override fun onFirstViewAttach() {
+        subscribeToNetworkConnected(networkManager)
         viewState.showSortType(this.sort)
-        viewState.showShimmerEffect(true)
         viewState.showCurrencyInfo(currency)
-        loadRates()
+        pagination.refresh()
     }
+
 
     fun changeSort(sort: RateCurrencySort) {
-        this.list = interactor.sortBanksRates(this.list, sort)
+        val sortedList = interactor.sortBanksRates(list, sort)
+        pagination.setAllData(sortedList, true)
+        viewState.showSortType(sort)
         this.sort = sort
-        viewState.showRates(this.list)
-        viewState.showSortType(this.sort)
-    }
-
-    fun loadRates() {
-
-        launchUIR({
-
-            interactor.loadBanksRates(currency, sort)
-
-        }, { list ->
-
-            this.list = list
-
-            viewState.showRates(list)
-
-            viewState.showProgress(false)
-            viewState.showShimmerEffect(false)
-            viewState.hideEmptyText()
-
-
-        }, {
-            it.printStackTrace()
-
-            viewState.showProgress(false)
-            viewState.showShimmerEffect(false)
-
-            if (list.isEmpty()) {
-                viewState.showEmptyText(it.toString())
-            } else {
-                viewState.hideEmptyText()
-                viewState.showMessage(it.toString())
-            }
-        })
     }
 
     fun onBackPressed() {

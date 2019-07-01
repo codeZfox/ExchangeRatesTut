@@ -31,10 +31,11 @@ class CurrencyRatesRepositoryImpl(
         val paramsList: MutableList<Pair<String, String>> = params.toMutableList()
         paramsList.add("city_id" to "24248")
 
+        val paramsJson = paramsList.joinToString(",", "{", "}") { """"${it.first}":${it.second}""" }
         return mapOf(
                 "action" to action,
                 "auth_key" to "hiLlo77mAul94oINk19ANile",
-                "params" to gson.toJson(paramsList))
+                "params" to paramsJson)
     }
 
     override fun getCurrencies(): BaseResponse<Currency> {
@@ -47,9 +48,9 @@ class CurrencyRatesRepositoryImpl(
                 .map { parseResponse<BaseResponse<Rate>>(it) }
     }
 
-    override fun getBanksRates(currency: Currency): BaseResponse<RateBank> {
-        val response = api.getInfo(getFields(GET_BANKS_RATES, "currencyCode" to currency.id)).bodyOrError()
-        return parseResponse(response)
+    override fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>> {
+        return api.getInfoSingle(getFields(GET_BANKS_RATES, "currencyCode" to "\"${currency.id}\""))
+                .map { parseResponse<BaseResponse<RateBank>>(it) }
     }
 
     private inline fun <reified T> parseResponse(error: JsonObject): T {

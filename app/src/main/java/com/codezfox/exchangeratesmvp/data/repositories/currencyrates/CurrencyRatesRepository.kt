@@ -12,6 +12,6 @@ interface CurrencyRatesRepository {
 
     fun getCurrencies(): BaseResponse<Currency>
 
-    fun getBanksRates(currency: Currency): BaseResponse<RateBank>
+    fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>>
 }
 

@@ -13,24 +13,32 @@ import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.*
 import android.support.annotation.ColorInt
+import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.ui._base.BaseMvpFragment
+import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
+import com.codezfox.exchangeratesmvp.ui.currencyrates.CurrencyRatesViewBinder
 import com.codezfox.extensions.*
 import kotlinx.android.synthetic.main.screen_banks_rates.*
+import kotlinx.android.synthetic.main.screen_banks_rates.textViewLastDateData
+import kotlinx.android.synthetic.main.screen_banks_rates.toolbar
+import kotlinx.android.synthetic.main.screen_currency_rates.*
+import me.drakeet.multitype.MultiTypeAdapter
+import me.drakeet.multitype.register
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {
-
-    private val adapter = BanksRateAdapter()
+class BanksRatesFragment : BasePaginatorFragment<RateBank, BanksRatesView, BanksRatesPresenter>(), BanksRatesView {
 
     @ProvidePresenter
     fun providePresenter(): BanksRatesPresenter {
         val currency = arguments?.getSerializable("Currency") as Currency
-        val interactor = BanksRatesInteractor(get(), get())
-        return BanksRatesPresenter(currency, interactor, getRouter())
+        val interactor = BanksRatesInteractor(get(), get(), get())
+        return BanksRatesPresenter(currency, interactor, get(), getRouter())
     }
 
     @InjectPresenter
-    lateinit var presenter: BanksRatesPresenter
+    override lateinit var presenter: BanksRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.screen_banks_rates, container, false)
@@ -52,20 +60,26 @@ class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {
             presenter.changeSort(RateCurrencySort.SELL)
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
 
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
-        swipeRefreshLayout.setOnRefreshListener {
-            presenter.loadRates()
+    }
+
+    override fun registerTypes(adapter: MultiTypeAdapter) {
+        super.registerTypes(adapter)
+        adapter.register(RateBankViewBinder())
+    }
+
+
+    var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
+
+    override fun showLastDateUpdated(date: Date?) {
+        textViewLastDateData.visibleOrGone(date != null)
+        if (date != null) {
+            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
         }
     }
 
     private val d: Int by lazy {
-        //        val attrs = intArrayOf(android.R.attr.textColorSecondary)
-//        val a = activity!!.obtainStyledAttributes(R.style.AppTheme, attrs)
-//         a.getColor(0, Color.RED)
-//        a.recycle()
         getDefaultThemeColor(android.R.attr.textColorSecondary)
     }
 
@@ -96,28 +110,6 @@ class BanksRatesFragment : BaseMvpFragment(), BanksRatesView {
 
     override fun showCurrencyInfo(currency: Currency) {
         toolbar.title = currency.name
-    }
-
-    override fun showRates(items: List<RateBank>) {
-        recyclerView.visible()
-        adapter.setItems(items)
-    }
-
-    override fun showEmptyText(text: String) {
-        textViewEmptyList.text = text
-        textViewEmptyList.visible()
-    }
-
-    override fun hideEmptyText() {
-        textViewEmptyList.gone()
-    }
-
-    override fun showShimmerEffect(show: Boolean) {
-        shimmerView.visibleOrGone(show)
-    }
-
-    override fun showProgress(show: Boolean) {
-        swipeRefreshLayout.isRefreshing(show)
     }
 
 }

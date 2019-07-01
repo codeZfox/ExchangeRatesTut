@@ -2,6 +2,7 @@ package com.codezfox.exchangeratesmvp.data.repositories.preferences
 
 import android.content.Context
 import java.util.*
+import com.codezfox.exchangeratesmvp.data.models.Currency
 
 class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {
 
@@ -25,4 +26,20 @@ class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {
             Date(time)
         }
     }
+
+    override fun saveLastDateCurrency(currency: Currency, date: Date) {
+        preferences.edit().putLong(getPrefNameCurrency(currency), date.time).apply()
+    }
+
+    override fun getLastDateCurrency(currency: Currency): Date? {
+        val time = preferences.getLong(getPrefNameCurrency(currency), 0)
+        return if (time == 0L) {
+            null
+        } else {
+            Date(time)
+        }
+    }
+
+    private fun getPrefNameCurrency(currency: Currency) = PREF_LAST_DATE_DATA + "_" + currency
+
 }

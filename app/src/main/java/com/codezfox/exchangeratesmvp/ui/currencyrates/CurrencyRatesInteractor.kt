@@ -19,22 +19,20 @@ class CurrencyRatesInteractor(
     fun loadRates(): Single<Triple<List<RateCurrency>, Date?, Boolean>> {
 
         return repository.getCurrencyRatesSingle()
-                .map { it.data }
-                .flatMap { data ->
-
-                    database.saveRates(data)
+                .map { it.data!! }
+                .doOnSuccess {
+                    database.saveRates(it)
+                    preferencesRepository.saveLastDateData(Date())
+                }
+                .flatMap {
 
                     if (currencies.isEmpty()) {
-                        currencies = repository.getCurrencies().data!!
+                        currencies = repository.getCurrencies().data!! //todo to single
                         database.saveCurrencies(currencies)
                     }
 
-                    val date = Date()
-
-                    preferencesRepository.saveLastDateData(date)
-
                     database.getBestRates().map { Triple<List<RateCurrency>, Date?, Boolean>(it, null, false) }
-//                }
+
                 }.onErrorResumeNext { exception ->
 
                     val date = preferencesRepository.getLastDateData()

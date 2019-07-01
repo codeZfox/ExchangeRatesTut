@@ -11,5 +11,4 @@ interface CurrencyRatesView : PaginatorView<RateCurrency> {
 
     fun showLastDateUpdated(date: Date?)
 
-
 }

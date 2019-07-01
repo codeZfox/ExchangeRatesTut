@@ -5,12 +5,13 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.codezfox.exchangeratesmvp.data.models.RateBank
+import io.reactivex.Single
 
 @Dao
 interface RateBankDao {
 
     @Query("SELECT * FROM RateBank WHERE fromCurrency == :currency")
-    fun getRates(currency: String): List<RateBank>
+    fun getRates(currency: String): Single<List<RateBank>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

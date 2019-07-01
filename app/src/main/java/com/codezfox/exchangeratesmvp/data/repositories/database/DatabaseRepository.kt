@@ -16,6 +16,6 @@ interface DatabaseRepository {
 
     fun saveBanksRates(rates: List<RateBank>)
 
-    fun getBanksRates(currency: Currency): List<RateBank>
+    fun getBanksRates(currency: Currency): Single<List<RateBank>>
 
 }
