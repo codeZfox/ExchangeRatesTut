@@ -1,9 +1,9 @@
 package com.codezfox.exchangeratesmvp.di
 
 import com.codezfox.exchangeratesmvp.BuildConfig
-import com.codezfox.exchangeratesmvp.data.server.ApiProvider
-import com.codezfox.exchangeratesmvp.data.server.FinanceApi
-import com.codezfox.exchangeratesmvp.domain.CurrencyRatesRepository
+import com.codezfox.exchangeratesmvp.data.network.ApiProvider
+import com.codezfox.exchangeratesmvp.data.network.FinanceApi
+import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepositoryImpl
 import com.google.gson.*
 import org.kodein.di.Kodein

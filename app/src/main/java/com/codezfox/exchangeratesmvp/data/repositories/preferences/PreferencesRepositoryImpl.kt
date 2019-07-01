@@ -1,7 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.repositories.preferences
 
 import android.content.Context
-import com.codezfox.exchangeratesmvp.domain.PreferencesRepository
 import java.util.*
 
 class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {

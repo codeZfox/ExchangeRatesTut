@@ -4,8 +4,8 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.codezfox.exchangeratesmvp.domain.models.Rate
-import com.codezfox.exchangeratesmvp.domain.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.Rate
+import com.codezfox.exchangeratesmvp.data.models.RateCurrency
 import io.reactivex.Single
 
 @Dao

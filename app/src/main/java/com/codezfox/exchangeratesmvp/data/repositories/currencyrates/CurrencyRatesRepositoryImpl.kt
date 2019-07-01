@@ -1,12 +1,11 @@
 package com.codezfox.exchangeratesmvp.data.repositories.currencyrates
 
-import com.codezfox.exchangeratesmvp.domain.models.BaseResponse
-import com.codezfox.exchangeratesmvp.domain.models.Currency
-import com.codezfox.exchangeratesmvp.domain.models.Rate
-import com.codezfox.exchangeratesmvp.domain.models.RateBank
+import com.codezfox.exchangeratesmvp.data.models.BaseResponse
+import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.data.models.Rate
+import com.codezfox.exchangeratesmvp.data.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.bodyOrError
-import com.codezfox.exchangeratesmvp.data.server.FinanceApi
-import com.codezfox.exchangeratesmvp.domain.CurrencyRatesRepository
+import com.codezfox.exchangeratesmvp.data.network.FinanceApi
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken

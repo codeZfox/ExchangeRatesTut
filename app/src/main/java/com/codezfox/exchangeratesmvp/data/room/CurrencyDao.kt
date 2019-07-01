@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.data.room
 
 import android.arch.persistence.room.*
-import com.codezfox.exchangeratesmvp.domain.models.Currency
+import com.codezfox.exchangeratesmvp.data.models.Currency
 
 @Dao
 interface CurrencyDao {
