@@ -26,6 +26,7 @@ val appModule = Kodein.Module("appModule") {
     bind() from eagerSingleton {
         Room.databaseBuilder(instance(),
                 RoomDatabase::class.java, "exchangerates.db")
+                .fallbackToDestructiveMigration()
                 .build()
     }
 

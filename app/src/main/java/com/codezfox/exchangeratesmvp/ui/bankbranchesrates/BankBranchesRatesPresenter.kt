@@ -1,10 +1,11 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.bankbranchesrates
 
 import com.arellomobile.mvp.InjectViewState
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.Bank
+import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.ui.banksrates.RateCurrencySort
 import com.codezfox.paginator.NetworkManager
 import com.codezfox.paginator.screen.MvpPaginatorPresenter
 import com.codezfox.paginator.screen.PageContent
@@ -14,21 +15,23 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
-class BanksRatesPresenter(
+class BankBranchesRatesPresenter(
 
         private val currency: Currency,
-        private val interactor: BanksRatesInteractor,
+        private val bank: Bank,
+        private val interactor: BankBranchesRatesInteractor,
         private val networkManager: NetworkManager,
         private var router: Router
 
-) : MvpPaginatorPresenter<RateBank, BanksRatesView>() {
+) : MvpPaginatorPresenter<BranchCurrency, BankBranchesRatesView>() {
 
     private var sort = RateCurrencySort.BUY
 
-    private var list: List<RateBank> = emptyList()
+    private var list: List<BranchCurrency> = emptyList()
 
-    override fun requestFactory(page: Int): Single<PageContent<RateBank>> {
-        return interactor.loadBanksRates(currency, sort)
+    override fun requestFactory(page: Int): Single<PageContent<BranchCurrency>> {
+        val toCurrency = Currency("BYN", "", "", "", "", "", "", "", "", 0)
+        return interactor.loadBanksRates(bank, currency, toCurrency, sort)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { (list, date, _) ->
                     viewState.showLastDateUpdated(date)
@@ -43,7 +46,7 @@ class BanksRatesPresenter(
     override fun onFirstViewAttach() {
         subscribeToNetworkConnected(networkManager)
         viewState.showSortType(this.sort)
-        viewState.showCurrencyInfo(currency)
+        viewState.showTitle(bank.name, currency.name)
         pagination.refresh()
     }
 

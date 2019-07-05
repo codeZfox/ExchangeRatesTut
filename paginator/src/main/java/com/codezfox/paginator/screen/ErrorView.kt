@@ -1,7 +1,6 @@
 package com.codezfox.paginator.screen
 
 import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.support.v7.widget.AppCompatImageView
 import android.view.ViewGroup
 import android.widget.TextView
@@ -30,7 +29,9 @@ class ErrorViewHolder(
         private val view: ViewGroup,
 
         @DrawableRes
-        var imageResId: Int? = R.drawable.ic_scan
+        var defaultImageResId: Int? = R.drawable.ic_scan,
+
+        var defaultButtonName: String? = view.context.getString(R.string.repeat)
 
 ) : ErrorView {
 
@@ -51,13 +52,14 @@ class ErrorViewHolder(
                            msg: String?,
                            buttonText: String?,
                            onClick: (() -> Unit)?) {
-        showErrorDefault(imageId, msg, buttonText, onClick)
+        showErrorDefault(imageId ?: defaultImageResId, msg,
+                         buttonText ?: defaultButtonName, onClick)
     }
 
-    private fun showErrorDefault(imageId: Int? = imageResId,
-                                 msg: String? = null,
-                                 buttonText: String? = view.context.getString(R.string.repeat),
-                                 onClick: (() -> Unit)? = null) {
+    private fun showErrorDefault(imageId: Int?,
+                                 msg: String?,
+                                 buttonText: String?,
+                                 onClick: (() -> Unit)?) {
 
         if (imageId != null) {
             imageView.setImageResource(imageId)

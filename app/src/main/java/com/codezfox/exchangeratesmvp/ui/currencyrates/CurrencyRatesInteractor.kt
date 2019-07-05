@@ -18,7 +18,7 @@ class CurrencyRatesInteractor(
 
     fun loadRates(): Single<Triple<List<RateCurrency>, Date?, Boolean>> {
 
-        return repository.getCurrencyRatesSingle()
+        return repository.getBestRates()
                 .map { it.data!! }
                 .doOnSuccess {
                     database.saveRates(it)

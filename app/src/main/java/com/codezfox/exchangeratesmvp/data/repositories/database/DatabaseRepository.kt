@@ -1,9 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.repositories.database
 
-import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.Rate
-import com.codezfox.exchangeratesmvp.data.models.RateBank
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.*
 import io.reactivex.Single
 
 interface DatabaseRepository {
@@ -17,5 +14,13 @@ interface DatabaseRepository {
     fun saveBanksRates(rates: List<RateBank>)
 
     fun getBanksRates(currency: Currency): Single<List<RateBank>>
+
+    fun saveBranches(branches: List<Branch>)
+
+    fun updateBranches(branches: List<BranchRate>)
+
+    fun saveExchangeRates(branches: List<ExchangeRate>)
+
+    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchCurrency>>
 
 }

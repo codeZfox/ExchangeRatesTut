@@ -1,5 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.repositories.preferences
 
+import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import java.util.*
 
@@ -12,6 +13,10 @@ interface PreferencesRepository {
     fun saveLastDateCurrency(currency: Currency, date: Date)
 
     fun getLastDateCurrency(currency: Currency): Date?
+
+    fun saveLastDateBank(bank: Bank, fromCurrency: Currency, toCurrency: Currency, date: Date)
+
+    fun getLastDateBank(bank: Bank, fromCurrency: Currency, toCurrency: Currency): Date?
 
 }
 

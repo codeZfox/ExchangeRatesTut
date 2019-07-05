@@ -1,17 +1,19 @@
 package com.codezfox.exchangeratesmvp.data.repositories.currencyrates
 
-import com.codezfox.exchangeratesmvp.data.models.BaseResponse
-import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.Rate
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.data.models.*
 import io.reactivex.Single
 
 interface CurrencyRatesRepository {
 
-    fun getCurrencyRatesSingle(): Single<BaseResponse<Rate>>
+    fun getBestRates(): Single<BaseResponse<Rate>>
+
+    fun getCurrencyRates(fromCurrency: Currency, toCurrency: Currency): Single<BaseResponse<BranchRate>>
 
     fun getCurrencies(): BaseResponse<Currency>
 
     fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>>
+
+    fun getBankBranches(bank: Bank): Single<BaseResponse<Branch>>
+
 }
 

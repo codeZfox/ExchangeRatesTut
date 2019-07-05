@@ -11,10 +11,6 @@ import io.reactivex.Single
 @Dao
 interface RateDao {
 
-    @Query("SELECT * FROM Rate")
-    fun getRates(): List<Rate>
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRates(rate: List<Rate>)
 
@@ -23,7 +19,6 @@ interface RateDao {
     fun deleteRates()
 
     @Query("SELECT Rate.*, Currency.* FROM Rate INNER JOIN Currency ON Rate.currencyCode = Currency.id")
-    fun getRatess(): Single<List<RateCurrency>>
-
+    fun getRateCurrencies(): Single<List<RateCurrency>>
 
 }

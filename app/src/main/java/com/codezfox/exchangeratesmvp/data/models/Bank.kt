@@ -1,6 +1,7 @@
 package com.codezfox.exchangeratesmvp.data.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Bank(
 
@@ -11,4 +12,4 @@ data class Bank(
 
         val isOpened: String //"1"
 
-)
+) : Serializable

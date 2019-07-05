@@ -20,19 +20,22 @@ class CurrencyRatesViewBinder(private val onClick: (rateCurrency: RateCurrency) 
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         val root = inflater.inflate(R.layout.item_currency_rate, parent, false)
-        return ViewHolder(onClick, root)
+        return ViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, rateCurrency: RateCurrency) {
-        holder.bindView(rateCurrency)
+    override fun onBindViewHolder(holder: ViewHolder, item: RateCurrency) {
+        holder.bindView(item)
+        holder.itemView.onClick {
+            onClick.invoke(item)
+        }
     }
 
-    class ViewHolder(private val onClick: (rateCurrency: RateCurrency) -> Unit, override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindView(rateCurrency: RateCurrency) {
 
-            containerView.onClick {
-                onClick.invoke(rateCurrency)
-            }
+//            containerView.onClick {
+//                onClick.invoke(rateCurrency)
+//            }
 
             val rate = rateCurrency.rate
 

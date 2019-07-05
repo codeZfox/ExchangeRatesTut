@@ -1,5 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.banksrates
 
+import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.RateBank
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
@@ -39,9 +40,9 @@ class BanksRatesInteractor(
 
     private fun List<RateBank>.sort(sort: RateCurrencySort): List<RateBank> {
         return if (sort == RateCurrencySort.BUY) {
-            this.sortedBy { it.sell }
+            this.sortedWith(compareBy<RateBank> { it.sell }.then(compareBy { it.bank.bankId }))
         } else {
-            this.sortedByDescending { it.buy }
+            this.sortedWith(compareByDescending<RateBank> { it.buy }.then(compareBy { it.bank.bankId }))
         }
     }
 
