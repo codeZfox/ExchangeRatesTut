@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.data.models
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
 class BranchRate(
         val id: String, // "6/4616"
@@ -32,6 +33,16 @@ data class BranchCurrency(
 
 )
 
+data class BranchCurrency2(
+
+        @Embedded
+        var currency: Currency,
+
+        @Embedded
+        var branchRate: ExchangeRate
+
+)
+
 @Entity
 data class Branch(
         val bank_id: String, // "27"
@@ -50,10 +61,14 @@ data class Branch(
         val lat: String, // "53.9150"
         val branche_type: String, // "7"
         var isOpened: String? = null
-)
+) : Serializable {
+
+    fun getPhonesList() = phone.split(", ").filterNot { it.isEmpty() }
+
+}
 
 data class Schedule(
         val days: Int, // 120
         val open: String, // "30600"
         val close: String // "63000"
-)
+) : Serializable

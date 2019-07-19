@@ -1,7 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.repositories.currencyrates
 
 import com.codezfox.exchangeratesmvp.data.models.*
-import com.codezfox.exchangeratesmvp.extensions.bodyOrError
 import com.codezfox.exchangeratesmvp.data.network.FinanceApi
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -37,14 +36,16 @@ class CurrencyRatesRepositoryImpl(
                 "params" to paramsJson)
     }
 
-    override fun getCurrencies(): BaseResponse<Currency> {
-        val response = api.getInfo(getFields(GET_CURRENCIES)).bodyOrError()
-        return parseResponse(response)
+    override fun getCurrencies(): Single<List<Currency>> {
+        return api.getInfoSingle(getFields(GET_CURRENCIES))
+                .map { parseResponse<BaseResponse<Currency>>(it) }
+                .map { it.data }
     }
 
-    override fun getBestRates(): Single<BaseResponse<Rate>> {
+    override fun getBestRates(): Single<List<BestRate>> {
         return api.getInfoSingle(getFields(GET_BEST_RATES))
-                .map { parseResponse<BaseResponse<Rate>>(it) }
+                .map { parseResponse<BaseResponse<BestRate>>(it) }
+                .map { it.data }
     }
 
     override fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>> {
@@ -55,6 +56,22 @@ class CurrencyRatesRepositoryImpl(
     override fun getBankBranches(bank: Bank): Single<BaseResponse<Branch>> {
         return api.getInfoSingle(getFields(GET_PLACES, "bank_id" to bank.bankId, "placeType" to "\"branch\""))
                 .map { parseResponse<BaseResponse<Branch>>(it) }
+    }
+
+    override fun getBrancheExchangeRate(branchId: String): Single<BaseResponse<BranchRate>> {
+        return api.getInfoSingle(getFields(GET_CURRENCY_RATES, "places" to "[$branchId]"))
+                .map {
+                    val response = parseResponse<BaseResponse<BranchRate>>(it)
+
+                    //todo duplicate 88
+                    response.data?.forEach { branchRate ->
+                        branchRate.exchangeRates.forEach { exchangeRate ->
+                            exchangeRate.branche_id = branchRate.branche_id
+                        }
+                    }
+
+                    response
+                }
     }
 
     override fun getCurrencyRates(fromCurrency: Currency, toCurrency: Currency): Single<BaseResponse<BranchRate>> {

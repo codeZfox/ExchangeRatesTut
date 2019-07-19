@@ -16,9 +16,9 @@ abstract class MvpPaginatorPresenter<T, V : PaginatorView<T>> : MvpPresenter<V>(
 
     override fun attachView(view: V) {
         super.attachView(view)
-        if (!isFirstAttach) {
-            pagination.show()
-        }
+//        if (!isFirstAttach) {
+//            pagination.show()
+//        }
         isFirstAttach = false
     }
 

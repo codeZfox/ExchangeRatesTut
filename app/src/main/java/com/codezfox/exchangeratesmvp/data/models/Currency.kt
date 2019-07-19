@@ -22,6 +22,10 @@ data class Currency(
 
 ) : Serializable {
 
+    fun getAmountString(): String? {
+        return "$amount $plural_short"
+    }
+
     companion object {
 
         private var mapFormats = hashMapOf<Int, String>()

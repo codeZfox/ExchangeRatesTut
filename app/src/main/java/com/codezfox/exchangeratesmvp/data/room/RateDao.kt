@@ -4,21 +4,21 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.codezfox.exchangeratesmvp.data.models.Rate
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.BestRate
+import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import io.reactivex.Single
 
 @Dao
 interface RateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRates(rate: List<Rate>)
+    fun insertRates(rate: List<BestRate>)
 
 
-    @Query("DELETE FROM Rate")
+    @Query("DELETE FROM BestRate")
     fun deleteRates()
 
-    @Query("SELECT Rate.*, Currency.* FROM Rate INNER JOIN Currency ON Rate.currencyCode = Currency.id")
-    fun getRateCurrencies(): Single<List<RateCurrency>>
+    @Query("SELECT BestRate.*, Currency.* FROM BestRate INNER JOIN Currency ON BestRate.currencyCode = Currency.id")
+    fun getRateCurrencies(): Single<List<BestRateCurrency>>
 
 }

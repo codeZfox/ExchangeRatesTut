@@ -16,12 +16,12 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         currencyDao.insertCurrency(currencies)
     }
 
-    override fun saveRates(rates: List<Rate>) {
+    override fun saveBestRates(rates: List<BestRate>) {
         rateDao.deleteRates()
         rateDao.insertRates(rates)
     }
 
-    override fun getBestRates(): Single<List<RateCurrency>> {
+    override fun getBestRates(): Single<List<BestRateCurrency>> {
         return rateDao.getRateCurrencies()
     }
 
@@ -50,7 +50,15 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         branchDao.insertExchangeRates(branches)
     }
 
+    override fun getBranchCurrencyRates(branchId: String): Single<List<BranchCurrency2>> {
+        return branchDao.getBranchesCurrencies(branchId)
+    }
+
     override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchCurrency>> {
         return branchDao.getBranchesCurrencies(bankId, fromCurrency, toCurrency)
+    }
+
+    override fun getBankById(bankId: String): Single<Bank> {
+        return rateBankDao.getBankById(bankId).map { it.bank }
     }
 }

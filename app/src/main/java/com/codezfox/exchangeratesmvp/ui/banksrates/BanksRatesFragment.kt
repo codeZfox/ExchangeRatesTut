@@ -14,6 +14,7 @@ import com.codezfox.exchangeratesmvp.extensions.*
 import android.support.annotation.ColorInt
 import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
 import com.codezfox.extensions.*
+import kotlinx.android.synthetic.main.layout_currency_rate_header.*
 import kotlinx.android.synthetic.main.screen_banks_rates.*
 import kotlinx.android.synthetic.main.screen_banks_rates.textViewLastDateData
 import kotlinx.android.synthetic.main.screen_banks_rates.toolbar

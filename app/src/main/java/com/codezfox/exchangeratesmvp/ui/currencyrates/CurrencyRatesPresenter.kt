@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.ui.currencyrates
 
 import com.arellomobile.mvp.InjectViewState
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.paginator.NetworkManager
 import com.codezfox.paginator.screen.PageContent
@@ -17,9 +17,9 @@ class CurrencyRatesPresenter(
         private val router: Router,
         private val interactor: CurrencyRatesInteractor,
         private val networkManager: NetworkManager
-) : MvpPaginatorPresenter<RateCurrency, CurrencyRatesView>(), IMvpPaginatorPresenter<RateCurrency, CurrencyRatesView> {
+) : MvpPaginatorPresenter<BestRateCurrency, CurrencyRatesView>(), IMvpPaginatorPresenter<BestRateCurrency, CurrencyRatesView> {
 
-    override fun requestFactory(page: Int): Single<PageContent<RateCurrency>> {
+    override fun requestFactory(page: Int): Single<PageContent<BestRateCurrency>> {
         return interactor.loadRates()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { (_, date) ->
@@ -36,7 +36,7 @@ class CurrencyRatesPresenter(
         pagination.refresh()
     }
 
-    fun openCurrency(rateCurrency: RateCurrency) {
+    fun openCurrency(rateCurrency: BestRateCurrency) {
         router.navigateTo(Screens.BanksRates(rateCurrency.currency))
     }
 

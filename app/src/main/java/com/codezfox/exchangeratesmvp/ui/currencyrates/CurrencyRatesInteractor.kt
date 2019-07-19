@@ -4,7 +4,7 @@ import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRat
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import io.reactivex.Single
 import java.util.*
 
@@ -16,22 +16,28 @@ class CurrencyRatesInteractor(
 
     private var currencies: List<Currency> = listOf()
 
-    fun loadRates(): Single<Triple<List<RateCurrency>, Date?, Boolean>> {
+    fun loadRates(): Single<Triple<List<BestRateCurrency>, Date?, Boolean>> {
 
         return repository.getBestRates()
-                .map { it.data!! }
                 .doOnSuccess {
-                    database.saveRates(it)
+                    database.saveBestRates(it)
                     preferencesRepository.saveLastDateData(Date())
                 }
                 .flatMap {
+                    if (currencies.isEmpty()) {
+                        repository.getCurrencies()
+                    } else {
+                        Single.just(emptyList())
+                    }
+                }
+                .flatMap { currencies ->
 
                     if (currencies.isEmpty()) {
-                        currencies = repository.getCurrencies().data!! //todo to single
+                        this.currencies = currencies
                         database.saveCurrencies(currencies)
                     }
 
-                    database.getBestRates().map { Triple<List<RateCurrency>, Date?, Boolean>(it, null, false) }
+                    database.getBestRates().map { Triple<List<BestRateCurrency>, Date?, Boolean>(it, null, false) }
 
                 }.onErrorResumeNext { exception ->
 

@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.ui.bankbranchesrates
 import com.arellomobile.mvp.InjectViewState
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.Bank
+import com.codezfox.exchangeratesmvp.data.models.Branch
 import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.ui.banksrates.RateCurrencySort
@@ -62,8 +63,8 @@ class BankBranchesRatesPresenter(
         router.exit()
     }
 
-    fun openBankExchangeRates(bank: Bank) {
-        router.navigateTo(Screens.BankBranchesRates(bank, currency))
+    fun openBankBranch(branch: Branch) {
+        router.navigateTo(Screens.Branch(branch))
     }
 
 }

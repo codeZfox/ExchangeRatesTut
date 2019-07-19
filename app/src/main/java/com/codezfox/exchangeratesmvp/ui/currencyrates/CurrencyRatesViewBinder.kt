@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.extensions.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
@@ -16,14 +16,14 @@ import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
-class CurrencyRatesViewBinder(private val onClick: (rateCurrency: RateCurrency) -> Unit) : ItemViewBinder<RateCurrency, CurrencyRatesViewBinder.ViewHolder>() {
+class CurrencyRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) -> Unit) : ItemViewBinder<BestRateCurrency, CurrencyRatesViewBinder.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         val root = inflater.inflate(R.layout.item_currency_rate, parent, false)
         return ViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: RateCurrency) {
+    override fun onBindViewHolder(holder: ViewHolder, item: BestRateCurrency) {
         holder.bindView(item)
         holder.itemView.onClick {
             onClick.invoke(item)
@@ -31,7 +31,7 @@ class CurrencyRatesViewBinder(private val onClick: (rateCurrency: RateCurrency) 
     }
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bindView(rateCurrency: RateCurrency) {
+        fun bindView(rateCurrency: BestRateCurrency) {
 
 //            containerView.onClick {
 //                onClick.invoke(rateCurrency)

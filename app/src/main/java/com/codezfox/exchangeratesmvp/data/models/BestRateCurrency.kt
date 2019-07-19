@@ -2,10 +2,10 @@ package com.codezfox.exchangeratesmvp.data.models
 
 import android.arch.persistence.room.Embedded
 
-data class RateCurrency(
+data class BestRateCurrency(
 
         @Embedded
-        var rate: Rate,
+        var rate: BestRate,
 
         @Embedded
         var currency: Currency
@@ -13,6 +13,6 @@ data class RateCurrency(
 
 ) {
     fun getAmountString(): String? {
-        return "${currency.amount} ${currency.plural_short}"
+        return currency.getAmountString()
     }
 }

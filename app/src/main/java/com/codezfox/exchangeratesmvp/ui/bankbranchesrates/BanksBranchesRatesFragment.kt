@@ -17,6 +17,7 @@ import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
 import com.codezfox.exchangeratesmvp.ui.banksrates.*
 import com.codezfox.extensions.*
+import kotlinx.android.synthetic.main.layout_currency_rate_header.*
 import kotlinx.android.synthetic.main.screen_banks_rates.*
 import kotlinx.android.synthetic.main.screen_banks_rates.textViewLastDateData
 import kotlinx.android.synthetic.main.screen_banks_rates.toolbar
@@ -66,7 +67,7 @@ class BanksBranchesRatesFragment : BasePaginatorFragment<BranchCurrency, BankBra
     override fun registerTypes(adapter: MultiTypeAdapter) {
         super.registerTypes(adapter)
         adapter.register(BranchCurrencyViewBinder({
-                                                      //            presenter.openBankExchangeRates(it.bank)
+                                                      presenter.openBankBranch(it.branch)
                                                   }))
     }
 

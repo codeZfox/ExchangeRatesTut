@@ -8,7 +8,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
-import com.codezfox.exchangeratesmvp.data.models.RateCurrency
+import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.extensions.*
 import com.codezfox.extensions.visibleOrGone
 import kotlinx.android.synthetic.main.screen_currency_rates.*
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CurrencyRatesFragment : BasePaginatorFragment<RateCurrency, CurrencyRatesView, CurrencyRatesPresenter>(), CurrencyRatesView {
+class CurrencyRatesFragment : BasePaginatorFragment<BestRateCurrency, CurrencyRatesView, CurrencyRatesPresenter>(), CurrencyRatesView {
 
     @ProvidePresenter
     fun providePresenter(): CurrencyRatesPresenter {

@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 import java.util.*
 
 @Entity
-data class Rate(
+data class BestRate(
 
         @PrimaryKey
         val currencyCode: String, // "USD",
