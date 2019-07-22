@@ -60,7 +60,7 @@ class BanksRatesPresenter(
     }
 
     fun openBankExchangeRates(bank: Bank) {
-        router.navigateTo(Screens.BankBranchesRates(bank, currency))
+        router.navigateTo(Screens.ExchangeRateCurrencyOfBranchesBank(bank, currency))
     }
 
 }

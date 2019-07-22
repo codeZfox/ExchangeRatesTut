@@ -26,19 +26,16 @@ class CurrencyRatesInteractor(
                 .flatMap {
                     if (currencies.isEmpty()) {
                         repository.getCurrencies()
+                                .doOnSuccess { currencies ->
+                                    this.currencies = currencies
+                                    database.saveCurrencies(currencies)
+                                }
                     } else {
                         Single.just(emptyList())
                     }
                 }
-                .flatMap { currencies ->
-
-                    if (currencies.isEmpty()) {
-                        this.currencies = currencies
-                        database.saveCurrencies(currencies)
-                    }
-
+                .flatMap {
                     database.getBestRates().map { Triple<List<BestRateCurrency>, Date?, Boolean>(it, null, false) }
-
                 }.onErrorResumeNext { exception ->
 
                     val date = preferencesRepository.getLastDateData()

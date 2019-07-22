@@ -37,7 +37,7 @@ class CurrencyRatesPresenter(
     }
 
     fun openCurrency(rateCurrency: BestRateCurrency) {
-        router.navigateTo(Screens.BanksRates(rateCurrency.currency))
+        router.navigateTo(Screens.ExchangeRateCurrencyOfBanks(rateCurrency.currency))
     }
 
 }

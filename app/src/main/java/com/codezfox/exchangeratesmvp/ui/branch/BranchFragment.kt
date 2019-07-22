@@ -33,8 +33,9 @@ class BranchFragment : BaseMvpFragment(), BranchView {
     @ProvidePresenter
     fun providePresenter(): BranchPresenter {
         val branch = arguments?.getSerializable("Branch") as Branch
+        val bank = arguments?.getSerializable("Bank") as Bank?
         val interactor = BranchInteractor(get(), get(), get())
-        return BranchPresenter(branch, getRouter(), interactor)
+        return BranchPresenter(bank, branch, getRouter(), interactor)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,8 +59,11 @@ class BranchFragment : BaseMvpFragment(), BranchView {
         }))
     }
 
+    override fun showTitle(bank: Bank?) {
+        toolbar.title = bank?.name ?: ""
+    }
+
     override fun showBranch(bank: Bank, branch: Branch, exchangeRates: List<BranchCurrency2>) {
-        toolbar.title = bank.name
 
         val items = mutableListOf<Any>()
         if (bank.name != branch.name) {

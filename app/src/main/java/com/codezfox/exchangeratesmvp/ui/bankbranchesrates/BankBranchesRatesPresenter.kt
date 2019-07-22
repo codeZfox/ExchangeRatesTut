@@ -64,7 +64,7 @@ class BankBranchesRatesPresenter(
     }
 
     fun openBankBranch(branch: Branch) {
-        router.navigateTo(Screens.Branch(branch))
+        router.navigateTo(Screens.BankBranch(bank, branch))
     }
 
 }
