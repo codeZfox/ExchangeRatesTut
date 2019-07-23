@@ -20,10 +20,10 @@ interface BranchDao {
     fun insertExchangeRates(list: List<ExchangeRate>)
 
     @Query("""SELECT Branch.*, ExchangeRate.* FROM Branch INNER JOIN ExchangeRate ON Branch.id = ExchangeRate.branche_id WHERE Branch.bank_id = :bankId AND ExchangeRate.foreignCurrencyId = :fromCurrency AND ExchangeRate.nationalCurrencyId = :toCurrency AND Branch.isOpened = '1'""")
-    fun getBranchesCurrencies(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchCurrency>>
+    fun getBranchesCurrencies(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchExchangeRate>>
 
     @Query("""SELECT ExchangeRate.*,  Currency.* FROM ExchangeRate INNER JOIN Currency ON ExchangeRate.foreignCurrencyId = Currency.id WHERE ExchangeRate.branche_id = :branchId""")
-    fun getBranchesCurrencies(branchId: String): Single<List<BranchCurrency2>>
+    fun getCurrencyExchangeRate(branchId: String): Single<List<CurrencyExchangeRate>>
 
 
 }

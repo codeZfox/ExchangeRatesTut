@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.ercofbranchesbank
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -9,13 +9,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateBank
 import com.codezfox.exchangeratesmvp.extensions.*
 import android.support.annotation.ColorInt
+import com.codezfox.exchangeratesmvp.data.models.Bank
+import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
 import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
+import com.codezfox.exchangeratesmvp.ui.ercofbanks.*
 import com.codezfox.extensions.*
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
-import kotlinx.android.synthetic.main.screen_banks_rates.*
 import kotlinx.android.synthetic.main.screen_banks_rates.textViewLastDateData
 import kotlinx.android.synthetic.main.screen_banks_rates.toolbar
 import me.drakeet.multitype.MultiTypeAdapter
@@ -24,17 +25,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class BanksRatesFragment : BasePaginatorFragment<RateBank, BanksRatesView, BanksRatesPresenter>(), BanksRatesView {
+class ExchangeRateCurrencyOfBranchesBankFragment : BasePaginatorFragment<BranchExchangeRate, ExchangeRateCurrencyOfBranchesBankView, ExchangeRateCurrencyOfBranchesBankPresenter>(), ExchangeRateCurrencyOfBranchesBankView {
 
     @ProvidePresenter
-    fun providePresenter(): BanksRatesPresenter {
+    fun providePresenter(): ExchangeRateCurrencyOfBranchesBankPresenter {
         val currency = arguments?.getSerializable("Currency") as Currency
-        val interactor = BanksRatesInteractor(get(), get(), get())
-        return BanksRatesPresenter(currency, interactor, get(), getRouter())
+        val bank = arguments?.getSerializable("Bank") as Bank
+        val interactor = ExchangeRateCurrencyOfBranchesBankInteractor(get(), get(), get())
+        return ExchangeRateCurrencyOfBranchesBankPresenter(currency, bank, interactor, get(), getRouter())
     }
 
     @InjectPresenter
-    override lateinit var presenter: BanksRatesPresenter
+    override lateinit var presenter: ExchangeRateCurrencyOfBranchesBankPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.screen_banks_rates, container, false)
@@ -62,9 +64,9 @@ class BanksRatesFragment : BasePaginatorFragment<RateBank, BanksRatesView, Banks
 
     override fun registerTypes(adapter: MultiTypeAdapter) {
         super.registerTypes(adapter)
-        adapter.register(RateBankViewBinder({
-            presenter.openBankExchangeRates(it.bank)
-        }))
+        adapter.register(BranchCurrencyViewBinder({
+                                                      presenter.openBankBranch(it.branch)
+                                                  }))
     }
 
 
@@ -106,8 +108,9 @@ class BanksRatesFragment : BasePaginatorFragment<RateBank, BanksRatesView, Banks
         }
     }
 
-    override fun showCurrencyInfo(currency: Currency) {
-        toolbar.title = currency.name
+    override fun showTitle(title: String, subTitle: String) {
+        toolbar.title = title
+        toolbar.subtitle = subTitle
     }
 
 }

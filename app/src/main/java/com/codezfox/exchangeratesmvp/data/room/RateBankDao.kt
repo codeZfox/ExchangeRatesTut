@@ -4,25 +4,24 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.codezfox.exchangeratesmvp.data.models.Bank
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.data.models.BankRate
 import io.reactivex.Single
 
 @Dao
 interface RateBankDao {
 
-    @Query("SELECT * FROM RateBank WHERE fromCurrency == :currency")
-    fun getRates(currency: String): Single<List<RateBank>>
+    @Query("SELECT * FROM BankRate WHERE fromCurrency == :currency")
+    fun getBankRates(currency: String): Single<List<BankRate>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRates(rate: List<RateBank>)
+    fun insertBankRates(rate: List<BankRate>)
 
 
-    @Query("DELETE FROM RateBank")
+    @Query("DELETE FROM BankRate")
     fun deleteRates()
 
-    @Query("SELECT * FROM RateBank WHERE bankId == :bankId")
-    fun getBankById(bankId: String): Single<RateBank>
+    @Query("SELECT * FROM BankRate WHERE bankId == :bankId")
+    fun getBankById(bankId: String): Single<BankRate>
 
 }

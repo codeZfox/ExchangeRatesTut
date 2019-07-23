@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.branch
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -10,32 +10,29 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Branch
-import com.codezfox.exchangeratesmvp.data.models.BranchCurrency2
+import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.extensions.get
 import com.codezfox.exchangeratesmvp.ui._base.BaseMvpFragment
-import com.codezfox.exchangeratesmvp.ui.banksrates.BanksRatesInteractor
-import com.codezfox.exchangeratesmvp.ui.banksrates.CurrencyRatesHeader
-import com.codezfox.exchangeratesmvp.ui.banksrates.CurrencyRatesHeaderViewBinder
-import com.codezfox.exchangeratesmvp.ui.banksrates.StringViewBinder
 import com.codezfox.paginator.screen.updateAdapter
 import kotlinx.android.synthetic.main.screen_bank_branch.*
+import kotlinx.android.synthetic.main.screen_bank_branch.toolbar
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 
 
-class BranchFragment : BaseMvpFragment(), BranchView {
+class BankBranchFragment : BaseMvpFragment(), BankBranchView {
 
     @InjectPresenter
-    lateinit var presenter: BranchPresenter
+    lateinit var presenter: BankBranchPresenter
 
     private var adapter = MultiTypeAdapter()
 
     @ProvidePresenter
-    fun providePresenter(): BranchPresenter {
+    fun providePresenter(): BankBranchPresenter {
         val branch = arguments?.getSerializable("Branch") as Branch
         val bank = arguments?.getSerializable("Bank") as Bank?
-        val interactor = BranchInteractor(get(), get(), get())
-        return BranchPresenter(bank, branch, getRouter(), interactor)
+        val interactor = BankBranchInteractor(get(), get(), get())
+        return BankBranchPresenter(bank, branch, getRouter(), interactor)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,7 +41,7 @@ class BranchFragment : BaseMvpFragment(), BranchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
@@ -63,7 +60,7 @@ class BranchFragment : BaseMvpFragment(), BranchView {
         toolbar.title = bank?.name ?: ""
     }
 
-    override fun showBranch(bank: Bank, branch: Branch, exchangeRates: List<BranchCurrency2>) {
+    override fun showBranch(bank: Bank, branch: Branch, exchangeRates: List<CurrencyExchangeRate>) {
 
         val items = mutableListOf<Any>()
         if (bank.name != branch.name) {

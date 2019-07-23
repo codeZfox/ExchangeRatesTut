@@ -1,36 +1,29 @@
-package com.codezfox.exchangeratesmvp.ui.bankbranchesrates
+package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.data.models.BankRate
 import com.codezfox.extensions.isToday
 import com.codezfox.extensions.onClick
-import com.codezfox.extensions.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bank_rate.*
 import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
-class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchCurrency) -> Unit) : ItemViewBinder<BranchCurrency, BranchCurrencyViewBinder.ViewHolder>() {
+class ExchangeRateOfBankViewBinder(private val onClick: (rateBank: BankRate) -> Unit) : ItemViewBinder<BankRate, ExchangeRateOfBankViewBinder.ViewHolder>() {
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindView(branchCurrency: BranchCurrency) {
-            textViewName.text = branchCurrency.branch.name
-            val address = s(branchCurrency)
-            textViewAddress.text = address
-            textViewUpdate.text = buildActualTimeString(Date(branchCurrency.branchRate.updateTime * 1000L))
-            textViewBuy.text = Currency.rateForUI(branchCurrency.branchRate.sellRate.toDouble())
-            textViewSell.text = Currency.rateForUI(branchCurrency.branchRate.buyRate.toDouble())
-        }
-
-        private fun s(branchCurrency: BranchCurrency): String {
-            return branchCurrency.branch.address.split(", ", limit = 2).joinToString(", ") { it.replace("\u0020", "\u00A0") }
+        fun bindView(rate: BankRate) {
+            textViewName.text = rate.bank.name
+            textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
+            textViewBuy.text = Currency.rateForUI(rate.sell)
+            textViewSell.text = Currency.rateForUI(rate.buy)
         }
 
 
@@ -48,9 +41,8 @@ class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchCurrency) -
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bank_rate, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: BranchCurrency) {
+    override fun onBindViewHolder(holder: ViewHolder, item: BankRate) {
         holder.bindView(item)
-        holder.textViewAddress.visible()
         holder.itemView.onClick {
             onClick.invoke(item)
         }

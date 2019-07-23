@@ -57,7 +57,7 @@ abstract class PaginatorFragment<T, V : PaginatorView<T>, P : IMvpPaginatorPrese
             it.getView().let { view ->
                 view.id = R.id.errorLayout
                 view.gone()
-                rootPaginator.addView(view, 0)
+                rootPaginator.addView(view)
             }
         }
 
@@ -65,7 +65,7 @@ abstract class PaginatorFragment<T, V : PaginatorView<T>, P : IMvpPaginatorPrese
             it.getView().let { view ->
                 view.id = R.id.emptyLayout
                 view.gone()
-                rootPaginator.addView(view, 0)
+                rootPaginator.addView(view)
             }
         }
 

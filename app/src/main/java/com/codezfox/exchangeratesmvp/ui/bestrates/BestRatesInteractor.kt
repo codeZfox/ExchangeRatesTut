@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.currencyrates
+package com.codezfox.exchangeratesmvp.ui.bestrates
 
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
@@ -8,7 +8,7 @@ import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import io.reactivex.Single
 import java.util.*
 
-class CurrencyRatesInteractor(
+class BestRatesInteractor(
         private val repository: CurrencyRatesRepository,
         private val database: DatabaseRepository,
         private val preferencesRepository: PreferencesRepository
@@ -35,12 +35,12 @@ class CurrencyRatesInteractor(
                     }
                 }
                 .flatMap {
-                    database.getBestRates().map { Triple<List<BestRateCurrency>, Date?, Boolean>(it, null, false) }
+                    database.getBestRatesCurrencies().map { Triple<List<BestRateCurrency>, Date?, Boolean>(it, null, false) }
                 }.onErrorResumeNext { exception ->
 
                     val date = preferencesRepository.getLastDateData()
 
-                    database.getBestRates().map { list ->
+                    database.getBestRatesCurrencies().map { list ->
                         if (list.isEmpty()) {
                             throw exception
                         } else {

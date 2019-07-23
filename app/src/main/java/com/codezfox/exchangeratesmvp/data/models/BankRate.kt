@@ -4,7 +4,7 @@ import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 
 @Entity(primaryKeys = ["fromCurrency", "bankId"])
-data class RateBank(
+data class BankRate(
 
         @Embedded
         val bank: Bank,

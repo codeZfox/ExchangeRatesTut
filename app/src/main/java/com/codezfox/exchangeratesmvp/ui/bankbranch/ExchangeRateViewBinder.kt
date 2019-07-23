@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.branch
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 
 import android.support.v7.widget.RecyclerView
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.BranchCurrency2
+import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.ExchangeRate
 import com.codezfox.extensions.*
@@ -17,14 +17,14 @@ import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
-class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -> Unit) : ItemViewBinder<BranchCurrency2, ExchangeRateViewBinder.ViewHolder>() {
+class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -> Unit) : ItemViewBinder<CurrencyExchangeRate, ExchangeRateViewBinder.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         val root = inflater.inflate(R.layout.item_exchange_rate, parent, false)
         return ViewHolder(root)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: BranchCurrency2) {
+    override fun onBindViewHolder(holder: ViewHolder, item: CurrencyExchangeRate) {
         holder.bindView(item)
         holder.itemView.onClick {
             onClick.invoke(item.branchRate)
@@ -32,7 +32,7 @@ class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -
     }
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bindView(branchCurrency2: BranchCurrency2) {
+        fun bindView(branchCurrency2: CurrencyExchangeRate) {
 
             val rate = branchCurrency2.branchRate
 

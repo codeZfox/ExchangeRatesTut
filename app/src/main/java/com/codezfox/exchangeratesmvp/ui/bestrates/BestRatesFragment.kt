@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.currencyrates
+package com.codezfox.exchangeratesmvp.ui.bestrates
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,15 +18,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CurrencyRatesFragment : BasePaginatorFragment<BestRateCurrency, CurrencyRatesView, CurrencyRatesPresenter>(), CurrencyRatesView {
+class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView, BestRatesPresenter>(), BestRatesView {
 
     @ProvidePresenter
-    fun providePresenter(): CurrencyRatesPresenter {
-        return CurrencyRatesPresenter(getRouter(), CurrencyRatesInteractor(get(), get(), get()), get())
+    fun providePresenter(): BestRatesPresenter {
+        return BestRatesPresenter(getRouter(), BestRatesInteractor(get(), get(), get()), get())
     }
 
     @InjectPresenter
-    override lateinit var presenter: CurrencyRatesPresenter
+    override lateinit var presenter: BestRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.screen_currency_rates, container, false)
@@ -34,7 +34,7 @@ class CurrencyRatesFragment : BasePaginatorFragment<BestRateCurrency, CurrencyRa
 
     override fun registerTypes(adapter: MultiTypeAdapter) {
         super.registerTypes(adapter)
-        adapter.register(CurrencyRatesViewBinder({
+        adapter.register(BestRatesViewBinder({
             presenter.openCurrency(it)
         }))
     }

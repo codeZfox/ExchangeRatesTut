@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         setContentView(frameLayout)
 
         if (savedInstanceState == null) {
-            router.newRootScreen(Screens.CurrencyRates())
+            router.newRootScreen(Screens.BestRates())
         }
     }
 

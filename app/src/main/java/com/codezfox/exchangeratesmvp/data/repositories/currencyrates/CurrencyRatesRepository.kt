@@ -7,15 +7,15 @@ interface CurrencyRatesRepository {
 
     fun getBestRates(): Single<List<BestRate>>
 
-    fun getCurrencyRates(fromCurrency: Currency, toCurrency: Currency): Single<BaseResponse<BranchRate>>
-
     fun getCurrencies(): Single<List<Currency>>
 
-    fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>>
+    fun getBanksRates(currency: Currency): Single<List<BankRate>>
 
-    fun getBankBranches(bank: Bank): Single<BaseResponse<Branch>>
+    fun getBranches(bank: Bank): Single<List<Branch>>
 
-    fun getBrancheExchangeRate(branchId: String): Single<BaseResponse<BranchRate>>
+    fun getRatesOfBranch(fromCurrency: Currency, toCurrency: Currency): Single<List<RatesOfBranch>>
+
+    fun getRatesOfBranch(branchId: String): Single<List<RatesOfBranch>>
 
 }
 

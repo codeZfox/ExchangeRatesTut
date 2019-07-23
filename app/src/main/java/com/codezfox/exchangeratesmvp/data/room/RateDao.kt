@@ -13,13 +13,13 @@ import io.reactivex.Single
 interface RateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRates(rate: List<BestRate>)
+    fun insertBestRates(rate: List<BestRate>)
 
 
     @Query("DELETE FROM BestRate")
-    fun deleteRates()
+    fun deleteBestRates()
 
     @Query("SELECT BestRate.*, Currency.* FROM BestRate INNER JOIN Currency ON BestRate.currencyCode = Currency.id")
-    fun getRateCurrencies(): Single<List<BestRateCurrency>>
+    fun getBestRatesCurrencies(): Single<List<BestRateCurrency>>
 
 }

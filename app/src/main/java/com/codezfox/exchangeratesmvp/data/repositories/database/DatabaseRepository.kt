@@ -9,21 +9,21 @@ interface DatabaseRepository {
 
     fun saveBestRates(rates: List<BestRate>)
 
-    fun getBestRates(): Single<List<BestRateCurrency>>
+    fun getBestRatesCurrencies(): Single<List<BestRateCurrency>>
 
-    fun saveBanksRates(rates: List<RateBank>)
+    fun saveBanksRates(rates: List<BankRate>)
 
-    fun getBanksRates(currency: Currency): Single<List<RateBank>>
+    fun getBanksRates(currency: Currency): Single<List<BankRate>>
 
     fun saveBranches(branches: List<Branch>)
 
-    fun updateBranches(branches: List<BranchRate>)
+    fun updateBranches(branches: List<RatesOfBranch>)
 
     fun saveExchangeRates(branches: List<ExchangeRate>)
 
-    fun getBranchCurrencyRates(branchId: String): Single<List<BranchCurrency2>>
+    fun getBranchCurrencyRates(branchId: String): Single<List<CurrencyExchangeRate>>
 
-    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchCurrency>>
+    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchExchangeRate>>
 
     fun getBankById(bankId: String): Single<Bank>
 

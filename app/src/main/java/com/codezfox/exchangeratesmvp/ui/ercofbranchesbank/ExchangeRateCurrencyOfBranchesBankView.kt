@@ -1,16 +1,16 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.ercofbranchesbank
 
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
+import com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort
 import com.codezfox.paginator.screen.PaginatorView
 import java.util.*
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface BanksRatesView : PaginatorView<RateBank> {
+interface ExchangeRateCurrencyOfBranchesBankView : PaginatorView<BranchExchangeRate> {
 
-    fun showCurrencyInfo(currency: Currency)
+    fun showTitle(title: String, subTitle: String)
 
     fun showSortType(sort: RateCurrencySort)
 

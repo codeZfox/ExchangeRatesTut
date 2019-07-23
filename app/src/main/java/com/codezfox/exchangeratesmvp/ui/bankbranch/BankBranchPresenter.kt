@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.branch
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -9,11 +9,11 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
-class BranchPresenter(
+class BankBranchPresenter(
         private val bank: Bank?,
         private val branch: Branch,
         private val router: Router,
-        private val interactor: BranchInteractor) : MvpPresenter<BranchView>() {
+        private val interactor: BankBranchInteractor) : MvpPresenter<BankBranchView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -28,6 +28,10 @@ class BranchPresenter(
                 }, {
                     it.printStackTrace()
                 })
+    }
+
+    fun onBackPressed() {
+        router.exit()
     }
 
 }

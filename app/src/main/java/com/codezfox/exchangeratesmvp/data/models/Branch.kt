@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
-class BranchRate(
+class RatesOfBranch(
         val id: String, // "6/4616"
         val branche_id: String, // "5719"
         val isOpened: String, // "1"
@@ -23,7 +23,7 @@ data class ExchangeRate(
         val updateTime: Long // 1543836312
 )
 
-data class BranchCurrency(
+data class BranchExchangeRate(
 
         @Embedded
         var branch: Branch,
@@ -33,7 +33,7 @@ data class BranchCurrency(
 
 )
 
-data class BranchCurrency2(
+data class CurrencyExchangeRate(
 
         @Embedded
         var currency: Currency,

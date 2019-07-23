@@ -1,10 +1,12 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.ercofbranchesbank
 
 import com.arellomobile.mvp.InjectViewState
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.Bank
+import com.codezfox.exchangeratesmvp.data.models.Branch
+import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort
 import com.codezfox.paginator.NetworkManager
 import com.codezfox.paginator.screen.MvpPaginatorPresenter
 import com.codezfox.paginator.screen.PageContent
@@ -14,21 +16,23 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
-class BanksRatesPresenter(
+class ExchangeRateCurrencyOfBranchesBankPresenter(
 
         private val currency: Currency,
-        private val interactor: BanksRatesInteractor,
+        private val bank: Bank,
+        private val interactor: ExchangeRateCurrencyOfBranchesBankInteractor,
         private val networkManager: NetworkManager,
         private var router: Router
 
-) : MvpPaginatorPresenter<RateBank, BanksRatesView>() {
+) : MvpPaginatorPresenter<BranchExchangeRate, ExchangeRateCurrencyOfBranchesBankView>() {
 
     private var sort = RateCurrencySort.BUY
 
-    private var list: List<RateBank> = emptyList()
+    private var list: List<BranchExchangeRate> = emptyList()
 
-    override fun requestFactory(page: Int): Single<PageContent<RateBank>> {
-        return interactor.loadBanksRates(currency, sort)
+    override fun requestFactory(page: Int): Single<PageContent<BranchExchangeRate>> {
+        val toCurrency = Currency("BYN", "", "", "", "", "", "", "", "", 0)
+        return interactor.loadBanksRates(bank, currency, toCurrency, sort)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { (list, date, _) ->
                     viewState.showLastDateUpdated(date)
@@ -43,7 +47,7 @@ class BanksRatesPresenter(
     override fun onFirstViewAttach() {
         subscribeToNetworkConnected(networkManager)
         viewState.showSortType(this.sort)
-        viewState.showCurrencyInfo(currency)
+        viewState.showTitle(bank.name, currency.name)
         pagination.refresh()
     }
 
@@ -59,8 +63,8 @@ class BanksRatesPresenter(
         router.exit()
     }
 
-    fun openBankExchangeRates(bank: Bank) {
-        router.navigateTo(Screens.ExchangeRateCurrencyOfBranchesBank(bank, currency))
+    fun openBankBranch(branch: Branch) {
+        router.navigateTo(Screens.BankBranch(bank, branch))
     }
 
 }

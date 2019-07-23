@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.currencyrates
+package com.codezfox.exchangeratesmvp.ui.bestrates
 
 import com.arellomobile.mvp.InjectViewState
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
@@ -13,11 +13,11 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 @InjectViewState
-class CurrencyRatesPresenter(
+class BestRatesPresenter(
         private val router: Router,
-        private val interactor: CurrencyRatesInteractor,
+        private val interactor: BestRatesInteractor,
         private val networkManager: NetworkManager
-) : MvpPaginatorPresenter<BestRateCurrency, CurrencyRatesView>(), IMvpPaginatorPresenter<BestRateCurrency, CurrencyRatesView> {
+) : MvpPaginatorPresenter<BestRateCurrency, BestRatesView>(), IMvpPaginatorPresenter<BestRateCurrency, BestRatesView> {
 
     override fun requestFactory(page: Int): Single<PageContent<BestRateCurrency>> {
         return interactor.loadRates()

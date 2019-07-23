@@ -1,27 +1,25 @@
-package com.codezfox.exchangeratesmvp.ui.branch
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Branch
-import com.codezfox.exchangeratesmvp.data.models.BranchCurrency2
+import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
-import java.util.*
 
-class BranchInteractor(
+class BankBranchInteractor(
         private val repository: CurrencyRatesRepository,
         private val database: DatabaseRepository,
         private val preferencesRepository: PreferencesRepository
 ) {
-    fun getCurrencyRates(branch: Branch): Single<Pair<Bank, List<BranchCurrency2>>> {
+    fun getCurrencyRates(branch: Branch): Single<Pair<Bank, List<CurrencyExchangeRate>>> {
 //        return Single.zip(database.getBankById(branch.bank_id), database.getBranchCurrencyRates(branch.id), BiFunction { bank, exchangeRates ->
 //            bank to exchangeRates
 //        })
-        return repository.getBrancheExchangeRate(branch.id)
-                .map { baseResponse ->
-                    val list = baseResponse.data!!
+        return repository.getRatesOfBranch(branch.id)
+                .map { list ->
 
                     database.saveExchangeRates(list.flatMap { it.exchangeRates })
                     database.updateBranches(list)
@@ -32,7 +30,7 @@ class BranchInteractor(
                 }
                 .onErrorReturnItem(Unit)
                 .flatMap {
-                    Single.zip<Bank, List<BranchCurrency2>, Pair<Bank, List<BranchCurrency2>>>(database.getBankById(branch.bank_id), database.getBranchCurrencyRates(branch.id), BiFunction { bank, exchangeRates ->
+                    Single.zip<Bank, List<CurrencyExchangeRate>, Pair<Bank, List<CurrencyExchangeRate>>>(database.getBankById(branch.bank_id), database.getBranchCurrencyRates(branch.id), BiFunction { bank, exchangeRates ->
                         bank to exchangeRates
                     })
                 }

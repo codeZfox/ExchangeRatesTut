@@ -38,64 +38,50 @@ class CurrencyRatesRepositoryImpl(
 
     override fun getCurrencies(): Single<List<Currency>> {
         return api.getInfoSingle(getFields(GET_CURRENCIES))
-                .map { parseResponse<BaseResponse<Currency>>(it) }
-                .map { it.data }
+                .map { parseResponse<BaseResponse<Currency>>(it).data }
     }
 
     override fun getBestRates(): Single<List<BestRate>> {
         return api.getInfoSingle(getFields(GET_BEST_RATES))
-                .map { parseResponse<BaseResponse<BestRate>>(it) }
-                .map { it.data }
+                .map { parseResponse<BaseResponse<BestRate>>(it).data }
     }
 
-    override fun getBanksRates(currency: Currency): Single<BaseResponse<RateBank>> {
+    override fun getBanksRates(currency: Currency): Single<List<BankRate>> {
         return api.getInfoSingle(getFields(GET_BANKS_RATES, "currencyCode" to "\"${currency.id}\""))
-                .map { parseResponse<BaseResponse<RateBank>>(it) }
+                .map { parseResponse<BaseResponse<BankRate>>(it).data }
     }
 
-    override fun getBankBranches(bank: Bank): Single<BaseResponse<Branch>> {
+    override fun getBranches(bank: Bank): Single<List<Branch>> {
         return api.getInfoSingle(getFields(GET_PLACES, "bank_id" to bank.bankId, "placeType" to "\"branch\""))
-                .map { parseResponse<BaseResponse<Branch>>(it) }
+                .map { parseResponse<BaseResponse<Branch>>(it).data }
     }
 
-    override fun getBrancheExchangeRate(branchId: String): Single<BaseResponse<BranchRate>> {
-        return api.getInfoSingle(getFields(GET_CURRENCY_RATES, "places" to "[$branchId]"))
-                .map {
-                    val response = parseResponse<BaseResponse<BranchRate>>(it)
-
-                    //todo duplicate 88
-                    response.data?.forEach { branchRate ->
-                        branchRate.exchangeRates.forEach { exchangeRate ->
-                            exchangeRate.branche_id = branchRate.branche_id
-                        }
-                    }
-
-                    response
-                }
+    override fun getRatesOfBranch(branchId: String): Single<List<RatesOfBranch>> {
+        return getCurrencyRates(getFields(GET_CURRENCY_RATES, "places" to "[$branchId]"))
     }
 
-    override fun getCurrencyRates(fromCurrency: Currency, toCurrency: Currency): Single<BaseResponse<BranchRate>> {
-        val fields = getFields(
-                GET_CURRENCY_RATES,
+    override fun getRatesOfBranch(fromCurrency: Currency, toCurrency: Currency): Single<List<RatesOfBranch>> {
+        val fields = getFields(GET_CURRENCY_RATES,
                 "fromCurrency" to "\"${fromCurrency.id}\"",
                 "toCurrency" to "\"${toCurrency.id}\""
         )
-        return api.getInfoSingle(fields)
+        return getCurrencyRates(fields)
+    }
+
+    private fun getCurrencyRates(map: Map<String, String>): Single<List<RatesOfBranch>> {
+        return api.getInfoSingle(map)
                 .map {
-                    val response = parseResponse<BaseResponse<BranchRate>>(it)
-
-                    response.data?.forEach { branchRate ->
-                        branchRate.exchangeRates.forEach { exchangeRate ->
-                            exchangeRate.branche_id = branchRate.branche_id
-                        }
-                    }
-
-                    response
+                    parseResponse<BaseResponse<RatesOfBranch>>(it).data
+                            ?.onEach { branchRate ->
+                                branchRate.exchangeRates.forEach { exchangeRate ->
+                                    exchangeRate.branche_id = branchRate.branche_id
+                                }
+                            }
                 }
     }
 
-    private inline fun <reified T> parseResponse(error: JsonObject): T {
-        return gson.fromJson(error, object : TypeToken<T>() {}.type)
+    private inline fun <reified T> parseResponse(jsonObject: JsonObject): T {
+        return gson.fromJson(jsonObject, object : TypeToken<T>() {}.type)
     }
 
 }

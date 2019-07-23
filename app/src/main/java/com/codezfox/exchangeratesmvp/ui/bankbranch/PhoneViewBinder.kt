@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.branch
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

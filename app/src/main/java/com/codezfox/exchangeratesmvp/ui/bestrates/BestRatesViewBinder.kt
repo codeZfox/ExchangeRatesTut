@@ -1,4 +1,4 @@
-package com.codezfox.exchangeratesmvp.ui.currencyrates
+package com.codezfox.exchangeratesmvp.ui.bestrates
 
 
 import android.support.v7.widget.RecyclerView
@@ -16,7 +16,7 @@ import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
-class CurrencyRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) -> Unit) : ItemViewBinder<BestRateCurrency, CurrencyRatesViewBinder.ViewHolder>() {
+class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) -> Unit) : ItemViewBinder<BestRateCurrency, BestRatesViewBinder.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         val root = inflater.inflate(R.layout.item_currency_rate, parent, false)

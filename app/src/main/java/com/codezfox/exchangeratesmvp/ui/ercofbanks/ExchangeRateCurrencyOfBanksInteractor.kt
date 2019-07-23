@@ -1,8 +1,7 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import com.codezfox.exchangeratesmvp.data.models.BranchCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
-import com.codezfox.exchangeratesmvp.data.models.RateBank
+import com.codezfox.exchangeratesmvp.data.models.BankRate
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
@@ -10,21 +9,21 @@ import io.reactivex.Single
 import java.util.*
 
 
-class BanksRatesInteractor(
+class ExchangeRateCurrencyOfBanksInteractor(
         private val repository: CurrencyRatesRepository,
         private val preferencesRepository: PreferencesRepository,
         private val database: DatabaseRepository
 ) {
 
-    fun loadBanksRates(currency: Currency, sort: RateCurrencySort): Single<Triple<List<RateBank>, Date?, Boolean>> {
+    fun loadBanksRates(currency: Currency, sort: RateCurrencySort): Single<Triple<List<BankRate>, Date?, Boolean>> {
         return repository.getBanksRates(currency)
-                .map { it.data ?: emptyList() }
+//                .map { it.data ?: emptyList() }
                 .doOnSuccess {
                     database.saveBanksRates(it)
                     preferencesRepository.saveLastDateCurrency(currency, Date())
                 }
                 .map {
-                    Triple<List<RateBank>, Date?, Boolean>(it.sort(sort), null, false)
+                    Triple<List<BankRate>, Date?, Boolean>(it.sort(sort), null, false)
                 }
                 .onErrorResumeNext { exception ->
                     database.getBanksRates(currency).map { list ->
@@ -38,15 +37,18 @@ class BanksRatesInteractor(
                 }
     }
 
-    private fun List<RateBank>.sort(sort: RateCurrencySort): List<RateBank> {
-        return if (sort == RateCurrencySort.BUY) {
-            this.sortedWith(compareBy<RateBank> { it.sell }.then(compareBy { it.bank.bankId }))
+    private fun List<BankRate>.sort(sort: RateCurrencySort): List<BankRate> {
+
+        val comparator = if (sort == RateCurrencySort.BUY) {
+            compareBy<BankRate> { it.sell }
         } else {
-            this.sortedWith(compareByDescending<RateBank> { it.buy }.then(compareBy { it.bank.bankId }))
+            compareByDescending { it.buy }
         }
+
+        return this.sortedWith(comparator.then(compareBy { it.bank.bankId }))
     }
 
-    fun sortBanksRates(list: List<RateBank>, sort: RateCurrencySort): List<RateBank> {
+    fun sortBanksRates(list: List<BankRate>, sort: RateCurrencySort): List<BankRate> {
         return list.sort(sort)
     }
 

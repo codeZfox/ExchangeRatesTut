@@ -17,28 +17,28 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
     }
 
     override fun saveBestRates(rates: List<BestRate>) {
-        rateDao.deleteRates()
-        rateDao.insertRates(rates)
+        rateDao.deleteBestRates()
+        rateDao.insertBestRates(rates)
     }
 
-    override fun getBestRates(): Single<List<BestRateCurrency>> {
-        return rateDao.getRateCurrencies()
+    override fun getBestRatesCurrencies(): Single<List<BestRateCurrency>> {
+        return rateDao.getBestRatesCurrencies()
     }
 
-    override fun saveBanksRates(rates: List<RateBank>) {
-//        rateBankDao.deleteRates()
-        rateBankDao.insertRates(rates)
+    override fun saveBanksRates(rates: List<BankRate>) {
+//        rateBankDao.deleteBestRates()
+        rateBankDao.insertBankRates(rates)
     }
 
-    override fun getBanksRates(currency: Currency): Single<List<RateBank>> {
-        return rateBankDao.getRates(currency.id)
+    override fun getBanksRates(currency: Currency): Single<List<BankRate>> {
+        return rateBankDao.getBankRates(currency.id)
     }
 
     override fun saveBranches(branches: List<Branch>) {
         branchDao.insertBranches(branches)
     }
 
-    override fun updateBranches(branches: List<BranchRate>) {
+    override fun updateBranches(branches: List<RatesOfBranch>) {
         val list = branchDao.getBranches()
         branches.forEach { branchRate ->
             list.find { it.id == branchRate.branche_id }?.isOpened = branchRate.isOpened
@@ -50,11 +50,11 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         branchDao.insertExchangeRates(branches)
     }
 
-    override fun getBranchCurrencyRates(branchId: String): Single<List<BranchCurrency2>> {
-        return branchDao.getBranchesCurrencies(branchId)
+    override fun getBranchCurrencyRates(branchId: String): Single<List<CurrencyExchangeRate>> {
+        return branchDao.getCurrencyExchangeRate(branchId)
     }
 
-    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchCurrency>> {
+    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchExchangeRate>> {
         return branchDao.getBranchesCurrencies(bankId, fromCurrency, toCurrency)
     }
 

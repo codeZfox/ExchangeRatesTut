@@ -1,13 +1,11 @@
-package com.codezfox.exchangeratesmvp.ui.banksrates
+package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.extensions.onClick
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_string.*
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
 import me.drakeet.multitype.ItemViewBinder
 
