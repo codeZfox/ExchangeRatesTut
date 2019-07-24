@@ -31,6 +31,8 @@
         tools:visibility="visible"
         />
 
+    <include layout="@layout/layout_best_currency_rate_header" />
+
     <include layout="@layout/fragment_list_paginator" />
 
 </LinearLayout>

@@ -11,7 +11,7 @@ import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.extensions.*
 import com.codezfox.extensions.visibleOrGone
-import kotlinx.android.synthetic.main.screen_currency_rates.*
+import kotlinx.android.synthetic.main.screen_best_rates.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 import java.text.SimpleDateFormat
@@ -29,7 +29,7 @@ class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView,
     override lateinit var presenter: BestRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.screen_currency_rates, container, false)
+        return inflater.inflate(R.layout.screen_best_rates, container, false)
     }
 
     override fun registerTypes(adapter: MultiTypeAdapter) {
