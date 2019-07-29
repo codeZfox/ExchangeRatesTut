@@ -12,12 +12,12 @@ import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.extensions.*
 import android.support.annotation.ColorInt
 import com.codezfox.exchangeratesmvp.data.models.Bank
-import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
+import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
 import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.*
 import com.codezfox.extensions.*
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
-import kotlinx.android.synthetic.main.screen_banks_rates.textViewLastDateData
+import kotlinx.android.synthetic.main.layout_last_date_data.*
 import kotlinx.android.synthetic.main.screen_banks_rates.toolbar
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ExchangeRateCurrencyOfBranchesBankFragment : BasePaginatorFragment<BranchExchangeRate, ExchangeRateCurrencyOfBranchesBankView, ExchangeRateCurrencyOfBranchesBankPresenter>(), ExchangeRateCurrencyOfBranchesBankView {
+class ExchangeRateCurrencyOfBranchesBankFragment : BasePaginatorFragment<BranchWithExchangeRate, ExchangeRateCurrencyOfBranchesBankView, ExchangeRateCurrencyOfBranchesBankPresenter>(), ExchangeRateCurrencyOfBranchesBankView {
 
     @ProvidePresenter
     fun providePresenter(): ExchangeRateCurrencyOfBranchesBankPresenter {

@@ -23,8 +23,14 @@ interface DatabaseRepository {
 
     fun getBranchCurrencyRates(branchId: String): Single<List<CurrencyExchangeRate>>
 
-    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchExchangeRate>>
+    fun saveExchangeRateBranch(branches: List<ExchangeRateBranch>)
+
+    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchWithExchangeRate>>
 
     fun getBankById(bankId: String): Single<Bank>
+
+    fun insertService(list: List<Service>)
+
+    fun deleteServices()
 
 }

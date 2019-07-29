@@ -19,7 +19,7 @@ class ExchangeRateCurrencyOfBranchesBankInteractor(
 
     var places = listOf<Branch>()
 
-    fun loadBanksRates(bank: Bank, fromCurrency: Currency, toCurrency: Currency, sort: RateCurrencySort): Single<Triple<List<BranchExchangeRate>, Date?, Boolean>> {
+    fun loadBanksRates(bank: Bank, fromCurrency: Currency, toCurrency: Currency, sort: RateCurrencySort): Single<Triple<List<BranchWithExchangeRate>, Date?, Boolean>> {
 
         return if (places.isEmpty()) {
             repository.getBranches(bank)
@@ -39,7 +39,7 @@ class ExchangeRateCurrencyOfBranchesBankInteractor(
 
                     preferencesRepository.saveLastDateBank(bank, fromCurrency, toCurrency, Date())
 
-                    database.getBranchCurrencyRates(bank.bankId, fromCurrency.id, toCurrency.id).map { Triple<List<BranchExchangeRate>, Date?, Boolean>(it.sort(sort), null, false) }
+                    database.getBranchCurrencyRates(bank.bankId, fromCurrency.id, toCurrency.id).map { Triple<List<BranchWithExchangeRate>, Date?, Boolean>(it.sort(sort), null, false) }
                 }
                 .onErrorResumeNext { exception ->
                     database.getBranchCurrencyRates(bank.bankId, fromCurrency.id, toCurrency.id).map { list ->
@@ -53,10 +53,10 @@ class ExchangeRateCurrencyOfBranchesBankInteractor(
                 })
     }
 
-    private fun List<BranchExchangeRate>.sort(sort: RateCurrencySort): List<BranchExchangeRate> {
+    private fun List<BranchWithExchangeRate>.sort(sort: RateCurrencySort): List<BranchWithExchangeRate> {
 
         val comparator = if (sort == RateCurrencySort.BUY) {
-            compareBy<BranchExchangeRate> { it.branchRate.sellRate }
+            compareBy<BranchWithExchangeRate> { it.branchRate.sellRate }
         } else {
             compareByDescending { it.branchRate.buyRate }
         }
@@ -64,7 +64,7 @@ class ExchangeRateCurrencyOfBranchesBankInteractor(
         return this.sortedWith(comparator.then(compareBy { it.branch.id }))
     }
 
-    fun sortBanksRates(list: List<BranchExchangeRate>, sort: RateCurrencySort): List<BranchExchangeRate> {
+    fun sortBanksRates(list: List<BranchWithExchangeRate>, sort: RateCurrencySort): List<BranchWithExchangeRate> {
         return list.sort(sort)
     }
 

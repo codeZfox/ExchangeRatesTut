@@ -6,13 +6,13 @@
     >
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/flp_swipe_to_refresh"
+        android:id="@+id/paginatorSwipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/flp_list"
+            android:id="@+id/paginatorRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

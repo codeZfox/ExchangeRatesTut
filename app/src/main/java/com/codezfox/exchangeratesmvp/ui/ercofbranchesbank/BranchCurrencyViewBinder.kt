@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
+import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.extensions.isToday
 import com.codezfox.extensions.onClick
@@ -16,11 +16,11 @@ import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
-class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchExchangeRate) -> Unit) : ItemViewBinder<BranchExchangeRate, BranchCurrencyViewBinder.ViewHolder>() {
+class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchWithExchangeRate) -> Unit) : ItemViewBinder<BranchWithExchangeRate, BranchCurrencyViewBinder.ViewHolder>() {
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindView(branchCurrency: BranchExchangeRate) {
+        fun bindView(branchCurrency: BranchWithExchangeRate) {
             textViewName.text = branchCurrency.branch.name
             val address = s(branchCurrency)
             textViewAddress.text = address
@@ -29,7 +29,7 @@ class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchExchangeRat
             textViewSell.text = Currency.rateForUI(branchCurrency.branchRate.buyRate.toDouble())
         }
 
-        private fun s(branchCurrency: BranchExchangeRate): String {
+        private fun s(branchCurrency: BranchWithExchangeRate): String {
             return branchCurrency.branch.address.split(", ", limit = 2).joinToString(", ") { it.replace("\u0020", "\u00A0") }
         }
 
@@ -48,7 +48,7 @@ class BranchCurrencyViewBinder(private val onClick: (rateBank: BranchExchangeRat
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bank_rate, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: BranchExchangeRate) {
+    override fun onBindViewHolder(holder: ViewHolder, item: BranchWithExchangeRate) {
         holder.bindView(item)
         holder.textViewAddress.visible()
         holder.itemView.onClick {

@@ -2,6 +2,7 @@ package com.codezfox.exchangeratesmvp.data.repositories.preferences
 
 import android.content.Context
 import com.codezfox.exchangeratesmvp.data.models.Bank
+import com.codezfox.exchangeratesmvp.data.models.Branch
 import java.util.*
 import com.codezfox.exchangeratesmvp.data.models.Currency
 
@@ -39,7 +40,7 @@ class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {
     }
 
 
-    private fun getPrefNameCurrency(currency: Currency) = PREF_LAST_DATE_DATA + "_" + currency
+    private fun getPrefNameCurrency(currency: Currency) = PREF_LAST_DATE_DATA + "_Currency_" + currency.id
 
     override fun saveLastDateCurrency(currency: Currency, date: Date) {
         saveLastDate(getPrefNameCurrency(currency), date)
@@ -58,6 +59,16 @@ class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {
 
     override fun getLastDateBank(bank: Bank, fromCurrency: Currency, toCurrency: Currency): Date? {
         return getLastDate(getPrefNameBank(bank, fromCurrency, toCurrency))
+    }
 
+
+    private fun getPrefNameBranch(branch: Branch) = PREF_LAST_DATE_DATA + "_Branch_" + branch.id
+
+    override fun saveLastDateBranch(branch: Branch, date: Date) {
+        saveLastDate(getPrefNameBranch(branch), date)
+    }
+
+    override fun getLastDateBranch(branch: Branch): Date? {
+        return getLastDate(getPrefNameBranch(branch))
     }
 }

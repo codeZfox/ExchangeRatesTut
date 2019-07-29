@@ -6,9 +6,9 @@
     android:background="@color/colorGrayLight"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
-    android:paddingTop="4dp"
+    android:paddingTop="5dp"
     android:paddingRight="16dp"
-    android:paddingBottom="4dp"
+    android:paddingBottom="5dp"
     tools:showIn="@layout/screen_best_rates"
     >
 

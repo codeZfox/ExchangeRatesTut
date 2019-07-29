@@ -69,8 +69,8 @@ abstract class PaginatorFragment<T, V : PaginatorView<T>, P : IMvpPaginatorPrese
             }
         }
 
-        swipeToRefresh = view.findViewById(R.id.flp_swipe_to_refresh)
-        recyclerView = view.findViewById(R.id.flp_list)
+        swipeToRefresh = view.findViewById(R.id.paginatorSwipeRefreshLayout)
+        recyclerView = view.findViewById(R.id.paginatorRecyclerView)
 
         swipeToRefresh.setColorSchemeResources(themeAttributeToColor(R.attr.colorPrimary)!!)
         swipeToRefresh.setOnRefreshListener { presenter.refresh() }

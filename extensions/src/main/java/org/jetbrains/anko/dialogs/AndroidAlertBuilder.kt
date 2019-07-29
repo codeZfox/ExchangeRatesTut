@@ -16,15 +16,19 @@
 
 package org.jetbrains.anko
 
+import android.R
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
 import kotlin.DeprecationLevel.ERROR
+
 
 val Android: AlertBuilderFactory<AlertDialog> = ::AndroidAlertBuilder
 
@@ -112,16 +116,18 @@ internal class AndroidAlertBuilder(override val ctx: Context) : AlertBuilder<Ale
         builder.setNeutralButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit) {
-        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
-            onItemSelected(dialog, which)
+    override fun items(items: List<CharSequence>, onItemSelected: ((dialog: DialogInterface, index: Int) -> Unit)?) {
+        val function: (dialog: DialogInterface, which: Int) -> Unit = { dialog, which ->
+            onItemSelected?.invoke(dialog, which)
         }
+        builder.setItems(Array(items.size) { i -> items[i].toString() }, function.takeIf { onItemSelected != null })
     }
 
-    override fun <T> items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T, index: Int) -> Unit) {
-        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
-            onItemSelected(dialog, items[which], which)
+    override fun <T> items(items: List<T>, onItemSelected: ((dialog: DialogInterface, item: T, index: Int) -> Unit)?) {
+        val function: (dialog: DialogInterface, which: Int) -> Unit = { dialog, which ->
+            onItemSelected?.invoke(dialog, items[which], which)
         }
+        builder.setItems(Array(items.size) { i -> items[i].toString() }, function.takeIf { onItemSelected != null })
     }
 
     override fun build(): AlertDialog = builder.create()

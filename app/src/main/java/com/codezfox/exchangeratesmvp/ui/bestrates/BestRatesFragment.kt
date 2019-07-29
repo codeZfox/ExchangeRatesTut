@@ -11,6 +11,7 @@ import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.extensions.*
 import com.codezfox.extensions.visibleOrGone
+import kotlinx.android.synthetic.main.layout_last_date_data.*
 import kotlinx.android.synthetic.main.screen_best_rates.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register

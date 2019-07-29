@@ -40,7 +40,7 @@ fun <D : DialogInterface> Context.selector(
         factory: AlertBuilderFactory<D>,
         title: CharSequence? = null,
         items: List<CharSequence>,
-        onClick: (DialogInterface, CharSequence, Int) -> Unit
+        onClick: ((DialogInterface, CharSequence, Int) -> Unit)? = null
 ) {
     with(factory(this)) {
         if (title != null) {

@@ -13,7 +13,7 @@ class RatesOfBranch(
 )
 
 @Entity(primaryKeys = ["branche_id", "nationalCurrencyId", "foreignCurrencyId"])
-data class ExchangeRate(
+open class ExchangeRate(
         var branche_id: String,
         val nationalCurrencyId: String, // "BYN"
         val foreignCurrencyId: String, // "USD"
@@ -21,9 +21,56 @@ data class ExchangeRate(
         val buyRate: Double, // "2.125000"
         val source: String, // "bank"
         val updateTime: Long // 1543836312
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-data class BranchExchangeRate(
+        other as ExchangeRate
+
+        if (branche_id != other.branche_id) return false
+        if (nationalCurrencyId != other.nationalCurrencyId) return false
+        if (foreignCurrencyId != other.foreignCurrencyId) return false
+        if (sellRate != other.sellRate) return false
+        if (buyRate != other.buyRate) return false
+        if (source != other.source) return false
+        if (updateTime != other.updateTime) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = branche_id.hashCode()
+        result = 31 * result + nationalCurrencyId.hashCode()
+        result = 31 * result + foreignCurrencyId.hashCode()
+        result = 31 * result + sellRate.hashCode()
+        result = 31 * result + buyRate.hashCode()
+        result = 31 * result + source.hashCode()
+        result = 31 * result + updateTime.hashCode()
+        return result
+    }
+}
+
+@Entity(primaryKeys = ["branche_id", "nationalCurrencyId", "foreignCurrencyId"])
+data class ExchangeRateBranch(
+        var branche_id: String,
+        val nationalCurrencyId: String, // "BYN"
+        val foreignCurrencyId: String, // "USD"
+        val sellRate: Double, // "2.138000"
+        val buyRate: Double, // "2.125000"
+        val source: String, // "bank"
+        val updateTime: Long // 1543836312
+) {
+    constructor(exchangeRate: ExchangeRate) : this(exchangeRate.branche_id,
+            exchangeRate.nationalCurrencyId,
+            exchangeRate.foreignCurrencyId,
+            exchangeRate.sellRate,
+            exchangeRate.buyRate,
+            exchangeRate.source,
+            exchangeRate.updateTime)
+}
+
+data class BranchWithExchangeRate(
 
         @Embedded
         var branch: Branch,

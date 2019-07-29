@@ -25,19 +25,19 @@ import android.content.DialogInterface
 inline fun AnkoContext<*>.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        noinline onClick: (DialogInterface, Int) -> Unit
+        noinline onClick: ((DialogInterface, Int) -> Unit)? = null
 ): Unit = ctx.selector(title, items, onClick)
 
 inline fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        noinline onClick: (DialogInterface, Int) -> Unit
+        noinline onClick: ((DialogInterface, Int) -> Unit)? = null
 ): Unit = activity.selector(title, items, onClick)
 
 fun Context.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        onClick: (DialogInterface, Int) -> Unit
+        onClick: ((DialogInterface, Int) -> Unit)? = null
 ) {
     with(AndroidAlertBuilder(this)) {
         if (title != null) {

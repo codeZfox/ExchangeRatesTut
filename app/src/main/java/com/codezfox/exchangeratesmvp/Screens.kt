@@ -34,7 +34,7 @@ object Screens {
         }
     }
 
-    class BankBranch(private val bank: Bank?, private val branch: Branch) : SupportAppScreen() {
+    class BankBranch(private val bank: Bank, private val branch: Branch) : SupportAppScreen() {
         override fun getFragment(): Fragment = BankBranchFragment().also { fragment ->
             fragment.arguments = Bundle().also {
                 it.putSerializable("Bank", bank)

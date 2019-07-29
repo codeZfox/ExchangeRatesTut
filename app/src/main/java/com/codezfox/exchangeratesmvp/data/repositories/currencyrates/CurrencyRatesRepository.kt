@@ -17,5 +17,7 @@ interface CurrencyRatesRepository {
 
     fun getRatesOfBranch(branchId: String): Single<List<RatesOfBranch>>
 
+    fun getServices(): Single<List<Service>>
+
 }
 

@@ -5,7 +5,7 @@ import android.arch.persistence.room.TypeConverters
 import com.codezfox.exchangeratesmvp.data.models.*
 
 
-@Database(entities = [Currency::class, BestRate::class, BankRate::class, Branch::class, ExchangeRate::class], version = 4)
+@Database(entities = [Currency::class, BestRate::class, BankRate::class, Branch::class, ExchangeRate::class, Service::class, ExchangeRateBranch::class], version = 6)
 @TypeConverters(Converters::class)
 abstract class RoomDatabase : android.arch.persistence.room.RoomDatabase() {
 
@@ -16,6 +16,8 @@ abstract class RoomDatabase : android.arch.persistence.room.RoomDatabase() {
     abstract fun rateBankDao(): RateBankDao
 
     abstract fun branchDao(): BranchDao
+
+    abstract fun serviceDao(): ServiceDao
 
 }
 

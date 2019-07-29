@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Branch
-import com.codezfox.exchangeratesmvp.data.models.BranchExchangeRate
+import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort
 import com.codezfox.paginator.NetworkManager
@@ -24,13 +24,13 @@ class ExchangeRateCurrencyOfBranchesBankPresenter(
         private val networkManager: NetworkManager,
         private var router: Router
 
-) : MvpPaginatorPresenter<BranchExchangeRate, ExchangeRateCurrencyOfBranchesBankView>() {
+) : MvpPaginatorPresenter<BranchWithExchangeRate, ExchangeRateCurrencyOfBranchesBankView>() {
 
     private var sort = RateCurrencySort.BUY
 
-    private var list: List<BranchExchangeRate> = emptyList()
+    private var list: List<BranchWithExchangeRate> = emptyList()
 
-    override fun requestFactory(page: Int): Single<PageContent<BranchExchangeRate>> {
+    override fun requestFactory(page: Int): Single<PageContent<BranchWithExchangeRate>> {
         val toCurrency = Currency("BYN", "", "", "", "", "", "", "", "", 0)
         return interactor.loadBanksRates(bank, currency, toCurrency, sort)
                 .observeOn(AndroidSchedulers.mainThread())

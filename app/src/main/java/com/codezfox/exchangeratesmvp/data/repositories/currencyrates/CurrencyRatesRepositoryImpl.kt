@@ -22,6 +22,7 @@ class CurrencyRatesRepositoryImpl(
         private const val GET_BANKS_RATES = "get_banks_rates"
         private const val GET_PLACES = "get_places"
         private const val GET_CURRENCY_RATES = "get_currency_rates"
+        private const val GET_SERVICES = "get_services"
     }
 
     private fun getFields(action: String, vararg params: Pair<String, String>): Map<String, String> {
@@ -78,6 +79,11 @@ class CurrencyRatesRepositoryImpl(
                                 }
                             }
                 }
+    }
+
+    override fun getServices(): Single<List<Service>> {
+        return api.getInfoSingle(getFields(GET_SERVICES))
+                .map { parseResponse<BaseResponse<Service>>(it).data }
     }
 
     private inline fun <reified T> parseResponse(jsonObject: JsonObject): T {

@@ -72,8 +72,8 @@ interface AlertBuilder<out D : DialogInterface> {
     fun neutralPressed(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit)
     fun neutralPressed(@StringRes buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit)
 
-    fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit)
-    fun <T> items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T, index: Int) -> Unit)
+    fun items(items: List<CharSequence>, onItemSelected: ((dialog: DialogInterface, index: Int) -> Unit)?)
+    fun <T> items(items: List<T>, onItemSelected: ((dialog: DialogInterface, item: T, index: Int) -> Unit)?)
 
     fun build(): D
     fun show(): D

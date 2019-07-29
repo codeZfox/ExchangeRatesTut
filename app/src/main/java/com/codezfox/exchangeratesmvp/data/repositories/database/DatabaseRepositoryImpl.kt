@@ -10,6 +10,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
     private val rateDao = roomDatabase.rateDao()
     private val rateBankDao = roomDatabase.rateBankDao()
     private val branchDao = roomDatabase.branchDao()
+    private val serviceDao = roomDatabase.serviceDao()
 
     override fun saveCurrencies(currencies: List<Currency>) {
         currencyDao.deleteCurrencies()
@@ -54,11 +55,24 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         return branchDao.getCurrencyExchangeRate(branchId)
     }
 
-    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchExchangeRate>> {
+    override fun saveExchangeRateBranch(branches: List<ExchangeRateBranch>) {
+        branchDao.insertExchangeRateBranch(branches)
+    }
+
+    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchWithExchangeRate>> {
         return branchDao.getBranchesCurrencies(bankId, fromCurrency, toCurrency)
     }
 
     override fun getBankById(bankId: String): Single<Bank> {
         return rateBankDao.getBankById(bankId).map { it.bank }
+    }
+
+    override fun insertService(list: List<Service>) {
+        serviceDao.insertService(list)
+        serviceDao.deleteServices()
+    }
+
+    override fun deleteServices() {
+        serviceDao.deleteServices()
     }
 }

@@ -201,6 +201,35 @@ fun Context.makeCall(number: String): Boolean {
     }
 }
 
+
+inline fun AnkoContext<*>.dial(number: String): Boolean = ctx.dial(number)
+inline fun Fragment.dial(number: String): Boolean = activity.dial(number)
+
+fun Context.dial(number: String): Boolean {
+    try {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+        startActivity(intent)
+        return true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return false
+    }
+}
+
+inline fun AnkoContext<*>.geo(query: String): Boolean = ctx.geo(query)
+inline fun Fragment.geo(query: String): Boolean = activity.geo(query)
+
+fun Context.geo(query: String, lat: Int = 0, lng: Int = 0): Boolean {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$lat,$lng?q=${query}"))
+        startActivity(intent)
+        return true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return false
+    }
+}
+
 inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = ctx.sendSMS(number, text)
 inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean = activity.sendSMS(number, text)
 

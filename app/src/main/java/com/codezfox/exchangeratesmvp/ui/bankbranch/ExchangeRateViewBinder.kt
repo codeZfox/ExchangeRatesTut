@@ -43,7 +43,6 @@ class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -
             textViewAmount.text = currency.getAmountString()
             textViewBuy.text = Currency.rateForUI(rate.sellRate, scale)
             textViewSell.text = Currency.rateForUI(rate.buyRate, scale)
-            textViewUpdate.text = buildActualTimeString(Date(rate.updateTime * 1000L))
 
 
             Picasso.with(itemView.context)
@@ -51,14 +50,6 @@ class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -
                     .placeholder(R.drawable.ic_currency_default)
                     .into(imageViewCurrencyFlag)
 
-        }
-
-        private fun buildActualTimeString(date: Date): String {
-            return if (date.isToday()) {
-                String.format("Актуально на сегодня в %1\$tH:%1\$tM", date)
-            } else {
-                String.format("Актуально на %1\$te %1\$tB в %1\$tH:%1\$tM", date)
-            }
         }
     }
 }
