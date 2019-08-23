@@ -3,6 +3,8 @@ package com.codezfox.exchangeratesmvp.data.models
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 
 @Entity
@@ -30,13 +32,17 @@ data class Currency(
 
         private var mapFormats = hashMapOf<Int, String>()
 
-        fun rateForUI(value: Double, scale: Int = 4): String {
+        fun rateForUI(value: Double, scale: Int = 4, fillZero: Boolean = true): String {
 
+            val s = if (fillZero) "0" else "#"
+            val decimalFormat = DecimalFormat("###,###.${s.repeat(scale)}", DecimalFormatSymbols(Locale.UK).also {
+                it.setGroupingSeparator(' ')
+            })
             if (!mapFormats.containsKey(scale)) {
                 mapFormats[scale] = "%.${scale}f"
             }
-
-            return String.format(Locale.UK, mapFormats[scale]!!, value)
+            //todo
+            return decimalFormat.format(value)
         }
 
 

@@ -3,5 +3,6 @@
 
     <string name="BCSE_date">Итоги торгов БВФБ %1$te\u00A0%1$tB</string>
     <string name="services">Услуги</string>
+    <string name="currency_converter">Конвертер валют</string>
 
 </resources>

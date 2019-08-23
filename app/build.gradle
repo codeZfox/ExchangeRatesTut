@@ -83,4 +83,6 @@ dependencies {
 
     implementation "me.drakeet.multitype:multitype-kotlin:3.4.4"
 
+
+    implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
 }

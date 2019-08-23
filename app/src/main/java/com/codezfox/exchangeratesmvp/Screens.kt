@@ -9,6 +9,7 @@ import com.codezfox.exchangeratesmvp.ui.bankbranch.BankBranchFragment
 import com.codezfox.exchangeratesmvp.ui.ercofbranchesbank.ExchangeRateCurrencyOfBranchesBankFragment
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.ExchangeRateCurrencyOfBanksFragment
 import com.codezfox.exchangeratesmvp.ui.bestrates.BestRatesFragment
+import com.codezfox.exchangeratesmvp.ui.converter.ConverterFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -41,6 +42,10 @@ object Screens {
                 it.putSerializable("Branch", branch)
             }
         }
+    }
+
+    class Converter : SupportAppScreen() {
+        override fun getFragment(): Fragment = ConverterFragment()
     }
 
 }

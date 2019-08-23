@@ -1,5 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -77,19 +78,7 @@ class ExchangeRateCurrencyOfBanksFragment : BasePaginatorFragment<BankRate, Exch
     }
 
     private val d: Int by lazy {
-        getDefaultThemeColor(android.R.attr.textColorSecondary)
-    }
-
-    @ColorInt
-    fun getDefaultThemeColor(attribute: Int): Int {
-        val themeArray = context!!.getTheme().obtainStyledAttributes(intArrayOf(attribute))
-        try {
-            val index = 0
-            val defaultColourValue = 0
-            return themeArray.getColor(index, defaultColourValue)
-        } finally {
-            themeArray.recycle()
-        }
+        context!!.getDefaultThemeColor(android.R.attr.textColorSecondary)
     }
 
     override fun showSortType(sort: RateCurrencySort) {
