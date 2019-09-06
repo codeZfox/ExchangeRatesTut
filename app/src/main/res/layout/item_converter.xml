@@ -51,6 +51,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@android:color/black"
+        android:textIsSelectable="true"
         android:textSize="22sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"

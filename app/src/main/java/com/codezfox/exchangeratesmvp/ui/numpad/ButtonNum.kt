@@ -32,7 +32,7 @@ class ButtonDel : ButtonImage(R.drawable.ic_backspace_outline, { it.dropLast(1) 
 open class ButtonNum(
         val num: Int,
         private val letters: List<Char> = listOf(),
-        process: (text: String, number: Int) -> String = { text, number -> text.plus(number) }
+        process: (text: String, number: Int) -> String = { text, number -> plus(text, number) }
 ) : Button({ process.invoke(it, num) }) {
 
     override fun toString(): String {
@@ -47,7 +47,7 @@ open class ButtonNum(
 
     companion object {
         fun list(): List<Button> = listOf(
-                ButtonNum(1, listOf()),
+                ButtonNum(1),
                 ButtonNum(2, listOf('A', 'B', 'C')),
                 ButtonNum(3, listOf('D', 'E', 'F')),
                 ButtonNum(4, listOf('G', 'H', 'I')),
@@ -62,25 +62,27 @@ open class ButtonNum(
         )
 
         fun list2(): List<Button> = listOf(
-                ButtonNum(1, listOf()),
-                ButtonNum(2, listOf()),
-                ButtonNum(3, listOf()),
-                ButtonNum(4, listOf()),
-                ButtonNum(5, listOf()),
-                ButtonNum(6, listOf()),
-                ButtonNum(7, listOf()),
-                ButtonNum(8, listOf()),
-                ButtonNum(9, listOf()),
+                ButtonNum(1),
+                ButtonNum(2),
+                ButtonNum(3),
+                ButtonNum(4),
+                ButtonNum(5),
+                ButtonNum(6),
+                ButtonNum(7),
+                ButtonNum(8),
+                ButtonNum(9),
                 ButtonDot(),
-                ButtonNum(0, listOf(), { text, number ->
-                    if (text.firstOrNull()?.toInt() ?: 0 == number) {
-                        text
-                    } else {
-                        text.plus(number)
-                    }
-                }),
+                ButtonNum(0),
                 ButtonDel()
         )
+
+        private fun plus(text: String, number: Int): String {
+            return if (text.length >= 15 || text.contains('.') && text.substringAfter('.').length == 4) {
+                text
+            } else {
+                text.plus(number)
+            }
+        }
     }
 }
 

@@ -7,9 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.codezfox.exchangeratesmvp.R
 
 class NumPadView : LinearLayout {
@@ -21,7 +19,7 @@ class NumPadView : LinearLayout {
             editChange?.invoke(value)
         }
 
-    val numPadAdapter = NumPadAdapter(ButtonNum.list2(), ::onClickNumPad,::onLongClickNumPad, ::onPlusMinus)
+    val numPadAdapter = NumPadAdapter(ButtonNum.list2(), ::onClickNumPad, ::onLongClickNumPad, ::onPlusMinus)
 
     constructor(context: Context) : super(context) {
         init(context)

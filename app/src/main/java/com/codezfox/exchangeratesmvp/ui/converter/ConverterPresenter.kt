@@ -39,15 +39,26 @@ class ConverterPresenter(
     }
 
     fun input(text: String) {
-        val input = text.toDoubleOrNull() ?: 0.0
+        val fractionalPart = text.substringAfter(".")
+        if (text.contains(".") && fractionalPart.length > 4) {
+            return
+        }
+        val input = text.replace(" ", "").toDoubleOrNull() ?: 0.0
         val list = rateCurrency.map {
             val value = input * currency.rate.nb / it.rate.nb * it.currency.amount.toDouble() / currency.currency.amount.toDouble()
             var sa = Currency.rateForUI(value, it.currency.scale, false)
-            val lastOrNull = text.lastOrNull()
-            if ((lastOrNull == '.' || lastOrNull == '0') && currency == it) {
-                //todo 10000000 format
-                sa = text
+
+            if (currency == it && text.contains('.')) {
+                val lastOrNull = text.lastOrNull()
+                if (lastOrNull == '.') {
+                    sa += lastOrNull
+                }
+                val fractionalPart = text.substringAfter(".")
+                if (fractionalPart.lastOrNull() == '0') {
+                    sa += (if (sa.contains('.')) "" else ".") + fractionalPart.substringAfter(sa.substringAfter("."))
+                }
             }
+
             ConverterRate(it, sa, it.currency == currency.currency)
         }
         viewState.show(list)
