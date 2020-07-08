@@ -14,6 +14,7 @@
         style="@style/ToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="?attr/actionBarSize"
         app:contentInsetStartWithNavigation="0dp"
         app:elevation="0dp"
         app:navigationIcon="@drawable/ic_arrow_back_24dp"

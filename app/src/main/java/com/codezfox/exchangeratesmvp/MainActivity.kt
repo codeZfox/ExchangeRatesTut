@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
+import com.codezfox.exchangeratesmvp.ui._base.BackAware
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -29,8 +30,18 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         setContentView(frameLayout)
 
         if (savedInstanceState == null) {
-            router.newRootScreen(Screens.BestRates())
+            router.newRootScreen(Screens.Main())
         }
+    }
+
+    override fun onBackPressed() {
+        supportFragmentManager.findFragmentById(R.id.container)
+                .let { fragment ->
+                    if (fragment !is BackAware || !fragment.onBackPressed()) {
+                        super.onBackPressed()
+                    }
+                }
+
     }
 
     override fun onResumeFragments() {

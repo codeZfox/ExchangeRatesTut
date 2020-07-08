@@ -34,7 +34,6 @@ class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView,
     override lateinit var presenter: BestRatesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.screen_best_rates, container, false)
     }
 
@@ -57,26 +56,6 @@ class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView,
         textViewLastDateData.visibleOrGone(date != null)
         if (date != null) {
             textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu?.add(0, 0, 0, getString(R.string.currency_converter))?.also {
-            it.setShowAsAction(SHOW_AS_ACTION_ALWAYS)
-            it.setIcon(context!!.resources.getDrawable(R.drawable.ic_calculator).also { drawable ->
-                DrawableCompat.setTint(DrawableCompat.wrap(drawable), toolbar.context!!.getDefaultThemeColor(android.R.attr.textColorPrimary))
-            })
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            0 -> {
-                getRouter().navigateTo(Screens.Converter())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

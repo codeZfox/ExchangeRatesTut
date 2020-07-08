@@ -56,7 +56,7 @@ class ConverterFragment : BaseMvpFragment(), ConverterView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         toolbar.setTitle(R.string.currency_converter)
-        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         adapter.register(ConverterViewBinder({
             presenter.selectCurrency(it)
