@@ -18,7 +18,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
     }
 
     override fun saveBestRates(rates: List<BestRate>) {
-        rateDao.deleteBestRates()
+//        rateDao.deleteBestRates()
         rateDao.insertBestRates(rates)
     }
 

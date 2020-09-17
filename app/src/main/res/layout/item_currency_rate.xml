@@ -15,9 +15,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
         android:background="@color/colorGrayLight"
+        android:src="@drawable/ic_currency_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_currency_default"
         />
 
     <LinearLayout
@@ -103,6 +103,18 @@
         tools:text="2.1575"
         />
 
+
+    <TextView
+        android:id="@+id/textNbDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewNbDiff"
+        app:layout_constraintTop_toBottomOf="@id/textViewNbDiff"
+        tools:text="сент. 17"
+        />
+
     <TextView
         android:id="@+id/textViewNbDiff"
         android:layout_width="wrap_content"
@@ -119,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="textViewNbDiff,textViewNb,textViewSell,textViewBuy"
+        app:constraint_referenced_ids="textNbDate,textViewNbDiff,textViewNb,textViewSell,textViewBuy"
         />
 
     <LinearLayout
@@ -127,6 +139,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/colorGrayLight"
         android:gravity="center"
@@ -191,7 +204,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="textViewBCSERoot,linearLayout"
+        app:constraint_referenced_ids="textViewBCSERoot,linearLayout, textViewBCSERoot"
         />
 
 </android.support.constraint.ConstraintLayout>
