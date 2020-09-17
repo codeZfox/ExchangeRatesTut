@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.di
 
 import com.codezfox.exchangeratesmvp.BuildConfig
-import com.codezfox.exchangeratesmvp.data.network.ApiProvider
+import com.codezfox.exchangeratesmvp.data.network.ApiProviderImpl
 import com.codezfox.exchangeratesmvp.data.network.FinanceApi
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepositoryImpl
@@ -15,7 +15,7 @@ import java.util.*
 
 val serverModule = Kodein.Module("serverModule") {
 
-    bind<FinanceApi>() with factory { baseUrl: String, gson: Gson -> ApiProvider(baseUrl, gson).get() }
+    bind<FinanceApi>() with factory { baseUrl: String, gson: Gson -> ApiProviderImpl(baseUrl, gson).get() }
 
     bind<Gson>() with provider {
         GsonBuilder()
