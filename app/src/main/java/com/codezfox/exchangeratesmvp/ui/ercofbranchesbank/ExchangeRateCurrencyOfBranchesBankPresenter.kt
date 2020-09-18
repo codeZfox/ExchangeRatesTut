@@ -31,7 +31,7 @@ class ExchangeRateCurrencyOfBranchesBankPresenter(
     private var list: List<BranchWithExchangeRate> = emptyList()
 
     override fun requestFactory(page: Int): Single<PageContent<BranchWithExchangeRate>> {
-        val toCurrency = Currency("BYN", "", "", "", "", "", "", "", "", 0)
+        val toCurrency = Currency("BYN", "", "", "", "", "", "", "", "", 0, 0)
         return interactor.loadBanksRates(bank, currency, toCurrency, sort)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { (list, date, _) ->

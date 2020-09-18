@@ -17,7 +17,7 @@ class ConverterPresenter(
 
     private var rateCurrency: List<BestRateCurrency> = emptyList()
     private var currency: BestRateCurrency = BestRateCurrency(BestRate("BYN", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, null, 1.0, null, 0.0, "BYN"),
-            Currency("BYN", "Белорусский рубль", "белорусский рубль", "рубль", "BYN", "", "http://img.tyt.by/i/icons/android/new/BYN.png", "1", "1", 4))
+            Currency("BYN", "Белорусский рубль", "белорусский рубль", "рубль", "BYN", "", "http://img.tyt.by/i/icons/android/new/BYN.png", "1", "1", 4, 0))
 //    private lateinit var rateUsd: BestRate
 
     override fun onFirstViewAttach() {

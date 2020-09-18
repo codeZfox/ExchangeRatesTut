@@ -14,7 +14,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
 
     override fun saveCurrencies(currencies: List<Currency>) {
         currencyDao.deleteCurrencies()
-        currencyDao.insertCurrency(currencies)
+        currencyDao.insertCurrency(currencies.mapIndexed { index, currency ->  currency.copy(order = index) })
     }
 
     override fun saveBestRates(rates: List<BestRate>) {
@@ -23,7 +23,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
     }
 
     override fun getBestRatesCurrencies(): Single<List<BestRateCurrency>> {
-        return rateDao.getBestRatesCurrencies()
+        return rateDao.getBestRatesCurrencies().map { it.sortedBy { it.currency.order } }
     }
 
     override fun saveBanksRates(rates: List<BankRate>) {

@@ -20,7 +20,8 @@ data class Currency(
         val flag: String, // "http://img.tyt.by/i/icons/android/new/USD.png",
         val amount: String, // "1",
         val status: String, // "1",
-        val scale: Int // "4",
+        val scale: Int, // "4",
+        val order: Int
 
 ) : Serializable {
 

@@ -6,6 +6,7 @@ import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRe
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
+import com.codezfox.exchangeratesmvp.data.room.MIGRATION_6_7
 import com.codezfox.paginator.NetworkManager
 import org.kodein.di.Kodein
 import org.kodein.di.android.ActivityRetainedScope
@@ -24,9 +25,9 @@ val appModule = Kodein.Module("appModule") {
     bind<PreferencesRepository>() with singleton { PreferencesRepositoryImpl(instance()) }
 
     bind() from eagerSingleton {
-        Room.databaseBuilder(instance(),
-                RoomDatabase::class.java, "exchangerates.db")
-                .fallbackToDestructiveMigration()
+        Room.databaseBuilder(instance(), RoomDatabase::class.java, "exchangerates.db")
+                .addMigrations(MIGRATION_6_7)
+                .allowMainThreadQueries()
                 .build()
     }
 
