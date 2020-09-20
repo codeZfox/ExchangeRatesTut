@@ -51,10 +51,10 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
                 textViewBCSERoot.gone()
 
-                textViewNbDiff.visibleOrInvisible(rate.nb_diff != 0.0)
+                textViewNbDiff.visibleOrGone(rate.nb_diff != 0.0)
                 textViewNbDiff.setTextColor(resources.getColor(if (rate.nb_diff >= 0) R.color.colorGreen else R.color.colorRed))
                 textViewNbDiff.text = Currency.rateDiffForUI(rate.nb_diff, scale)
-                textNbDate.visibleOrInvisible(rate.nb_diff != 0.0)
+                textNbDate.visibleOrGone(true)
                 textNbDate.text = String.format(Locale("ru"), "%1\$tb %1\$te", rate.nb_date)
 
             } else {
