@@ -16,9 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="2e988f6cd7c45a6253b9c3d6d907fe6fabb49475" />
+
         <activity android:name="com.codezfox.exchangeratesmvp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

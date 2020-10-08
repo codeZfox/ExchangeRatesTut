@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 androidExtensions {
     experimental = true
@@ -45,9 +46,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.26.1-eap13"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.26.1-eap13"
 
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-        transitive = true
-    }
+    // Firebase
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.6.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:17.2.2'
 
     //AndroidX
 //    implementation 'com.google.android.material:material:1.2.1'
