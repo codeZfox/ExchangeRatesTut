@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:numpad="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@android:color/background_light"
-    android:orientation="vertical"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/ToolbarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize"
-        app:contentInsetStartWithNavigation="0dp"
-        app:elevation="0dp"
-        app:navigationIcon="@drawable/ic_arrow_back_24dp"
-        />
+    <data>
+
+        <variable
+            name="adapter"
+            type="com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.codezfox.exchangeratesmvp.ui.converter.ConverterViewModel" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:animateLayoutChanges="true"
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
 
-        <include layout="@layout/layout_last_date_data" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarStyle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            numpad:itemCount="20"
-            />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?attr/actionBarSize"
+            app:title="@string/currency_converter"
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            app:navigationIcon="@drawable/ic_arrow_back_24dp" />
 
-
-        <com.niveler.numpad.NumPadView
-            android:id="@+id/numPad"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_gravity="center"
-            android:background="@color/colorGrayLight"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_last_date_data" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:adapter="@{adapter}"
+                app:items="@{viewModel.items}"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:itemCount="20" />
+
+
+            <com.niveler.numpad.NumPadView
+                android:id="@+id/numPad"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:background="@color/colorGrayLight" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

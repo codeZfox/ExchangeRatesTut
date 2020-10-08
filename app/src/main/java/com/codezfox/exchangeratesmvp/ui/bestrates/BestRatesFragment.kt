@@ -1,40 +1,38 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.menu.MenuBuilder
-import android.view.*
-import android.view.MenuItem.SHOW_AS_ACTION_ALWAYS
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.Screens
-import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
-import com.codezfox.exchangeratesmvp.extensions.*
-import com.codezfox.extensions.visibleOrGone
-import kotlinx.android.synthetic.main.layout_last_date_data.*
+import com.codezfox.exchangeratesmvp.databinding.ScreenBestRatesBinding
+import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
+import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
+import com.codezfox.exchangeratesmvp.ui.base.viewModelLazyInstance
 import kotlinx.android.synthetic.main.screen_best_rates.*
-import me.drakeet.multitype.MultiTypeAdapter
-import me.drakeet.multitype.register
-import java.text.SimpleDateFormat
-import java.util.*
+import ru.terrakok.cicerone.Router
 
+class BestRatesFragment : BaseMvvmFragment<BestRatesViewModel, Router>() {
 
-class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView, BestRatesPresenter>(), BestRatesView {
+    override val viewModel: BestRatesViewModel by viewModelLazyInstance()
 
-    @ProvidePresenter
-    fun providePresenter(): BestRatesPresenter {
-        return BestRatesPresenter(getRouter(), BestRatesInteractor(get(), get(), get()), get())
+    private val adapter by lazy {
+        MultiAdapter().also { adapter ->
+            adapter.register(BestRateCurrency::class.java, BestRatesViewBinder {
+                viewModel.openCurrency(it)
+            })
+        }
     }
 
-    @InjectPresenter
-    override lateinit var presenter: BestRatesPresenter
+    private var binding: ScreenBestRatesBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.screen_best_rates, container, false)
+        return ScreenBestRatesBinding.inflate(inflater).also { binding ->
+            this.binding = binding
+            binding.viewModel = viewModel
+            binding.adapter = adapter
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,21 +40,9 @@ class BestRatesFragment : BasePaginatorFragment<BestRateCurrency, BestRatesView,
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
     }
 
-    override fun registerTypes(adapter: MultiTypeAdapter) {
-        super.registerTypes(adapter)
-        adapter.register(BestRatesViewBinder({
-            presenter.openCurrency(it)
-        }))
-    }
-
-    private var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
-
-    override fun showLastDateUpdated(date: Date?) {
-        //todo blink after backPressed
-        textViewLastDateData.visibleOrGone(date != null)
-        if (date != null) {
-            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
 }

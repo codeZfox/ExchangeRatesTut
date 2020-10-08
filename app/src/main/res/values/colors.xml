@@ -9,4 +9,7 @@
     <color name="colorRed">#cf0000</color>
     <color name="colorGreen">#00ae00</color>
 
+    <color name="colorGray">#aaa</color>
+
+
 </resources>

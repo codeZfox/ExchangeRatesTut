@@ -6,15 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
+import com.codezfox.exchangeratesmvp.ui.base.StringResources
+import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
+import com.codezfox.exchangeratesmvp.ui.base.setText
 import com.codezfox.extensions.gone
 import com.codezfox.extensions.onClick
 import com.codezfox.extensions.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_string.*
-import me.drakeet.multitype.ItemViewBinder
 
 
-data class DataString(val data: String, val type: TYPE) {
+data class DataString(val data: StringResources, val type: TYPE) : DisplayableItem {
+
+    override fun areItemsTheSame(): String {
+        return type.name
+    }
+
     enum class TYPE(@DrawableRes val imageId: Int?) {
         STRING(null),
         ADDRESS(R.drawable.ic_city),
@@ -38,7 +46,7 @@ class StringViewBinder(private val onClick: (string: DataString) -> Unit) : Item
                 imageView.gone()
             }
 
-            textView.text = dataString.data
+            textView.setText(dataString.data)
 
         }
     }

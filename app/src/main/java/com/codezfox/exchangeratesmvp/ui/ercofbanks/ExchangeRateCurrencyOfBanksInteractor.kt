@@ -1,40 +1,38 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.BankRate
+import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.repositories.currencyrates.CurrencyRatesRepository
 import com.codezfox.exchangeratesmvp.data.repositories.database.DatabaseRepository
 import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
-import io.reactivex.Single
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 
 class ExchangeRateCurrencyOfBanksInteractor(
-        private val repository: CurrencyRatesRepository,
-        private val preferencesRepository: PreferencesRepository,
-        private val database: DatabaseRepository
+    private val repository: CurrencyRatesRepository,
+    private val preferencesRepository: PreferencesRepository,
+    private val database: DatabaseRepository
 ) {
 
-    fun loadBanksRates(currency: Currency, sort: RateCurrencySort): Single<Triple<List<BankRate>, Date?, Boolean>> {
+    fun loadBanksRates(currency: Currency): Completable {
         return repository.getBanksRates(currency)
-//                .map { it.data ?: emptyList() }
-                .doOnSuccess {
-                    database.saveBanksRates(it)
-                    preferencesRepository.saveLastDateCurrency(currency, Date())
-                }
-                .map {
-                    Triple<List<BankRate>, Date?, Boolean>(it.sort(sort), null, false)
-                }
-                .onErrorResumeNext { exception ->
-                    database.getBanksRates(currency).map { list ->
-                        if (list.isEmpty()) {
-                            throw exception
-                        } else {
-                            val date: Date? = preferencesRepository.getLastDateCurrency(currency)
-                            Triple(list.sort(sort), date, true)
-                        }
-                    }
-                }
+            .doOnSuccess {
+                database.saveBanksRates(it)
+                preferencesRepository.saveLastDateCurrency(currency, Date())
+            }
+            .ignoreElement()
+            .subscribeOn(Schedulers.io())
+    }
+
+    fun getBanksRates(currency: Currency, sort: RateCurrencySort): Flowable<Pair<List<BankRate>, Date?>> {
+        return database.getBanksRates(currency)
+            .map { list ->
+                val date: Date? = preferencesRepository.getLastDateCurrency(currency)
+                list.sort(sort) to date
+            }
     }
 
     private fun List<BankRate>.sort(sort: RateCurrencySort): List<BankRate> {

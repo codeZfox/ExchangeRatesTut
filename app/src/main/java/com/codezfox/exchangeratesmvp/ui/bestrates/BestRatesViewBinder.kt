@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
+import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import com.codezfox.extensions.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_currency_rate.*
-import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 
@@ -74,7 +74,7 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
             }
 
             Picasso.with(itemView.context)
-                    .load(rateCurrency.currency?.flag)
+                    .load(rateCurrency.currency.flag)
                     .placeholder(R.drawable.ic_currency_default)
                     .into(imageViewCurrencyFlag)
 

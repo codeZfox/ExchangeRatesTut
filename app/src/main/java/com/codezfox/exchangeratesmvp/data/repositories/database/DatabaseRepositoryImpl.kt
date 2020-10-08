@@ -2,9 +2,9 @@ package com.codezfox.exchangeratesmvp.data.repositories.database
 
 import com.codezfox.exchangeratesmvp.data.models.*
 import com.codezfox.exchangeratesmvp.data.room.RoomDatabase
-import io.reactivex.Single
+import io.reactivex.Flowable
 
-class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
+class DatabaseRepositoryImpl(private val roomDatabase: RoomDatabase) : DatabaseRepository {
 
     private val currencyDao = roomDatabase.currencyDao()
     private val rateDao = roomDatabase.rateDao()
@@ -22,7 +22,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         rateDao.insertBestRates(rates)
     }
 
-    override fun getBestRatesCurrencies(): Single<List<BestRateCurrency>> {
+    override fun getBestRatesCurrencies(): Flowable<List<BestRateCurrency>> {
         return rateDao.getBestRatesCurrencies().map { it.sortedBy { it.currency.order } }
     }
 
@@ -31,7 +31,7 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         rateBankDao.insertBankRates(rates)
     }
 
-    override fun getBanksRates(currency: Currency): Single<List<BankRate>> {
+    override fun getBanksRates(currency: Currency): Flowable<List<BankRate>> {
         return rateBankDao.getBankRates(currency.id)
     }
 
@@ -47,11 +47,14 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         branchDao.updateBranches(list)
     }
 
-    override fun saveExchangeRates(branches: List<ExchangeRate>) {
-        branchDao.insertExchangeRates(branches)
+    override fun saveExchangeRates(exchangeRates: List<ExchangeRate>, branches: List<RatesOfBranch>) {
+       roomDatabase.runInTransaction {
+           branchDao.insertExchangeRates(exchangeRates)
+           updateBranches(branches)
+       }
     }
 
-    override fun getBranchCurrencyRates(branchId: String): Single<List<CurrencyExchangeRate>> {
+    override fun getBranchCurrencyRates(branchId: String): Flowable<List<CurrencyExchangeRate>> {
         return branchDao.getCurrencyExchangeRate(branchId)
     }
 
@@ -59,11 +62,11 @@ class DatabaseRepositoryImpl(roomDatabase: RoomDatabase) : DatabaseRepository {
         branchDao.insertExchangeRateBranch(branches)
     }
 
-    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchWithExchangeRate>> {
+    override fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Flowable<List<BranchWithExchangeRate>> {
         return branchDao.getBranchesCurrencies(bankId, fromCurrency, toCurrency)
     }
 
-    override fun getBankById(bankId: String): Single<Bank> {
+    override fun getBankById(bankId: String): Flowable<Bank> {
         return rateBankDao.getBankById(bankId).map { it.bank }
     }
 

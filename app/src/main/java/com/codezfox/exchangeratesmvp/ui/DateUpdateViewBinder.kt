@@ -5,25 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
+import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
+import com.codezfox.exchangeratesmvp.ui.bestrates.BindingAdapters
 import com.codezfox.extensions.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_last_date_data.*
-import me.drakeet.multitype.ItemViewBinder
-import java.text.SimpleDateFormat
 import java.util.*
 
 
-data class DateUpdate(val date: Date)
+data class DateUpdate(val date: Date):DisplayableItem{
+    override fun areItemsTheSame(): String {
+        return date.time.toString()
+    }
+}
 
 class DateUpdateViewBinder : ItemViewBinder<DateUpdate, DateUpdateViewBinder.ViewHolder>() {
 
-
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
 
         fun bindView(dateUpdate: DateUpdate) {
             textViewLastDateData.visible()
-            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(dateUpdate.date)
+            BindingAdapters.bindLastDate(textViewLastDateData, dateUpdate.date) // todo move to binding
         }
     }
 

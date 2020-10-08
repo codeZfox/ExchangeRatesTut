@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.data.repositories.database
 
 import com.codezfox.exchangeratesmvp.data.models.*
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 interface DatabaseRepository {
 
@@ -9,25 +9,25 @@ interface DatabaseRepository {
 
     fun saveBestRates(rates: List<BestRate>)
 
-    fun getBestRatesCurrencies(): Single<List<BestRateCurrency>>
+    fun getBestRatesCurrencies(): Flowable<List<BestRateCurrency>>
 
     fun saveBanksRates(rates: List<BankRate>)
 
-    fun getBanksRates(currency: Currency): Single<List<BankRate>>
+    fun getBanksRates(currency: Currency): Flowable<List<BankRate>>
 
     fun saveBranches(branches: List<Branch>)
 
     fun updateBranches(branches: List<RatesOfBranch>)
 
-    fun saveExchangeRates(branches: List<ExchangeRate>)
+    fun saveExchangeRates(exchangeRates: List<ExchangeRate>, branches: List<RatesOfBranch>)
 
-    fun getBranchCurrencyRates(branchId: String): Single<List<CurrencyExchangeRate>>
+    fun getBranchCurrencyRates(branchId: String): Flowable<List<CurrencyExchangeRate>>
 
     fun saveExchangeRateBranch(branches: List<ExchangeRateBranch>)
 
-    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Single<List<BranchWithExchangeRate>>
+    fun getBranchCurrencyRates(bankId: String, fromCurrency: String, toCurrency: String): Flowable<List<BranchWithExchangeRate>>
 
-    fun getBankById(bankId: String): Single<Bank>
+    fun getBankById(bankId: String): Flowable<Bank>
 
     fun insertService(list: List<Service>)
 

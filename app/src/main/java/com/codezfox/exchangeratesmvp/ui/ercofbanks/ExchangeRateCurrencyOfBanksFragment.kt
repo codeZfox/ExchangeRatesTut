@@ -1,101 +1,72 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.BankRate
-import com.codezfox.exchangeratesmvp.extensions.*
-import android.support.annotation.ColorInt
-import com.codezfox.exchangeratesmvp.ui._base.BasePaginatorFragment
-import com.codezfox.extensions.*
+import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.databinding.ScreenErcBanksBinding
+import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
+import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
+import com.codezfox.exchangeratesmvp.ui.base.viewModelLazyFactory
+import com.codezfox.extensions.onClick
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
-import kotlinx.android.synthetic.main.layout_last_date_data.*
-import kotlinx.android.synthetic.main.screen_banks_rates.toolbar
-import me.drakeet.multitype.MultiTypeAdapter
-import me.drakeet.multitype.register
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.android.synthetic.main.screen_erc_banks.*
+import ru.terrakok.cicerone.Router
 
 
-class ExchangeRateCurrencyOfBanksFragment : BasePaginatorFragment<BankRate, ExchangeRateCurrencyOfBanksView, ExchangeRateCurrencyOfBanksPresenter>(), ExchangeRateCurrencyOfBanksView {
+class ExchangeRateCurrencyOfBanksFragment : BaseMvvmFragment<ExchangeRateCurrencyOfBanksViewModel, Router>() {
 
-    @ProvidePresenter
-    fun providePresenter(): ExchangeRateCurrencyOfBanksPresenter {
-        val currency = arguments?.getSerializable("Currency") as Currency
-        val interactor = ExchangeRateCurrencyOfBanksInteractor(get(), get(), get())
-        return ExchangeRateCurrencyOfBanksPresenter(currency, interactor, get(), getRouter())
+    override val viewModel: ExchangeRateCurrencyOfBanksViewModel by viewModelLazyFactory {
+        arguments?.getSerializable("Currency") as Currency
     }
 
-    @InjectPresenter
-    override lateinit var presenter: ExchangeRateCurrencyOfBanksPresenter
+    private val adapter by lazy {
+        MultiAdapter().also { adapter ->
+            adapter.register(BankRate::class.java, ExchangeRateOfBankViewBinder {
+                viewModel.openBankExchangeRates(it.bank) //todo maybe
+            })
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.screen_banks_rates, container, false)
+        return ScreenErcBanksBinding.inflate(inflater).also { binding ->
+            binding.viewModel = viewModel
+            binding.adapter = adapter
+
+            viewModel.scrollToTop
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    binding.recyclerView.smoothScrollToPosition(0)
+                },{
+                    it.printStackTrace()
+                })
+                .addDisposable()
+        }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
+        toolbar.setNavigationOnClickListener { viewModel.onBackPressed() } //todo maybe
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         textViewBuy.onClick {
-            presenter.changeSort(RateCurrencySort.BUY)
+            viewModel.changeSort(RateCurrencySort.BUY) //todo maybe
         }
 
         textViewSell.onClick {
-            presenter.changeSort(RateCurrencySort.SELL)
+            viewModel.changeSort(RateCurrencySort.SELL) //todo maybe
         }
 
         swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
 
-    }
-
-    override fun registerTypes(adapter: MultiTypeAdapter) {
-        super.registerTypes(adapter)
-        adapter.register(ExchangeRateOfBankViewBinder({
-            presenter.openBankExchangeRates(it.bank)
-        }))
-    }
-
-
-    var simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
-
-    override fun showLastDateUpdated(date: Date?) {
-        textViewLastDateData.visibleOrGone(date != null)
-        if (date != null) {
-            textViewLastDateData.text = "Последнее обновление: " + simpleDateFormat.format(date)
-        }
-    }
-
-    private val d: Int by lazy {
-        context!!.getDefaultThemeColor(android.R.attr.textColorSecondary)
-    }
-
-    override fun showSortType(sort: RateCurrencySort) {
-        when (sort) {
-            RateCurrencySort.BUY -> {
-                textViewBuy.setTextColor(resources.getColor(R.color.colorRed))
-                textViewSell.setTextColor(d)
-            }
-            RateCurrencySort.SELL -> {
-                textViewBuy.setTextColor(d)
-                textViewSell.setTextColor(resources.getColor(R.color.colorRed))
-            }
-        }
-    }
-
-    override fun showCurrencyInfo(currency: Currency) {
-        toolbar.title = currency.name
     }
 
 }

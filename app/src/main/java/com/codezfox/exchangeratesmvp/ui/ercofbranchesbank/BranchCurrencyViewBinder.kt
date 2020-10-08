@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import com.codezfox.extensions.isToday
 import com.codezfox.extensions.onClick
 import com.codezfox.extensions.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bank_rate.*
-import me.drakeet.multitype.ItemViewBinder
 import java.util.*
 
 

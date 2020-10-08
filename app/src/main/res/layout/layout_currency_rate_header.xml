@@ -1,39 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorGrayLight"
-    android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingTop="5dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="5dp"
-    tools:showIn="@layout/screen_banks_rates">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-    <TextView
-        android:id="@+id/textViewHeader"
-        android:layout_width="0dp"
+        <variable
+            name="sort"
+            type="com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Банк" />
+        android:background="@color/colorGrayLight"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="5dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="5dp">
 
 
-    <TextView
-        android:id="@+id/textViewBuy"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:minWidth="66dp"
-        android:text="Купить" />
+        <TextView
+            android:id="@+id/textViewHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Банк" />
 
-    <TextView
-        android:id="@+id/textViewSell"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:minWidth="66dp"
-        android:text="Продать" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textViewBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="66dp"
+            android:text="Купить"
+            app:sortTypeBuy="@{sort}" />
+
+        <TextView
+            android:id="@+id/textViewSell"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="66dp"
+            android:text="Продать"
+            app:sortTypeSell="@{sort}" />
+
+    </LinearLayout>
+</layout>

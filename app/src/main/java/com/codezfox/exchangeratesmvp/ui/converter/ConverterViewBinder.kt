@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.extensions.*
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
+import com.codezfox.extensions.onClick
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_converter.*
-import me.drakeet.multitype.ItemViewBinder
 
 
 class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> Unit) : ItemViewBinder<ConverterRate, ConverterViewBinder.ViewHolder>() {

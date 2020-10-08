@@ -27,13 +27,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(path: ':extensions')
-    implementation project(path: ':paginator')
 
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -50,13 +53,11 @@ dependencies {
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:1.1.3"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     //DI
-    implementation "org.kodein.di:kodein-di-generic-jvm:$rootProject.kodeinVersion"
+    implementation "org.kodein.di:kodein-di-generic-jvm:6.1.0"
     implementation "org.kodein.di:kodein-di-framework-android-support:$rootProject.kodeinVersion"
-
-    implementation "com.arello-mobile:moxy-app-compat:$rootProject.moxyVersion"
-    kapt "com.arello-mobile:moxy-compiler:$rootProject.moxyVersion"
 
     //Navigation
     implementation "ru.terrakok.cicerone:cicerone:$rootProject.ciceroneVersion"

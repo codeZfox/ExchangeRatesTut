@@ -5,13 +5,13 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.codezfox.exchangeratesmvp.data.models.BankRate
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 @Dao
 interface RateBankDao {
 
     @Query("SELECT * FROM BankRate WHERE fromCurrency == :currency")
-    fun getBankRates(currency: String): Single<List<BankRate>>
+    fun getBankRates(currency: String): Flowable<List<BankRate>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,6 +22,6 @@ interface RateBankDao {
     fun deleteRates()
 
     @Query("SELECT * FROM BankRate WHERE bankId == :bankId")
-    fun getBankById(bankId: String): Single<BankRate>
+    fun getBankById(bankId: String): Flowable<BankRate>
 
 }

@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.ExchangeRate
-import com.codezfox.extensions.*
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
+import com.codezfox.extensions.onClick
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_exchange_rate.*
-import me.drakeet.multitype.ItemViewBinder
-import java.util.*
 
 
 class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -> Unit) : ItemViewBinder<CurrencyExchangeRate, ExchangeRateViewBinder.ViewHolder>() {

@@ -1,27 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@android:color/background_light"
-    android:orientation="vertical"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/ToolbarStyle"
+    <data>
+
+        <variable
+            name="adapter"
+            type="com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.codezfox.exchangeratesmvp.ui.bestrates.BestRatesViewModel" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:elevation="0dp"
-        app:title="@string/exchange_rate"
-        />
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
 
-    <include layout="@layout/layout_last_date_data" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:elevation="0dp"
+            app:title="@string/exchange_rate" />
 
-    <include layout="@layout/layout_best_currency_rate_header" />
 
-    <include layout="@layout/fragment_list_paginator" />
+        <include
+            layout="@layout/layout_last_date_data"
+            app:lastDate="@{viewModel.lastDateUpdated}"
+            app:visibleGone="@{viewModel.isVisibleLastDateUpdated}" />
 
-</LinearLayout>
+        <include layout="@layout/layout_best_currency_rate_header" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{()->viewModel.reload()}"
+            app:refreshing="@{viewModel.isRefresh}">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:adapter="@{adapter}"
+                    app:items="@{viewModel.items}"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+                <include
+                    layout="@layout/layout_emty"
+                    app:emptyData="@{viewModel.empty}"
+                    app:visibleGone="@{viewModel.error==null&amp;&amp;viewModel.empty!=null}" />
+
+                <include
+                    layout="@layout/layout_error"
+                    app:error="@{viewModel.error}"
+                    app:visibleGone="@{viewModel.error!=null&amp;&amp;viewModel.items.size()==0}" />
+            </FrameLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

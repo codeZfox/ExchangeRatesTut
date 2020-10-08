@@ -1,17 +1,18 @@
 package com.codezfox.exchangeratesmvp.ui.main
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.Screens
-import com.codezfox.exchangeratesmvp.ui._base.BackAware
-import com.codezfox.exchangeratesmvp.ui._base.BaseMvpFragment
+import com.codezfox.exchangeratesmvp.ui.base.BackAware
 import kotlinx.android.synthetic.main.screen_main.*
 
 
-class MainFragment : BaseMvpFragment(), BackAware {
+class MainFragment : Fragment(), BackAware {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.screen_main, container, false)
     }

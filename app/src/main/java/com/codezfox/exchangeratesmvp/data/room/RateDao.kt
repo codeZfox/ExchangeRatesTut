@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query
 import com.codezfox.exchangeratesmvp.data.models.BestRate
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
@@ -20,6 +21,6 @@ interface RateDao {
     fun deleteBestRates()
 
     @Query("SELECT BestRate.*, Currency.* FROM BestRate INNER JOIN Currency ON BestRate.currencyCode = Currency.id")
-    fun getBestRatesCurrencies(): Single<List<BestRateCurrency>>
+    fun getBestRatesCurrencies(): Flowable<List<BestRateCurrency>>
 
 }

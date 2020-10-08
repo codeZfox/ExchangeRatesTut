@@ -4,15 +4,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.codezfox.exchangeratesmvp.R
-import com.codezfox.extensions.dp
-import com.codezfox.extensions.setHeight
+import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
+import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
-import me.drakeet.multitype.ItemViewBinder
 
-data class CurrencyRatesHeader(val header: String)
+data class CurrencyRatesHeader(val header: String) : DisplayableItem {
+    override fun areItemsTheSame(): String {
+        return header
+    }
+}
 
 class CurrencyRatesHeaderViewBinder : ItemViewBinder<CurrencyRatesHeader, CurrencyRatesHeaderViewBinder.ViewHolder>() {
 

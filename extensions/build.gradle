@@ -35,6 +35,4 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
 
-    implementation "com.arello-mobile:moxy-app-compat:$rootProject.moxyVersion"
-//    kapt "com.arello-mobile:moxy-compiler:$rootProject.moxyVersion"
 }
