@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.di
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Branch
 import com.codezfox.exchangeratesmvp.data.models.Currency

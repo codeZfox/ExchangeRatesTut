@@ -16,7 +16,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/zvh_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,15 +41,13 @@
             app:visibleGone="@{error.description!=null}"
             tools:text="string/data_not_founddsata_not_founddata_not_found" />
 
-        <android.support.design.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/zvh_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:onClick="@{()->error.onClick.invoke()}"
             android:text="@{error.buttonName}"
-            app:backgroundTint="?attr/colorPrimary"
-            app:rippleColor="?attr/colorPrimaryDark"
             app:visibleGone="@{error.buttonName!=null}"
             tools:text="@string/repeat" />
     </LinearLayout>

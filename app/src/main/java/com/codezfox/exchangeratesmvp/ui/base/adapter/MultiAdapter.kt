@@ -1,13 +1,20 @@
 package com.codezfox.exchangeratesmvp.ui.base.adapter
 
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 
-open class MultiAdapter(diffCallback: DiffUtil.ItemCallback<DisplayableItem> = DefaultDiffCallback()) : ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(diffCallback) {
+open class MultiAdapter(
+    diffCallback: DiffUtil.ItemCallback<DisplayableItem> = DefaultDiffCallback(),
+    private val onCurrentListChanged: ((previousList: List<DisplayableItem>, currentList: List<DisplayableItem>) -> Unit)? = null
+) : ListAdapter<DisplayableItem, RecyclerView.ViewHolder>(diffCallback) {
+
+    override fun onCurrentListChanged(previousList: List<DisplayableItem>, currentList: List<DisplayableItem>) {
+        onCurrentListChanged?.invoke(previousList, currentList)
+    }
 
     private val binders: MutableList<Pair<Class<*>, ItemViewBinder<*, *>>> = mutableListOf()
 
@@ -16,8 +23,8 @@ open class MultiAdapter(diffCallback: DiffUtil.ItemCallback<DisplayableItem> = D
     }
 
     fun <T : DisplayableItem, VH : RecyclerView.ViewHolder> register(
-            clazz: Class<T>,
-            binder: ItemViewBinder<T, VH>
+        clazz: Class<T>,
+        binder: ItemViewBinder<T, VH>
     ) {
         binders.add(clazz to binder)
     }

@@ -16,15 +16,12 @@
 
 package org.jetbrains.anko
 
-import android.R
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
 import kotlin.DeprecationLevel.ERROR

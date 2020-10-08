@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.converter
 
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.codezfox.exchangeratesmvp.data.models.BestRate
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency

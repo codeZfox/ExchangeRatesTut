@@ -1,6 +1,7 @@
 package com.codezfox.exchangeratesmvp.ui.base.adapter
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
+
 
 open class DefaultDiffCallback : DiffUtil.ItemCallback<DisplayableItem>() {
     override fun areItemsTheSame(

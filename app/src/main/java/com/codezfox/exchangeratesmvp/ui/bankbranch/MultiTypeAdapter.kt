@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.bankbranch
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import me.drakeet.multitype.MultiTypeAdapter
 
 //todo maybe delete file

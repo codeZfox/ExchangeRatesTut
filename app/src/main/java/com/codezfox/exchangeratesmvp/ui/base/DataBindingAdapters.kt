@@ -1,11 +1,11 @@
 package com.codezfox.exchangeratesmvp.ui.base
 
-import android.databinding.BindingAdapter
-import android.databinding.BindingMethod
-import android.databinding.BindingMethods
+import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.widget.ImageView
 import android.widget.TextView
 import org.w3c.dom.Text

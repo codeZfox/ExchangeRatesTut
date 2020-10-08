@@ -2,12 +2,12 @@ package com.niveler.numpad
 
 import android.content.Context
 import android.os.Build
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import com.codezfox.exchangeratesmvp.R
 
 class NumPadView : LinearLayout {

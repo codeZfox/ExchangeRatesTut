@@ -2,8 +2,8 @@
 
 package com.codezfox.extensions
 
-import android.support.v4.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 

@@ -1,8 +1,8 @@
 package com.codezfox.exchangeratesmvp.data.models
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
 import java.io.Serializable
 

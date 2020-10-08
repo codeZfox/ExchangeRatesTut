@@ -1,15 +1,16 @@
 package com.codezfox.exchangeratesmvp.data.room
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.TypeConverters
-import android.arch.persistence.room.migration.Migration
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.codezfox.exchangeratesmvp.data.models.*
 
 
 @Database(entities = [Currency::class, BestRate::class, BankRate::class, Branch::class, ExchangeRate::class, Service::class, ExchangeRateBranch::class], version = 7)
 @TypeConverters(Converters::class)
-abstract class RoomDatabase : android.arch.persistence.room.RoomDatabase() {
+abstract class RoomDatabase : RoomDatabase() {
 
     abstract fun currencyDao(): CurrencyDao
 

@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.room
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.codezfox.exchangeratesmvp.data.models.Currency
 
 @Dao

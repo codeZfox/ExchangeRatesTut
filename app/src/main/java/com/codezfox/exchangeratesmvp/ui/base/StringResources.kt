@@ -1,9 +1,9 @@
 package com.codezfox.exchangeratesmvp.ui.base
 
 import android.os.Parcelable
-import android.support.annotation.IdRes
-import android.support.annotation.PluralsRes
-import android.support.annotation.StringRes
+import androidx.annotation.IdRes
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
 import kotlinx.android.parcel.Parcelize
 
 

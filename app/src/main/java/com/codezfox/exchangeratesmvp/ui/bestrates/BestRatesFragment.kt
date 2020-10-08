@@ -1,10 +1,10 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.databinding.ScreenBestRatesBinding
 import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment

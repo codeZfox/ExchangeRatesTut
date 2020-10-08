@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*

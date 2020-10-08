@@ -1,10 +1,10 @@
 package com.codezfox.exchangeratesmvp.data.room
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.codezfox.exchangeratesmvp.data.models.Schedule
-import java.util.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
 
 class Converters {
 

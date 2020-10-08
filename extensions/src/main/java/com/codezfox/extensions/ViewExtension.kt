@@ -2,12 +2,11 @@ package com.codezfox.extensions
 
 import android.content.Context
 import android.content.res.Resources
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 fun View.onClick(l: (v: View?) -> Unit) {

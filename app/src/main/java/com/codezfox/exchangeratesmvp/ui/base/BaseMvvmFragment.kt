@@ -1,14 +1,14 @@
 package com.codezfox.exchangeratesmvp.ui.base
 
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import com.codezfox.exchangeratesmvp.extensions.get
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.support.kodein
+import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.on
 import ru.terrakok.cicerone.BaseRouter
 import ru.terrakok.cicerone.Router

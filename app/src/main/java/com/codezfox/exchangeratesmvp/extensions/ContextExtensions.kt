@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.extensions
 
 import android.content.Context
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 
 
 @ColorInt

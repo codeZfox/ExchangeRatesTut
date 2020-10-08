@@ -1,8 +1,8 @@
 package com.codezfox.exchangeratesmvp
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.codezfox.exchangeratesmvp.ui.base.BackAware
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein

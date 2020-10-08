@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.BankRate
@@ -15,7 +15,6 @@ import com.codezfox.exchangeratesmvp.ui.bestrates.RetryListener
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
-import io.reactivex.subjects.PublishSubject
 import ru.terrakok.cicerone.Router
 import java.util.*
 
@@ -30,9 +29,6 @@ class ExchangeRateCurrencyOfBanksViewModel(
     val title = ObservableField<String>(currency.name)
 
     var sort = ObservableField(RateCurrencySort.BUY)
-
-    private val scrollToTopRelay = PublishSubject.create<Unit>()
-    val scrollToTop = scrollToTopRelay.hide()
 
     val items = ObservableField<List<BankRate>>()
     val isRefresh = ObservableBoolean(false)
@@ -50,15 +46,14 @@ class ExchangeRateCurrencyOfBanksViewModel(
                 interactor.getBanksRates(currency, sort)
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ (it, date) ->
+            .subscribe({ (list, date) ->
                 lastDateUpdated.set(date)
-                if (it.isEmpty()) {
+                if (list.isEmpty()) {
                     empty.set(EmptyData())
                 } else {
                     empty.set(null)
                 }
-                items.set(it)
-                scrollToTopRelay.onNext(Unit)
+                items.set(list)
             }, {
                 empty.set(null)
                 it.printStackTrace()
@@ -76,7 +71,8 @@ class ExchangeRateCurrencyOfBanksViewModel(
                 isVisibleLastDateUpdated.set(false)
                 isRefresh.set(false)
             }, { throwable ->
-                error.set(ErrorData(description = throwable?.message?:throwable.toString(), onClick = object : RetryListener {
+                error.set(ErrorData(description = throwable?.message
+                    ?: throwable.toString(), onClick = object : RetryListener {
                     override fun invoke() {
                         reload()
                     }

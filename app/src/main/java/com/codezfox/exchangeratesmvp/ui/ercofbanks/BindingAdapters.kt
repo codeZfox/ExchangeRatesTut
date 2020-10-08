@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.TextView
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.extensions.getDefaultThemeColor

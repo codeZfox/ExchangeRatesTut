@@ -1,9 +1,9 @@
 package com.codezfox.exchangeratesmvp.ui.base
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 
 fun TextView.setText(stringResources: StringResources) {
     this.text = this.getString(stringResources)

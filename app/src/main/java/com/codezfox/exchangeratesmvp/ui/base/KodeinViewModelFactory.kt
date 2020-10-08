@@ -2,18 +2,16 @@
 
 package com.codezfox.exchangeratesmvp.ui.base
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import org.kodein.di.generic.factory
 import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.Router
 
 inline fun <reified ViewModelT : BaseMvvmViewModel<R>, R : Router> BaseMvvmFragment<ViewModelT, R>.viewModelLazyInstance() =
     lazy {
-        ViewModelProviders
-            .of(this, object : ViewModelProvider.Factory {
+        ViewModelProvider(this, object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     return this@viewModelLazyInstance.kodein.run {
                         val viewModel by instance<ViewModelT>()
@@ -28,8 +26,7 @@ inline fun <reified ViewModelT : BaseMvvmViewModel<R>, R : Router> BaseMvvmFragm
     }
 
 inline fun <reified ViewModelT : BaseMvvmViewModel<R>, R : Router> BaseMvvmFragment<ViewModelT, R>.viewModelInstance() =
-    ViewModelProviders
-        .of(this, object : ViewModelProvider.Factory {
+    ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return this@viewModelInstance.kodein.run {
                     val viewModel by instance<ViewModelT>()

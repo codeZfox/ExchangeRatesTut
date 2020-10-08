@@ -1,6 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.models
 
-import android.arch.persistence.room.Embedded
+import androidx.room.Embedded
 import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
 
 data class BestRateCurrency(

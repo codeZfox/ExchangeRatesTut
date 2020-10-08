@@ -1,8 +1,8 @@
 package com.codezfox.exchangeratesmvp.ui.base
 
-import android.databinding.BindingAdapter
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
 import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
 
@@ -20,15 +20,19 @@ object BindingAdapters {
         view.visibility = if (visible) View.VISIBLE else View.INVISIBLE
     }
 
-    @BindingAdapter(value = ["app:items", "app:adapter"])
+    @BindingAdapter(value = ["app:items", "app:adapter", "app:scrollToTop"], requireAll = false)
     @JvmStatic
-    fun setItems(view: RecyclerView, items: List<DisplayableItem>?, adapter: MultiAdapter) {
+    fun setItems(view: RecyclerView, items: List<DisplayableItem>?, adapter: MultiAdapter, scrollToTop: Boolean?) {
         if (view.adapter != adapter) {
             view.adapter = adapter
         }
         view.adapter?.also {
 //            view.recycledViewPool.clear()
-            (it as MultiAdapter).submitList(items)
+            (it as MultiAdapter).submitList(items) {
+                if (scrollToTop == true) {
+//                    view.smoothScrollToPosition(0)
+                }
+            }
         }
     }
 //

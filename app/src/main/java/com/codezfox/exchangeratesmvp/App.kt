@@ -1,17 +1,15 @@
 package com.codezfox.exchangeratesmvp
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.codezfox.exchangeratesmvp.di.appModule
 import com.codezfox.exchangeratesmvp.di.serverModule
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.androidCoreModule
-import org.kodein.di.android.androidModule
-import org.kodein.di.android.support.androidSupportModule
+import org.kodein.di.android.x.androidXModule
 
-class App : Application(), KodeinAware {
+class App : MultiDexApplication(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
@@ -24,7 +22,7 @@ class App : Application(), KodeinAware {
         Kodein {
             import(serverModule)
             import(appModule)
-            import(androidSupportModule(this@App))
+            import(androidXModule(this@App))
         }
     }
 }

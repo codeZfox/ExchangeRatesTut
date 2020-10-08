@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.codezfox.exchangeratesmvp.R
 
 class EmptyData(

@@ -1,7 +1,7 @@
 package com.codezfox.exchangeratesmvp.data.models
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
+import androidx.room.Embedded
+import androidx.room.Entity
 import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
 
 @Entity(primaryKeys = ["fromCurrency", "bankId"])

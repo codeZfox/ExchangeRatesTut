@@ -1,6 +1,6 @@
 package com.niveler.numpad
 
-import android.support.annotation.DrawableRes
+import androidx.annotation.DrawableRes
 import com.codezfox.exchangeratesmvp.R
 
 sealed class Button(var process: (String) -> String, var process2: (String) -> String = { it })
