@@ -12,9 +12,15 @@ class DatabaseRepositoryImpl(private val roomDatabase: RoomDatabase) : DatabaseR
     private val branchDao = roomDatabase.branchDao()
     private val serviceDao = roomDatabase.serviceDao()
 
+    override fun runInTransaction(body: () -> Unit) {
+        roomDatabase.runInTransaction {
+            body.invoke()
+        }
+    }
+
     override fun saveCurrencies(currencies: List<Currency>) {
-        currencyDao.deleteCurrencies()
-        currencyDao.insertCurrency(currencies.mapIndexed { index, currency ->  currency.copy(order = index) })
+//        currencyDao.deleteCurrencies()
+        currencyDao.insertCurrency(currencies.mapIndexed { index, currency -> currency.copy(order = index) })
     }
 
     override fun saveBestRates(rates: List<BestRate>) {
@@ -47,11 +53,8 @@ class DatabaseRepositoryImpl(private val roomDatabase: RoomDatabase) : DatabaseR
         branchDao.updateBranches(list)
     }
 
-    override fun saveExchangeRates(exchangeRates: List<ExchangeRate>, branches: List<RatesOfBranch>) {
-       roomDatabase.runInTransaction {
-           branchDao.insertExchangeRates(exchangeRates)
-           updateBranches(branches)
-       }
+    override fun saveExchangeRates(exchangeRates: List<ExchangeRate>) {
+        branchDao.insertExchangeRates(exchangeRates)
     }
 
     override fun getBranchCurrencyRates(branchId: String): Flowable<List<CurrencyExchangeRate>> {
@@ -71,8 +74,8 @@ class DatabaseRepositoryImpl(private val roomDatabase: RoomDatabase) : DatabaseR
     }
 
     override fun insertService(list: List<Service>) {
-        serviceDao.insertService(list)
         serviceDao.deleteServices()
+        serviceDao.insertService(list)
     }
 
     override fun deleteServices() {

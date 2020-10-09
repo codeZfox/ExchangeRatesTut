@@ -44,7 +44,7 @@ class ExchangeRateCurrencyOfBanksFragment : BaseMvvmFragment<ExchangeRateCurrenc
             //todo magic scroll
             binding?.recyclerView?.let { recyclerView ->
                 val endIndex = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-                if (isEqual(previousList, currentList, endIndex)) {
+                if (isEqual(previousList.map { it.areItemsTheSame() }, currentList.map { it.areItemsTheSame() }, endIndex)) {
                     recyclerView.smoothScrollToPosition(0)
                 }
             }

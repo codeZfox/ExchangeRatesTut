@@ -5,6 +5,8 @@ import io.reactivex.Flowable
 
 interface DatabaseRepository {
 
+    fun runInTransaction(body: () -> Unit)
+
     fun saveCurrencies(currencies: List<Currency>)
 
     fun saveBestRates(rates: List<BestRate>)
@@ -19,7 +21,7 @@ interface DatabaseRepository {
 
     fun updateBranches(branches: List<RatesOfBranch>)
 
-    fun saveExchangeRates(exchangeRates: List<ExchangeRate>, branches: List<RatesOfBranch>)
+    fun saveExchangeRates(exchangeRates: List<ExchangeRate>)
 
     fun getBranchCurrencyRates(branchId: String): Flowable<List<CurrencyExchangeRate>>
 
