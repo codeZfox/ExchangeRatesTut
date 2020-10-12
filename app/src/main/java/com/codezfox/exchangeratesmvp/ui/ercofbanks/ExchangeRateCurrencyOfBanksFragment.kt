@@ -20,7 +20,6 @@ import ru.terrakok.cicerone.Router
 
 fun <T> isEqual(first: List<T>, second: List<T>, endIndex: Int = -1): Boolean {
 
-
     first.forEachIndexed { index, value ->
         if (second[index] != value) {
             return false
@@ -44,7 +43,7 @@ class ExchangeRateCurrencyOfBanksFragment : BaseMvvmFragment<ExchangeRateCurrenc
             //todo magic scroll
             binding?.recyclerView?.let { recyclerView ->
                 val endIndex = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-                if (isEqual(previousList.map { it.areItemsTheSame() }, currentList.map { it.areItemsTheSame() }, endIndex)) {
+                if (!isEqual(previousList.map { it.areItemsTheSame() }, currentList.map { it.areItemsTheSame() }, endIndex)) {
                     recyclerView.smoothScrollToPosition(0)
                 }
             }

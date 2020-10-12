@@ -14,7 +14,7 @@ object BindingAdapters {
             val simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
             view.text = "Последнее обновление: " + simpleDateFormat.format(date)
         } else {
-            view.text = "null"
+            view.text = ""
         }
     }
 

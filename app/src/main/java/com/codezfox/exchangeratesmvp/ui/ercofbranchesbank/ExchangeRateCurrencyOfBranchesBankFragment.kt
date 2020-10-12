@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
@@ -14,6 +15,7 @@ import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
 import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
 import com.codezfox.exchangeratesmvp.ui.base.viewModelLazy
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort
+import com.codezfox.exchangeratesmvp.ui.ercofbanks.isEqual
 import com.codezfox.extensions.onClick
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
 import kotlinx.android.synthetic.main.screen_erc_branches_bank.*
@@ -31,8 +33,17 @@ class ExchangeRateCurrencyOfBranchesBankFragment : BaseMvvmFragment<ExchangeRate
         viewModelFactory(currency, bank)
     }
 
+    private var binding :ScreenErcBranchesBankBinding? = null
     private val adapter by lazy {
-        MultiAdapter().also { adapter ->
+        MultiAdapter(onCurrentListChanged = { previousList, currentList ->
+            //todo magic scroll
+            binding?.recyclerView?.let { recyclerView ->
+                val endIndex = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+                if (!isEqual(previousList.map { it.areItemsTheSame() }, currentList.map { it.areItemsTheSame() }, endIndex)) {
+                    recyclerView.smoothScrollToPosition(0)
+                }
+            }
+        }).also { adapter ->
             adapter.register(BranchWithExchangeRate::class.java, BranchCurrencyViewBinder {
                 viewModel.openBankBranch(it.branch) //todo maybe
             })
@@ -43,6 +54,7 @@ class ExchangeRateCurrencyOfBranchesBankFragment : BaseMvvmFragment<ExchangeRate
         return ScreenErcBranchesBankBinding.inflate(inflater).also { binding ->
             binding.viewModel = viewModel
             binding.adapter = adapter
+            this.binding = binding
         }.root
     }
 
@@ -62,7 +74,12 @@ class ExchangeRateCurrencyOfBranchesBankFragment : BaseMvvmFragment<ExchangeRate
             viewModel.changeSort(RateCurrencySort.SELL) //todo maybe
         }
 
-        swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+        swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(requireActivity(), R.color.colorPrimary))//todo maybe
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

@@ -4,7 +4,8 @@
 
         <variable
             name="sort"
-            type="com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort" />
+            type="com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort"
+            />
 
     </data>
 
@@ -15,9 +16,8 @@
         android:background="@color/colorGrayLight"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:paddingTop="5dp"
         android:paddingRight="16dp"
-        android:paddingBottom="5dp">
+        >
 
 
         <TextView
@@ -25,7 +25,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Банк" />
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Банк"
+            />
 
 
         <TextView
@@ -35,7 +38,8 @@
             android:gravity="center"
             android:minWidth="66dp"
             android:text="Купить"
-            app:sortTypeBuy="@{sort}" />
+            app:sortTypeBuy="@{sort}"
+            />
 
         <TextView
             android:id="@+id/textViewSell"
@@ -44,7 +48,8 @@
             android:gravity="center"
             android:minWidth="66dp"
             android:text="Продать"
-            app:sortTypeSell="@{sort}" />
+            app:sortTypeSell="@{sort}"
+            />
 
     </LinearLayout>
 </layout>
