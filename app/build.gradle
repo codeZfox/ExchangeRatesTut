@@ -47,7 +47,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.26.1-eap13"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-analytics-ktx:17.6.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.0'
+    implementation 'com.google.firebase:firebase-config-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:17.2.2'
 
     //AndroidX

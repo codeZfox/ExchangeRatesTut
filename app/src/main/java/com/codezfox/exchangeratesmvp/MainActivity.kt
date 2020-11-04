@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.codezfox.exchangeratesmvp.ui.base.BackAware
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        updateRemoteConfig()
+
         val frameLayout = FrameLayout(this).also {
             it.id = R.id.container
         }
@@ -31,6 +35,12 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
         if (savedInstanceState == null) {
             router.newRootScreen(Screens.Main())
+        }
+    }
+
+    private fun updateRemoteConfig() {
+        Firebase.remoteConfig.apply {
+            fetchAndActivate()
         }
     }
 

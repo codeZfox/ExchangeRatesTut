@@ -62,7 +62,7 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
 //                bindDiff(textViewNbDiff, rate.nb_diff, scale)
 
-                textNbDate.visibleOrGone(true)
+                textNbDate.visibleOrGone(rate.nb_date != null)
                 textNbDate.text = String.format(Locale("ru"), "%1\$tb %1\$te", rate.nb_date)
 
             } else {
