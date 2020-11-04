@@ -1,10 +1,11 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
@@ -43,23 +44,30 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
             textViewName.text = rate.currencyCode
             textViewAmount.text = rateCurrency.getAmountString()
-            textViewBuy.text = Currency.rateForUI(rate.sell, scale)
-            textViewSell.text = Currency.rateForUI(rate.buy, scale)
-            textViewNb.text = Currency.rateForUI(rate.nb, scale)
 
-            if (rate.bcse_date == null || rate.bcse_date != rate.nb_date && rate.nb == rate.bcse_rate) {
+            textViewBuy.text = Currency.rateForUI(rate.sell, scale)
+            bindDiff(textViewBuyDiff, rate.sell_diff, scale)
+
+            textViewSell.text = Currency.rateForUI(rate.buy, scale)
+            bindDiff(textViewSellDiff, rate.buy_diff, scale)
+
+            textViewNb.text = Currency.rateForUI(rate.nb, scale)
+            bindDiff(textViewNbDiff, rate.nb_diff, scale)
+
+            if (rate.bcse_date == null
+                    || rate.bcse_date != rate.nb_date && rate.nb == rate.bcse_rate
+                    || rate.bcse_date == rate.nb_date && rate.bcse_diff == 0.0) { //todo experimental
 
                 textViewBCSERoot.gone()
 
-                textViewNbDiff.visibleOrGone(rate.nb_diff != 0.0)
-                textViewNbDiff.setTextColor(resources.getColor(if (rate.nb_diff >= 0) R.color.colorGreen else R.color.colorRed))
-                textViewNbDiff.text = Currency.rateDiffForUI(rate.nb_diff, scale)
+//                bindDiff(textViewNbDiff, rate.nb_diff, scale)
+
                 textNbDate.visibleOrGone(true)
                 textNbDate.text = String.format(Locale("ru"), "%1\$tb %1\$te", rate.nb_date)
 
             } else {
 
-                textViewNbDiff.gone()
+//                textViewNbDiff.gone()
                 textNbDate.gone()
 
                 textViewBCSERoot.visible()
@@ -67,9 +75,7 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
                 textViewBCSEDate.text = String.format(Locale("ru"), itemView.context.getString(R.string.BCSE_date), rate.bcse_date)
                 textViewBCSERate.text = Currency.rateForUI(rate.bcse_rate, scale)
 
-                textViewBCSEDiff.visibleOrInvisible(rate.bcse_diff != 0.0)
-                textViewBCSEDiff.text = Currency.rateDiffForUI(rate.bcse_diff, scale)
-                textViewBCSEDiff.setTextColor(resources.getColor(if (rate.bcse_diff >= 0) R.color.colorGreen else R.color.colorRed))
+                bindDiff(textViewBCSEDiff, rate.bcse_diff, scale)
 
             }
 
@@ -78,6 +84,12 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
                     .placeholder(R.drawable.ic_currency_default)
                     .into(imageViewCurrencyFlag)
 
+        }
+
+        private fun bindDiff(textView: TextView, diff: Double, scale: Int) {
+            textView.setTextColor(resources.getColor(if (diff >= 0) R.color.colorGreen else R.color.colorRed))
+            textView.text = Currency.rateDiffForUI(diff, scale)
+            textView.visibleOrGone(diff != 0.0)
         }
     }
 }

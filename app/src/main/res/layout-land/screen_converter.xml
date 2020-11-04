@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.codezfox.exchangeratesmvp.ui.bestrates.BestRatesViewModel"
+            type="com.codezfox.exchangeratesmvp.ui.converter.ConverterViewModel"
             />
 
     </data>
@@ -31,57 +31,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="?attr/actionBarSize"
-            android:elevation="0dp"
-            app:title="@string/exchange_rate"
+            app:title="@string/currency_converter"
+            app:contentInsetStartWithNavigation="0dp"
+            app:elevation="0dp"
+            app:navigationIcon="@drawable/ic_arrow_back_24dp"
             />
 
-
-        <include
-            layout="@layout/layout_last_date_data"
-            app:lastDate="@{viewModel.lastDateUpdated}"
-            app:visibleGone="@{viewModel.isVisibleLastDateUpdated}"
-            />
-
-        <include layout="@layout/layout_best_currency_rate_header" />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeToRefresh"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:onRefreshListener="@{()->viewModel.reload()}"
-            app:refreshing="@{viewModel.isRefresh}"
+            android:orientation="horizontal"
             >
 
-            <FrameLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/containerList"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/numPad"
                 >
 
+                <include layout="@layout/layout_last_date_data" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:adapter="@{adapter}"
                     app:items="@{viewModel.items}"
-                    tools:listitem="@layout/item_currency_rate"
-                    tools:itemCount="3"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="20"
                     />
+            </LinearLayout>
 
 
-                <include
-                    layout="@layout/layout_emty"
-                    app:emptyData="@{viewModel.empty}"
-                    app:visibleGone="@{viewModel.error==null&amp;&amp;viewModel.empty!=null}"
-                    />
+            <com.niveler.numpad.NumPadView
+                android:id="@+id/numPad"
+                android:layout_width="300dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:background="@color/colorGrayLight"
+                app:layout_constraintStart_toEndOf="@id/containerList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <include
-                    layout="@layout/layout_error"
-                    app:error="@{viewModel.error}"
-                    app:visibleGone="@{viewModel.error!=null&amp;&amp;viewModel.items.size()==0}"
-                    />
-            </FrameLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </layout>

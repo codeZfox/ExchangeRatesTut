@@ -2,15 +2,13 @@ package com.niveler.numpad
 
 import android.content.Context
 import android.os.Build
-import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codezfox.exchangeratesmvp.R
 
-class NumPadView : LinearLayout {
+class NumPadView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RecyclerView(context, attrs, defStyleAttr) {
 
     var editChange: ((String) -> Unit)? = null
     var value = ""
@@ -21,30 +19,18 @@ class NumPadView : LinearLayout {
 
     val numPadAdapter = NumPadAdapter(ButtonNum.list2(), ::onClickNumPad, ::onLongClickNumPad, ::onPlusMinus)
 
-    constructor(context: Context) : super(context) {
-        init(context)
-    }
-
-    private fun init(context: Context) {
-        val recyclerView = RecyclerView(context)
-        recyclerView.layoutManager = GridLayoutManager(context, 3)
-        recyclerView.adapter = this.numPadAdapter
-        addView(recyclerView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+    init {
+        overScrollMode = OVER_SCROLL_NEVER
+        layoutManager = GridLayoutManager(context, 3)
+        adapter = NumPadAdapter(ButtonNum.list2(), ::onClickNumPad, ::onLongClickNumPad, ::onPlusMinus)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val outValue = TypedValue()
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackgroundBorderless, outValue, true)
+            context.theme.resolveAttribute(R.attr.selectableItemBackgroundBorderless, outValue, true)
             //            btnDel.background = getDrawable(context, outValue.resourceId)
         }
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context)
-    }
 //    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
 //    override fun onCreate(savedInstanceState: Bundle?) {

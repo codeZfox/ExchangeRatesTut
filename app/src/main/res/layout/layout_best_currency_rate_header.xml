@@ -57,7 +57,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:gravity="center"
-        android:minWidth="52dp"
+        android:minWidth="66dp"
         android:text="НБРБ"
         />
 

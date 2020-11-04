@@ -4,12 +4,14 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#008577</color>
 
+<!--    <color name="colorGrayLight">#373737</color>-->
     <color name="colorGrayLight">#f4f4f4</color>
     <color name="color_gray_light">#dadada</color>
     <color name="colorRed">#cf0000</color>
     <color name="colorGreen">#00ae00</color>
 
     <color name="colorGray">#aaa</color>
+    <color name="background_error_transparent">#f4d9d9</color>
 
 
 </resources>

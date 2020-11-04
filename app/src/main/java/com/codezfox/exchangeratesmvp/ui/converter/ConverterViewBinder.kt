@@ -2,12 +2,13 @@ package com.codezfox.exchangeratesmvp.ui.converter
 
 
 import android.graphics.Typeface
+import android.view.*
+import android.view.GestureDetector.SimpleOnGestureListener
+import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
+import com.codezfox.extensions.context
 import com.codezfox.extensions.onClick
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
@@ -26,6 +27,28 @@ class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> 
         holder.itemView.onClick {
             onClick.invoke(item)
         }
+        val mDetector = GestureDetectorCompat(holder.context, SimpleOnGestureListener()).apply {
+            setOnDoubleTapListener(object : GestureDetector.OnDoubleTapListener {
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    // This is where u add your OnClick event
+                    onClick.invoke(item)
+                    return false
+                }
+
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    return false
+                }
+
+                override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+                    return false
+                }
+            })
+        }
+
+        holder.textViewRate.setOnTouchListener { _, event ->
+            mDetector.onTouchEvent(event)
+            false
+        }
     }
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -35,10 +58,10 @@ class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> 
             val currency = rate.bestRateCurrency.currency
 
             textViewName.text = currency.id
-//            textViewSell.text = Currency.rateForUI(rate.summary, scale)
-            textViewSell.text = rate.summary
-            textViewSell.setTypeface(null, if (rate.isSelected) Typeface.BOLD else Typeface.NORMAL)
-            textViewSell.setTextSize(if (rate.isSelected) 22f else 18f)
+//            textViewRate.text = Currency.rateForUI(rate.summary, scale)
+            textViewRate.text = rate.summary
+            textViewRate.setTypeface(null, if (rate.isSelected) Typeface.BOLD else Typeface.NORMAL)
+            textViewRate.setTextSize(if (rate.isSelected) 22f else 18f)
 
 
             Picasso.with(itemView.context)

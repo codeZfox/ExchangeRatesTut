@@ -23,10 +23,10 @@
 
             <TextView
                 android:id="@+id/textNum"
+                style="@style/TextAppearance.AppCompat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="#000"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 tools:text="1"
@@ -44,7 +44,7 @@
                 tools:text="1"
                 />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,6 +52,7 @@
                 android:layout_toRightOf="@id/textNum"
                 android:src="@drawable/ic_city"
                 android:visibility="gone"
+                app:tint="?android:attr/textColorPrimary"
                 tools:visibility="visible"
                 />
             <!--            ic_plus_minus-->

@@ -10,11 +10,11 @@
 
     <TextView
         android:id="@+id/textViewName"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:textColor="@android:color/black"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textViewUpdate"
@@ -27,12 +27,12 @@
 
     <TextView
         android:id="@+id/textViewAddress"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="12sp"
         android:visibility="gone"
         tools:visibility="visible"
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/textViewName"
         app:layout_constraintRight_toLeftOf="@id/textViewBuy"
         app:layout_constraintTop_toBottomOf="@+id/textViewName"
@@ -41,9 +41,9 @@
 
     <TextView
         android:id="@+id/textViewUpdate"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/textViewName"
         app:layout_constraintRight_toLeftOf="@id/textViewBuy"
@@ -53,10 +53,10 @@
 
     <TextView
         android:id="@+id/textViewSell"
+        style="@style/TextAppearance.AppCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="24dp"
-        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,12 +66,12 @@
 
     <TextView
         android:id="@+id/textViewBuy"
+        style="@style/TextAppearance.AppCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textViewSell"

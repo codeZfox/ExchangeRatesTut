@@ -21,7 +21,7 @@ import ru.terrakok.cicerone.Router
 fun <T> isEqual(first: List<T>, second: List<T>, endIndex: Int = -1): Boolean {
 
     first.forEachIndexed { index, value ->
-        if (second[index] != value) {
+        if (second.getOrNull(index) != value) {
             return false
         }
         if (index == endIndex) {

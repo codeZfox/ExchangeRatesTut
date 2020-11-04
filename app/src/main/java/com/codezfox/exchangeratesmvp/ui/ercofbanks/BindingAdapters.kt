@@ -1,8 +1,7 @@
 package com.codezfox.exchangeratesmvp.ui.ercofbanks
 
-import androidx.databinding.BindingAdapter
 import android.widget.TextView
-import com.codezfox.exchangeratesmvp.R
+import androidx.databinding.BindingAdapter
 import com.codezfox.exchangeratesmvp.extensions.getDefaultThemeColor
 
 object BindingAdapters {
@@ -21,7 +20,8 @@ object BindingAdapters {
 
     private fun bindSort(view: TextView, isSelect: Boolean) {
         if (isSelect) {
-            view.setTextColor(view.resources.getColor(R.color.colorRed))
+            //todo maybe bold, and api 21
+            view.setTextColor(view.context.getDefaultThemeColor(android.R.attr.colorAccent))
         } else {
             view.setTextColor(view.context.getDefaultThemeColor(android.R.attr.textColorSecondary))
         }

@@ -31,10 +31,10 @@
 
         <TextView
             android:id="@+id/textViewName"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="USD"
@@ -52,11 +52,12 @@
 
     <TextView
         android:id="@+id/textViewBuy"
+        style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:includeFontPadding="false"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/textViewSell"
@@ -68,15 +69,25 @@
         />
 
     <TextView
+        android:id="@+id/textViewBuyDiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewBuy"
+        app:layout_constraintTop_toBottomOf="@id/textViewBuy"
+        tools:text="+0.3555"
+        />
+
+    <TextView
         android:id="@+id/textViewSell"
+        style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:includeFontPadding="false"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textViewBCSERoot"
         app:layout_constraintEnd_toStartOf="@+id/textViewNb"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -87,13 +98,24 @@
         />
 
     <TextView
+        android:id="@+id/textViewSellDiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewSell"
+        app:layout_constraintTop_toBottomOf="@id/textViewSell"
+        tools:text="+0.3555"
+        />
+
+    <TextView
         android:id="@+id/textViewNb"
+        style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="16dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:includeFontPadding="false"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,7 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintRight_toRightOf="@+id/textViewNb"
         app:layout_constraintTop_toBottomOf="@+id/textViewNb"
         tools:text="2.1575"
@@ -131,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="textNbDate,textViewNbDiff,textViewNb,textViewSell,textViewBuy"
+        app:constraint_referenced_ids="textNbDate,textViewNbDiff,textViewNb,textViewSell,textViewSellDiff,textViewBuy,textViewBuyDiff"
         />
 
     <LinearLayout
@@ -166,20 +188,22 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:orientation="vertical"
             >
 
             <TextView
                 android:id="@+id/textViewBCSERate"
+                style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
                 android:textSize="12sp"
                 tools:text="3.2"
                 />
 
             <TextView
                 android:id="@+id/textViewBCSEDiff"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
