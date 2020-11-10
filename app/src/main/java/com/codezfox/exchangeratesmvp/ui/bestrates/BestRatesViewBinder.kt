@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.data.models.Currency
+import com.codezfox.exchangeratesmvp.extensions.getDefaultThemeColor
 import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import com.codezfox.extensions.*
 import com.squareup.picasso.Picasso
@@ -45,11 +46,13 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
             textViewName.text = rate.currencyCode
             textViewAmount.text = rateCurrency.getAmountString()
 
+            val visibleDiff = rate.sell_diff != 0.0 || rate.buy_diff != 0.0
+
             textViewBuy.text = Currency.rateForUI(rate.sell, scale)
-            bindDiff(textViewBuyDiff, rate.sell_diff, scale)
+            bindDiff(textViewBuyDiff, rate.sell_diff, scale, visibleDiff)
 
             textViewSell.text = Currency.rateForUI(rate.buy, scale)
-            bindDiff(textViewSellDiff, rate.buy_diff, scale)
+            bindDiff(textViewSellDiff, rate.buy_diff, scale, visibleDiff)
 
             textViewNb.text = Currency.rateForUI(rate.nb, scale)
             bindDiff(textViewNbDiff, rate.nb_diff, scale)
@@ -86,10 +89,15 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
         }
 
-        private fun bindDiff(textView: TextView, diff: Double, scale: Int) {
-            textView.setTextColor(resources.getColor(if (diff >= 0) R.color.colorGreen else R.color.colorRed))
+        private fun bindDiff(textView: TextView, diff: Double, scale: Int, visible: Boolean = diff != 0.0) {
+            val color = when {
+                diff == 0.0 -> context.getDefaultThemeColor(android.R.attr.textColorSecondary)
+                diff > 0 -> resources.getColor(R.color.colorGreen)
+                else -> resources.getColor(R.color.colorRed)
+            }
+            textView.setTextColor(color)
             textView.text = Currency.rateDiffForUI(diff, scale)
-            textView.visibleOrGone(diff != 0.0)
+            textView.visibleOrGone(visible)
         }
     }
 }
