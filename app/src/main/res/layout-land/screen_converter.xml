@@ -71,7 +71,7 @@
                 android:layout_width="300dp"
                 android:layout_height="240dp"
                 android:layout_gravity="center"
-                android:background="@color/colorGrayLight"
+                android:background="?attr/colorBackgroundLight"
                 app:layout_constraintStart_toEndOf="@id/containerList"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

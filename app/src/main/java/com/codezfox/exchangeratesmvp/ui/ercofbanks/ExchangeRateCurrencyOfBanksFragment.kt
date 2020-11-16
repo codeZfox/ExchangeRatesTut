@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.BankRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.databinding.ScreenErcBanksBinding
 import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
 import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
 import com.codezfox.exchangeratesmvp.ui.base.viewModelLazyFactory
+import com.codezfox.exchangeratesmvp.ui.bestrates.applyColorsToSwipeToRefresh
 import com.codezfox.extensions.onClick
 import kotlinx.android.synthetic.main.layout_currency_rate_header.*
 import kotlinx.android.synthetic.main.screen_erc_banks.*
@@ -83,7 +82,7 @@ class ExchangeRateCurrencyOfBanksFragment : BaseMvvmFragment<ExchangeRateCurrenc
             viewModel.changeSort(RateCurrencySort.SELL) //todo maybe
         }
 
-        swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+        swipeToRefresh.applyColorsToSwipeToRefresh()
 
     }
 

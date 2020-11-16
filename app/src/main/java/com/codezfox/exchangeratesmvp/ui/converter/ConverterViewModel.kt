@@ -10,31 +10,32 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 
 class ConverterViewModel(
-    private val interactor: ConverterInteractor
+        private val interactor: ConverterInteractor
 ) : BaseMvvmViewModel<Router>() {
+
+    companion object {
+        private val BYN_RATE_CURRENCY = BestRateCurrency(
+               rate =  BestRate("BYN", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, null, 1.0, null, 0.0, "BYN"),
+               currency =  Currency("BYN", "Белорусский рубль", "белорусский рубль", "рубль", "BYN", "", "http://img.tyt.by/i/icons/android/new/BYN.png", "1", "1", 4, 0))
+
+    }
 
     val items = ObservableField<List<ConverterRate>>()
 
     private var rateCurrency: List<BestRateCurrency> = emptyList()
-    private var currency: BestRateCurrency = BestRateCurrency(BestRate("BYN", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, null, 1.0, null, 0.0, "BYN"),
-        Currency("BYN", "Белорусский рубль", "белорусский рубль", "рубль", "BYN", "", "http://img.tyt.by/i/icons/android/new/BYN.png", "1", "1", 4, 0))
-//    private lateinit var rateUsd: BestRate
+    private var currency: BestRateCurrency = BYN_RATE_CURRENCY
 
     init {
         interactor.loadRates()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                this.rateCurrency = listOf(currency, *it.toTypedArray())
-//                    this.currency = this.rateCurrency.first()
-//                    rateUsd = this.rateCurrency.find { it.currency.code == "USD" }!!.rate
-
-                input("")
-            }, {
-                it.printStackTrace()
-            })
-            .addDisposable()
-
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    this.rateCurrency = listOf(BYN_RATE_CURRENCY, *it.toTypedArray())
+                    input("")
+                }, {
+                    it.printStackTrace()
+                })
+                .addDisposable()
     }
 
     fun input(text: String) {

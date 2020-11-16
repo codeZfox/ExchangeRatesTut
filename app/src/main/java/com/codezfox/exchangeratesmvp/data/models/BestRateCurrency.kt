@@ -6,10 +6,10 @@ import com.codezfox.exchangeratesmvp.ui.base.adapter.DisplayableItem
 data class BestRateCurrency(
 
         @Embedded
-        var rate: BestRate,
+        val rate: BestRate,
 
         @Embedded
-        var currency: Currency
+        val currency: Currency
 
 ) : DisplayableItem {
 

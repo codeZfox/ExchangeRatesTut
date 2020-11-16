@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.BranchWithExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.Currency
@@ -14,6 +12,7 @@ import com.codezfox.exchangeratesmvp.databinding.ScreenErcBranchesBankBinding
 import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
 import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
 import com.codezfox.exchangeratesmvp.ui.base.viewModelLazy
+import com.codezfox.exchangeratesmvp.ui.bestrates.applyColorsToSwipeToRefresh
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.RateCurrencySort
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.isEqual
 import com.codezfox.extensions.onClick
@@ -74,7 +73,7 @@ class ExchangeRateCurrencyOfBranchesBankFragment : BaseMvvmFragment<ExchangeRate
             viewModel.changeSort(RateCurrencySort.SELL) //todo maybe
         }
 
-        swipeToRefresh.setColorSchemeColors(ContextCompat.getColor(requireActivity(), R.color.colorPrimary))//todo maybe
+        swipeToRefresh.applyColorsToSwipeToRefresh()
 
     }
 

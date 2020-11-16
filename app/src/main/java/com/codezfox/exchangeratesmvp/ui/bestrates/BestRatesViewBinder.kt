@@ -91,11 +91,11 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
         private fun bindDiff(textView: TextView, diff: Double, scale: Int, visible: Boolean = diff != 0.0) {
             val color = when {
-                diff == 0.0 -> context.getDefaultThemeColor(android.R.attr.textColorSecondary)
-                diff > 0 -> resources.getColor(R.color.colorGreen)
-                else -> resources.getColor(R.color.colorRed)
+                diff == 0.0 -> android.R.attr.textColorSecondary
+                diff > 0 -> R.attr.colorGreen
+                else -> R.attr.colorRed
             }
-            textView.setTextColor(color)
+            textView.setTextColor(context.getDefaultThemeColor(color))
             textView.text = Currency.rateDiffForUI(diff, scale)
             textView.visibleOrGone(visible)
         }

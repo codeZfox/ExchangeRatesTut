@@ -2,16 +2,20 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#008577</color>
 
-<!--    <color name="colorGrayLight">#373737</color>-->
-    <color name="colorGrayLight">#f4f4f4</color>
-    <color name="color_gray_light">#dadada</color>
-    <color name="colorRed">#cf0000</color>
-    <color name="colorGreen">#00ae00</color>
+    <color name="colorAccentLight">#008577</color>
+    <color name="colorAccentDark">#0AA0A0</color>
+
+    <color name="colorGrayLight">#08000000</color>
+    <color name="colorGrayDark">#08FFFFFF</color>
+    <color name="colorRedLight">#cf0000</color>
+    <color name="colorRedDark">#FF5050</color>
+    <color name="colorGreenLight">#00ae00</color>
+    <color name="colorGreenDark">#50AE50</color>
 
     <color name="colorGray">#aaa</color>
-    <color name="background_error_transparent">#f4d9d9</color>
+    <color name="backgroundErrorTransparentLight">#26FF2323</color>
+    <color name="backgroundErrorTransparentDark">#26FF2323</color>
 
 
 </resources>

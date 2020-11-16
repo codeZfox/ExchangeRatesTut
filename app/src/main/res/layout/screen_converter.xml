@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:layout_gravity="center"
-                android:background="@color/colorGrayLight" />
+                android:background="?attr/colorBackgroundLight" />
 
         </LinearLayout>
 

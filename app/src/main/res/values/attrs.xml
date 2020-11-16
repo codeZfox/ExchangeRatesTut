@@ -1,3 +1,6 @@
 <resources>
-
+    <attr name="colorBackgroundLight" format="reference|color" />
+    <attr name="colorRed" format="reference|color" />
+    <attr name="colorGreen" format="reference|color" />
+    <attr name="backgroundErrorTransparent" format="reference|color" />
 </resources>

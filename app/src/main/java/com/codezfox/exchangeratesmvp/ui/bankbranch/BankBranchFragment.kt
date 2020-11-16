@@ -15,7 +15,7 @@ import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmFragment
 import com.codezfox.exchangeratesmvp.ui.base.adapter.MultiAdapter
 import com.codezfox.exchangeratesmvp.ui.base.getString
 import com.codezfox.exchangeratesmvp.ui.base.viewModelLazy
-import com.codezfox.extensions.themeAttributeToColor
+import com.codezfox.exchangeratesmvp.ui.bestrates.applyColorsToSwipeToRefresh
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.screen_bank_branch.*
 import org.jetbrains.anko.dial
@@ -73,8 +73,7 @@ class BankBranchFragment : BaseMvvmFragment<BankBranchViewModel, Router>() {
         super.onViewCreated(view, savedInstanceState)
         toolbar.setNavigationOnClickListener { viewModel.onBackPressed() } //todo maybe
 
-        swipeRefreshLayout.setColorSchemeResources(themeAttributeToColor(R.attr.colorPrimary)!!)
-        //todo to style
+        swipeToRefresh.applyColorsToSwipeToRefresh()
 
     }
 

@@ -1,5 +1,9 @@
 package com.codezfox.exchangeratesmvp
 
+import android.annotation.TargetApi
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +16,8 @@ import org.kodein.di.generic.instance
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(), KodeinAware {
 
@@ -22,6 +28,31 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     private val router: Router by instance()
 
     private val navigator = SupportAppNavigator(this, R.id.container)
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(updateBaseContextLocale(base))
+    }
+
+    private fun updateBaseContextLocale(context: Context): Context? {
+        val locale = Locale("ru")
+        Locale.setDefault(locale)
+        return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            updateResourcesLocale(context, locale)
+        } else {
+            updateResourcesLocaleLegacy(context, locale)
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N_MR1)
+    private fun updateResourcesLocale(context: Context, locale: Locale): Context {
+        return context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(locale) });
+    }
+
+    @SuppressWarnings("deprecation")
+    private fun updateResourcesLocaleLegacy(context: Context, locale: Locale): Context? {
+        context.resources.updateConfiguration(resources.configuration.apply { this.locale = locale }, resources.displayMetrics)
+        return context
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

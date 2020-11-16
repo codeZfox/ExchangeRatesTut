@@ -5,9 +5,37 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorBackgroundLight">@color/colorGrayLight</item>
+        <item name="colorRed">@color/colorRedLight</item>
+        <item name="colorGreen">@color/colorGreenLight</item>
+        <item name="backgroundErrorTransparent">@color/backgroundErrorTransparentLight</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorBackgroundLight">@color/colorGrayDark</item>
+        <item name="colorRed">@color/colorRedDark</item>
+        <item name="colorGreen">@color/colorGreenDark</item>
+        <item name="backgroundErrorTransparent">@color/backgroundErrorTransparentDark</item>
+    </style>
+
+    <style name="AppThemeBlack" parent="AppThemeDark">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorBackgroundLight">@color/colorGrayDark</item>
+        <item name="android:windowBackground">@android:color/black</item>
     </style>
 
 

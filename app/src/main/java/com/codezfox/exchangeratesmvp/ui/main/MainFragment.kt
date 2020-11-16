@@ -1,15 +1,16 @@
 package com.codezfox.exchangeratesmvp.ui.main
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.Screens
+import com.codezfox.exchangeratesmvp.extensions.getDefaultThemeColor
 import com.codezfox.exchangeratesmvp.ui.base.BackAware
 import kotlinx.android.synthetic.main.layout_tab.view.*
 import kotlinx.android.synthetic.main.screen_main.*
@@ -29,19 +30,19 @@ class MainFragment : Fragment(), BackAware {
         val resources = view.context.resources
         tabLayout.setCustomTabView { container, position, adapter ->
             return@setCustomTabView inflater.inflate(R.layout.layout_tab, container, false)
-                .also { icon ->
-                    when (position) {
-                        0 -> icon.image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_bank, view.context.theme))
-                        1 -> icon.image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_calculator, view.context.theme))
-                        else -> throw IllegalStateException("Invalid position: $position")
+                    .also { icon ->
+                        when (position) {
+                            0 -> icon.image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_bank, view.context.theme))
+                            1 -> icon.image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_calculator, view.context.theme))
+                            else -> throw IllegalStateException("Invalid position: $position")
+                        }
                     }
-                }
         }
 
         //todo refactoring
         fun selectTab(position: Int) {
-            tabLayout.getTabAt(0)?.image?.setColorFilter(ContextCompat.getColor(view.context, if (position == 0) R.color.colorPrimary else R.color.colorGray))
-            tabLayout.getTabAt(1)?.image?.setColorFilter(ContextCompat.getColor(view.context, if (position == 1) R.color.colorPrimary else R.color.colorGray))
+            tabLayout.getTabAt(0)?.image?.setColorFilter(view.context.getDefaultThemeColor(if (position == 0) R.attr.colorAccent else android.R.attr.textColorSecondary), PorterDuff.Mode.SRC_IN)
+            tabLayout.getTabAt(1)?.image?.setColorFilter(view.context.getDefaultThemeColor(if (position == 1) R.attr.colorAccent else android.R.attr.textColorSecondary), PorterDuff.Mode.SRC_IN)
         }
 
         tabLayout.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
