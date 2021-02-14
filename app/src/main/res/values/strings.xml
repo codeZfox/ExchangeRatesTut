@@ -4,9 +4,18 @@
     <string name="BCSE_date">Итоги торгов БВФБ %1$te\u00A0%1$tB</string>
     <string name="services">Услуги</string>
     <string name="currency_converter">Конвертер валют</string>
+    <string name="title_settings">Настройки</string>
     <string name="exchange_rate">Курсы валют</string>
 
     <string name="data_not_found">Данные не найдены</string>
     <string name="repeat">Повторить</string>
+
+    <string name="item_dark_theme_text_view_title_text">Тема оформления</string>
+    <string name="device_theme">Тема оформления</string>
+    <string name="mode_night_no">Светлая</string>
+    <string name="mode_night_yes">Темная</string>
+    <string name="mode_night_follow_system">Как в системе</string>
+    <string name="mode_night_auto_battery">Set by Battery Saver</string>
+    <string name="cancel">Отмена</string>
 
 </resources>

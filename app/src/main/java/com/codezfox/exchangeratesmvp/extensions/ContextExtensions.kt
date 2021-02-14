@@ -6,7 +6,7 @@ import androidx.annotation.ColorInt
 
 @ColorInt
 fun Context.getDefaultThemeColor(attribute: Int): Int {
-    val themeArray = getTheme().obtainStyledAttributes(intArrayOf(attribute))
+    val themeArray = theme.obtainStyledAttributes(intArrayOf(attribute))
     try {
         val index = 0
         val defaultColourValue = 0

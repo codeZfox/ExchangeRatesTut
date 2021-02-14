@@ -11,6 +11,7 @@ import com.codezfox.exchangeratesmvp.ui.converter.ConverterFragment
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.ExchangeRateCurrencyOfBanksFragment
 import com.codezfox.exchangeratesmvp.ui.ercofbranchesbank.ExchangeRateCurrencyOfBranchesBankFragment
 import com.codezfox.exchangeratesmvp.ui.main.MainFragment
+import com.codezfox.exchangeratesmvp.ui.settings.SettingsFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -51,6 +52,10 @@ object Screens {
 
     class Converter : SupportAppScreen() {
         override fun getFragment(): Fragment = ConverterFragment()
+    }
+
+    class Settings : SupportAppScreen() {
+        override fun getFragment(): Fragment = SettingsFragment()
     }
 
 }

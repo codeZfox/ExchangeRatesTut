@@ -75,4 +75,8 @@ class BestRatesViewModel(
         router.navigateTo(Screens.ExchangeRateCurrencyOfBanks(rateCurrency.currency))
     }
 
+    fun openSettings() {
+        router.navigateTo(Screens.Settings())
+    }
+
 }

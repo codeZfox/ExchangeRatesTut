@@ -1,9 +1,8 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,6 +30,32 @@ class BestRatesFragment : BaseMvvmFragment<BestRatesViewModel, Router>() {
     }
 
     private var binding: ScreenBestRatesBinding? = null
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        for (i in 0 until menu.size()) {
+            menu.getItem(i).icon.let { drawable ->
+                drawable.mutate()
+                drawable.setColorFilter(toolbar.context.getDefaultThemeColor(R.attr.colorControlNormal), PorterDuff.Mode.SRC_ATOP)
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                viewModel.openSettings()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ScreenBestRatesBinding.inflate(inflater).also { binding ->

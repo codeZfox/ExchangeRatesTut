@@ -24,12 +24,11 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/TextAppearance.AppCompat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         tools:text="АбсолютБанк"
         />
-
 
 </LinearLayout>

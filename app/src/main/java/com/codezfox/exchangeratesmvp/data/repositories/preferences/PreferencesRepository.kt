@@ -1,5 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.repositories.preferences
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.codezfox.exchangeratesmvp.data.models.Bank
 import com.codezfox.exchangeratesmvp.data.models.Branch
 import com.codezfox.exchangeratesmvp.data.models.Currency
@@ -22,6 +23,10 @@ interface PreferencesRepository {
     fun saveLastDateBranch(branch: Branch, date: Date)
 
     fun getLastDateBranch(branch: Branch): Date?
+
+    fun getSavedNightMode(default: Int = AppCompatDelegate.MODE_NIGHT_UNSPECIFIED): Int
+
+    fun saveNightMode(value: Int)
 
 }
 

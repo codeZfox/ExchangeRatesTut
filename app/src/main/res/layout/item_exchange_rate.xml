@@ -82,7 +82,7 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2.1575"
@@ -90,7 +90,7 @@
 
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
+        android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
@@ -104,6 +104,6 @@
         android:background="?attr/colorBackgroundLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/barrier2"
+        app:layout_constraintTop_toTopOf="@+id/barrier"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

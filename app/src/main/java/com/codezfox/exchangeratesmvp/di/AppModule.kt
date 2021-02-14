@@ -21,6 +21,7 @@ import com.codezfox.exchangeratesmvp.ui.ercofbanks.ExchangeRateCurrencyOfBanksIn
 import com.codezfox.exchangeratesmvp.ui.ercofbanks.ExchangeRateCurrencyOfBanksViewModel
 import com.codezfox.exchangeratesmvp.ui.ercofbranchesbank.ExchangeRateCurrencyOfBranchesBankInteractor
 import com.codezfox.exchangeratesmvp.ui.ercofbranchesbank.ExchangeRateCurrencyOfBranchesBankViewModel
+import com.codezfox.exchangeratesmvp.ui.settings.SettingsViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.android.ActivityRetainedScope
 import org.kodein.di.generic.*
@@ -57,6 +58,8 @@ val appModule = Kodein.Module("appModule") {
     bind<BankBranchViewModel>() with factory { bank: Bank, branch: Branch -> BankBranchViewModel(bank, branch, instance(), BankBranchInteractor(instance(), instance(), instance())) }
 
     bind<ConverterViewModel>() with provider { ConverterViewModel(ConverterInteractor(instance(), instance())) }
+
+    bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
 
 
 }

@@ -7,7 +7,10 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import com.codezfox.exchangeratesmvp.data.repositories.preferences.PreferencesRepository
 import com.codezfox.exchangeratesmvp.ui.base.BackAware
+import com.codezfox.exchangeratesmvp.ui.settings.NightModeType
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import org.kodein.di.KodeinAware
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     private val router: Router by instance()
 
     private val navigator = SupportAppNavigator(this, R.id.container)
+
+    private val preferencesRepository: PreferencesRepository by instance()
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(updateBaseContextLocale(base))
@@ -55,6 +60,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        checkNightMode()
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         updateRemoteConfig()
@@ -67,6 +74,13 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         if (savedInstanceState == null) {
             router.newRootScreen(Screens.Main())
         }
+    }
+
+
+    private fun checkNightMode() {
+        val savedNightModeValue = preferencesRepository.getSavedNightMode()
+        val selectedNightMode = NightModeType.fromValue(savedNightModeValue)
+        AppCompatDelegate.setDefaultNightMode(selectedNightMode.value)
     }
 
     private fun updateRemoteConfig() {
