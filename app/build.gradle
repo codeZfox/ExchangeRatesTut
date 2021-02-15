@@ -15,8 +15,8 @@ android {
         applicationId "com.codezfox.exchangeratesmvp"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.1.1"
+        versionCode 6
+        versionName "1.2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         buildConfigField "String", "ORIGIN_ENDPOINT", '"https://finance.tut.by/"'
