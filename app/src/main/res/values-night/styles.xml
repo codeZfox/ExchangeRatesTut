@@ -14,6 +14,7 @@
         <item name="colorGreen">@color/colorGreenDark</item>
         <item name="backgroundErrorTransparent">@color/backgroundErrorTransparentDark</item>
         <item name="android:windowBackground">@color/colorDark</item>
+        <item name="android:navigationBarColor">@color/colorDark</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
 
