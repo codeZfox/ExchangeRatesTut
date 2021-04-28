@@ -3,8 +3,14 @@
     <data>
 
         <variable
+            name="isVisibleLastDateUpdated"
+            type="Boolean"
+            />
+
+        <variable
             name="lastDate"
-            type="java.util.Date" />
+            type="java.util.Date"
+            />
     </data>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,8 +23,10 @@
         android:gravity="center"
         android:padding="2dp"
         android:visibility="gone"
+        app:visibleGone="@{isVisibleLastDateUpdated &amp;&amp; lastDate!=null}"
         app:lastDate="@{lastDate}"
         tools:showIn="@layout/screen_best_rates"
         tools:text="lastDateData"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        />
 </layout>

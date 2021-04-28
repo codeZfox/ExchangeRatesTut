@@ -37,7 +37,7 @@
         <include
             layout="@layout/layout_last_date_data"
             app:lastDate="@{viewModel.lastDateUpdated}"
-            app:visibleGone="@{viewModel.isVisibleLastDateUpdated}"
+            app:isVisibleLastDateUpdated="@{viewModel.isVisibleLastDateUpdated}"
             />
 
         <include layout="@layout/layout_best_currency_rate_header" />

@@ -19,4 +19,8 @@
 <!--    <string name="mode_night_auto_battery">Set by Battery Saver</string>-->
     <string name="cancel">Отмена</string>
 
+    <string name="not_found_branches_bank">Мы не смогли найти открытые сейчас отделения банка</string>
+    <string name="error_connection_issues">Похоже, у вас проблемы с подключением к интернету.</string>
+<!--    <string name="error_connection_issues">Looks like you’re having network connection issues.</string>-->
+
 </resources>

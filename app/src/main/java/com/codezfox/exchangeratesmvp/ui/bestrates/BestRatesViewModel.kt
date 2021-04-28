@@ -2,10 +2,14 @@ package com.codezfox.exchangeratesmvp.ui.bestrates
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.Screens
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
+import com.codezfox.exchangeratesmvp.extensions.isNetworkException
 import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmViewModel
 import com.codezfox.exchangeratesmvp.ui.base.NetworkManager
+import com.codezfox.exchangeratesmvp.ui.base.StringResources
+import com.codezfox.exchangeratesmvp.ui.base.create
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
 import ru.terrakok.cicerone.Router
@@ -53,8 +57,12 @@ class BestRatesViewModel(
                 isVisibleLastDateUpdated.set(false)
                 isRefresh.set(false)
             }, { throwable ->
-                error.set(ErrorData(description = throwable?.message
-                    ?: throwable.toString(), onClick = object : RetryListener {
+                val message = if (throwable.isNetworkException()) {
+                    StringResources.create(R.string.error_connection_issues)
+                } else {
+                    throwable?.message?.create() ?: throwable.toString().create()
+                }
+                error.set(ErrorData(description = message, onClick = object : RetryListener {
                     override fun invoke() {
                         reload()
                     }

@@ -3,6 +3,7 @@ package com.codezfox.exchangeratesmvp.ui.bestrates
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.codezfox.exchangeratesmvp.R
+import com.codezfox.exchangeratesmvp.ui.base.StringResources
 
 class EmptyData(
 
@@ -21,7 +22,7 @@ class ErrorData(
 
         var buttonName: Int? = R.string.repeat,
 
-        var description: String? = null,
+        var description: StringResources? = null,
 
         val onClick: RetryListener = object : RetryListener {
                 override fun invoke() {
