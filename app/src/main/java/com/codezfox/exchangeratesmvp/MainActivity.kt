@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     @SuppressWarnings("deprecation")
-    private fun updateResourcesLocaleLegacy(context: Context, locale: Locale): Context? {
-        context.resources.updateConfiguration(resources.configuration.apply { this.locale = locale }, resources.displayMetrics)
+    private fun updateResourcesLocaleLegacy(context: Context, locale: Locale): Context {
+        context.resources.updateConfiguration(context.resources.configuration.apply { this.locale = locale }, context.resources.displayMetrics)
         return context
     }
 
