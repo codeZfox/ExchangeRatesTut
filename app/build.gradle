@@ -15,8 +15,8 @@ android {
         applicationId "com.codezfox.exchangeratesmvp"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.2.1"
+        versionCode 8
+        versionName "1.2.2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         buildConfigField "String", "ORIGIN_ENDPOINT", '"https://finance.tut.by/"'
@@ -76,7 +76,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
