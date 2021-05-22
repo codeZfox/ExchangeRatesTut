@@ -4,6 +4,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.Screens
+import com.codezfox.exchangeratesmvp.data.config.Group
 import com.codezfox.exchangeratesmvp.data.models.BestRateCurrency
 import com.codezfox.exchangeratesmvp.extensions.isNetworkException
 import com.codezfox.exchangeratesmvp.ui.base.BaseMvvmViewModel
@@ -50,7 +51,9 @@ class BestRatesViewModel(
     }
 
     private fun loadRates() {
-        interactor.loadRates()
+        val load = if (Group.BestRates().isNBData.value) interactor.loadNBRates() else interactor.loadRates()
+
+        load
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 error.set(null)
@@ -80,7 +83,9 @@ class BestRatesViewModel(
     }
 
     fun openCurrency(rateCurrency: BestRateCurrency) {
-        router.navigateTo(Screens.ExchangeRateCurrencyOfBanks(rateCurrency.currency))
+        if (Group.BestRates().isEnableCurrencyScreen.value) {
+            router.navigateTo(Screens.ExchangeRateCurrencyOfBanks(rateCurrency.currency))
+        }
     }
 
     fun openSettings() {

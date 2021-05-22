@@ -41,6 +41,36 @@ class BestRatesInteractor(
                 .subscribeOn(Schedulers.io())
     }
 
+    fun loadNBRates(): Completable {
+        return repository.getNBBestRates()
+                .doOnSuccess {
+                    database.saveBestRates(it.map { it.first })
+                    preferencesRepository.saveLastDateData(Date())
+                }
+                .flatMap { bestRates->
+                    if (currencies.isEmpty()) {
+                        repository.getNBCurrencies()
+                            .map { currencies ->
+                                currencies.map {
+                                    val second = bestRates.find { rate -> rate.second.curAbbreviation == it.code }?.second
+                                    it.copy(
+                                        amount = second?.curScale?.toString().orEmpty(),
+                                        plural_short = second?.curName.orEmpty()
+                                    )
+                                }
+                            }
+                            .doOnSuccess { currencies ->
+                                this.currencies = currencies
+                                database.saveCurrencies(currencies)
+                            }
+                    } else {
+                        Single.just(emptyList())
+                    }
+                }
+                .ignoreElement()
+                .subscribeOn(Schedulers.io())
+    }
+
     fun getRates(): Flowable<Pair<List<BestRateCurrency>, Date?>> {
         return database.getBestRatesCurrencies()
                 .map { list ->

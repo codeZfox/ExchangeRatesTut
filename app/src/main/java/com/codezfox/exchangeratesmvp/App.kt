@@ -34,7 +34,7 @@ class App : MultiDexApplication(), KodeinAware {
         Firebase.remoteConfig.apply {
             setDefaultsAsync(Group.BestRates().mapDefaultValues())
             setConfigSettingsAsync(remoteConfigSettings {
-                minimumFetchIntervalInSeconds = TimeUnit.HOURS.toSeconds(1)
+                minimumFetchIntervalInSeconds = TimeUnit.MINUTES.toSeconds(5)
             })
         }
     }

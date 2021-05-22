@@ -1,5 +1,6 @@
 package com.codezfox.exchangeratesmvp.data.models
 
+import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -26,8 +27,14 @@ data class Currency(
 ) : Serializable {
 
     fun getAmountString(): String? {
-        return "$amount $plural_short"
+        return "$amount ${CurrencyType.valueOfOrNull(code)?.pluralShort ?: plural_short}"
     }
+
+    @DrawableRes
+    fun getFlagDrawable(): Int? {
+        return CurrencyType.valueOfOrNull(code)?.flag
+    }
+
 
     companion object {
 
@@ -36,9 +43,10 @@ data class Currency(
         fun rateForUI(value: Double, scale: Int = 4, fillZero: Boolean = true): String {
 
             val s = if (fillZero) "0" else "#"
-            val decimalFormat = DecimalFormat("###,###.${s.repeat(scale)}", DecimalFormatSymbols(Locale.UK).also {
-                it.setGroupingSeparator(' ')
-            })
+            val decimalFormat =
+                DecimalFormat("###,###.${s.repeat(scale)}", DecimalFormatSymbols(Locale.UK).also {
+                    it.setGroupingSeparator(' ')
+                })
             if (!mapFormats.containsKey(scale)) {
                 mapFormats[scale] = "%.${scale}f"
             }

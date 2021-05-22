@@ -1,6 +1,8 @@
 package com.codezfox.exchangeratesmvp.ui.bestrates
 
 
+import android.os.Build
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +68,13 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 //                bindDiff(textViewNbDiff, rate.nb_diff, scale)
 
                 textNbDate.visibleOrGone(rate.nb_date != null)
-                textNbDate.text = String.format(Locale("ru"), "%1\$tb %1\$te", rate.nb_date)
+
+                textNbDate.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    val bestDateTimePattern = DateFormat.getBestDateTimePattern(Locale("ru"), "d MMMM")
+                    DateFormat.format(bestDateTimePattern, rate.nb_date).toString()
+                } else {
+                    String.format(Locale("ru"), "%1\$tb %1\$te", rate.nb_date)
+                }
 
             } else {
 
@@ -82,10 +90,35 @@ class BestRatesViewBinder(private val onClick: (rateCurrency: BestRateCurrency) 
 
             }
 
-            Picasso.with(itemView.context)
-                    .load(rateCurrency.currency.flag)
-                    .placeholder(R.drawable.ic_currency_default)
-                    .into(imageViewCurrencyFlag)
+            //todo image loading duplicate
+            rateCurrency.currency.getFlagDrawable().let { flagDrawable ->
+                if (flagDrawable == null) {
+                    rateCurrency.currency.flag.let { flag ->
+                        if (flag.isBlank()) {
+                            imageViewCurrencyFlag.visibility = View.INVISIBLE
+                        } else {
+                            imageViewCurrencyFlag.visibility = View.VISIBLE
+                            Picasso.with(itemView.context)
+                                .load(flag)
+                                .fit()
+                                .centerCrop()
+                                .placeholder(R.drawable.ic_currency_default)
+                                .into(imageViewCurrencyFlag)
+
+                        }
+                    }
+                } else {
+                    imageViewCurrencyFlag.visibility = View.VISIBLE
+                    Picasso.with(itemView.context)
+                        .load(flagDrawable)
+                        .fit()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_currency_default)
+                        .into(imageViewCurrencyFlag)
+
+                }
+            }
+
 
         }
 

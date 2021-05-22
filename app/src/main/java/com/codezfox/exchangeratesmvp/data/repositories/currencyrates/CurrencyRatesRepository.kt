@@ -1,6 +1,7 @@
 package com.codezfox.exchangeratesmvp.data.repositories.currencyrates
 
 import com.codezfox.exchangeratesmvp.data.models.*
+import com.codezfox.exchangeratesmvp.data.network.NBRate
 import io.reactivex.Single
 
 interface CurrencyRatesRepository {
@@ -8,6 +9,10 @@ interface CurrencyRatesRepository {
     fun getBestRates(): Single<List<BestRate>>
 
     fun getCurrencies(): Single<List<Currency>>
+
+    fun getNBBestRates(): Single<List<Pair<BestRate, NBRate>>>
+
+    fun getNBCurrencies(): Single<List<Currency>>
 
     fun getBanksRates(currency: Currency): Single<List<BankRate>>
 

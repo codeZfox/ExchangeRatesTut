@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageViewCurrencyFlag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/width_flag"
+        android:layout_height="@dimen/height_flag"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:background="?attr/colorBackgroundLight"

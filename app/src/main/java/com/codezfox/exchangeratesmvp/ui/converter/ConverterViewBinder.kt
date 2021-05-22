@@ -64,10 +64,34 @@ class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> 
             textViewRate.setTextSize(if (rate.isSelected) 22f else 18f)
 
 
-            Picasso.with(itemView.context)
-                    .load(currency.flag)
-                    .placeholder(R.drawable.ic_currency_default)
-                    .into(imageViewCurrencyFlag)
+            //todo image loading duplicate
+            currency.getFlagDrawable().let { flagDrawable ->
+                if (flagDrawable == null) {
+                    currency.flag.let { flag ->
+                        if (flag.isBlank()) {
+                            imageViewCurrencyFlag.visibility = View.INVISIBLE
+                        } else {
+                            imageViewCurrencyFlag.visibility = View.VISIBLE
+                            Picasso.with(itemView.context)
+                                .load(flag)
+                                .fit()
+                                .centerCrop()
+                                .placeholder(R.drawable.ic_currency_default)
+                                .into(imageViewCurrencyFlag)
+
+                        }
+                    }
+                } else {
+                    imageViewCurrencyFlag.visibility = View.VISIBLE
+                    Picasso.with(itemView.context)
+                        .load(flagDrawable)
+                        .fit()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_currency_default)
+                        .into(imageViewCurrencyFlag)
+
+                }
+            }
 
         }
     }

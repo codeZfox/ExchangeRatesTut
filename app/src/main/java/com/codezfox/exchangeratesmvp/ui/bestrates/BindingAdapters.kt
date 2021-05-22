@@ -11,7 +11,7 @@ object BindingAdapters {
     @JvmStatic
     fun bindLastDate(view: TextView, date: Date?) {
         if (date != null) {
-            val simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
+            val simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale("ru"))
             view.text = "Последнее обновление: " + simpleDateFormat.format(date)
         } else {
             view.text = ""

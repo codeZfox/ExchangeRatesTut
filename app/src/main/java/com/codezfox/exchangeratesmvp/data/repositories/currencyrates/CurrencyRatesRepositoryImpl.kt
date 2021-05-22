@@ -2,6 +2,7 @@ package com.codezfox.exchangeratesmvp.data.repositories.currencyrates
 
 import com.codezfox.exchangeratesmvp.data.models.*
 import com.codezfox.exchangeratesmvp.data.network.FinanceApi
+import com.codezfox.exchangeratesmvp.data.network.NBRate
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
@@ -45,6 +46,37 @@ class CurrencyRatesRepositoryImpl(
     override fun getBestRates(): Single<List<BestRate>> {
         return api.getInfoSingle(getFields(GET_BEST_RATES))
                 .map { parseResponse<BaseResponse<BestRate>>(it).data }
+    }
+
+    override fun getNBCurrencies(): Single<List<Currency>> {
+        return api.getCurrencies("https://www.nbrb.by/api/exrates/currencies")
+            .map { list ->
+                list.filter { CurrencyType.valueOfOrNull(it.curAbbreviation) != null }
+                    .sortedBy { CurrencyType.valueOfOrNull(it.curAbbreviation) }
+                    .mapIndexed { index, it ->
+                        Currency(
+                            it.curAbbreviation,
+                            it.curName,
+                            it.curName,
+                            it.curName,
+                            it.curAbbreviation,
+                            "",
+                            "",
+                            "1",
+                            "1",
+                            4,
+                            index
+                        )
+                    }
+            }
+    }
+
+    override fun getNBBestRates(): Single<List<Pair<BestRate, NBRate>>> {
+        return api.getNBBestRates("https://www.nbrb.by/api/exrates/rates?periodicity=0")
+            .map {
+                it.map {
+                    BestRate(it.curAbbreviation, it.curOfficialRate,it.curOfficialRate,it.curOfficialRate,0.0,0.0,0.0, it.date, it.curOfficialRate, null, 0.0, "BYN") to it                    }
+            }
     }
 
     override fun getBanksRates(currency: Currency): Single<List<BankRate>> {
