@@ -1,17 +1,17 @@
 package com.codezfox.exchangeratesmvp.ui.bankbranch
 
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.data.models.Currency
 import com.codezfox.exchangeratesmvp.data.models.CurrencyExchangeRate
 import com.codezfox.exchangeratesmvp.data.models.ExchangeRate
 import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import com.codezfox.extensions.onClick
-import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_exchange_rate.*
 
@@ -44,7 +44,7 @@ class ExchangeRateViewBinder(private val onClick: (exchangeRate: ExchangeRate) -
             textViewSell.text = Currency.rateForUI(rate.buyRate, scale)
 
 
-            Picasso.with(itemView.context)
+            Glide.with(itemView.context)
                     .load(currency.flag)
                     .placeholder(R.drawable.ic_currency_default)
                     .into(imageViewCurrencyFlag)

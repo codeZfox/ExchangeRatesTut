@@ -6,11 +6,11 @@ import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.codezfox.exchangeratesmvp.R
 import com.codezfox.exchangeratesmvp.ui.base.adapter.ItemViewBinder
 import com.codezfox.extensions.context
 import com.codezfox.extensions.onClick
-import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_converter.*
 
@@ -72,9 +72,8 @@ class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> 
                             imageViewCurrencyFlag.visibility = View.INVISIBLE
                         } else {
                             imageViewCurrencyFlag.visibility = View.VISIBLE
-                            Picasso.with(itemView.context)
+                            Glide.with(itemView.context)
                                 .load(flag)
-                                .fit()
                                 .centerCrop()
                                 .placeholder(R.drawable.ic_currency_default)
                                 .into(imageViewCurrencyFlag)
@@ -83,9 +82,8 @@ class ConverterViewBinder(private val onClick: (exchangeRate: ConverterRate) -> 
                     }
                 } else {
                     imageViewCurrencyFlag.visibility = View.VISIBLE
-                    Picasso.with(itemView.context)
+                    Glide.with(itemView.context)
                         .load(flagDrawable)
-                        .fit()
                         .centerCrop()
                         .placeholder(R.drawable.ic_currency_default)
                         .into(imageViewCurrencyFlag)

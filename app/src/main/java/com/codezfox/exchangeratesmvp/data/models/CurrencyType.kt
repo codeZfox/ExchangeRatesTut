@@ -30,7 +30,6 @@ enum class CurrencyType(val pluralShort: String, @DrawableRes val flag:Int? = nu
             return try {
                 valueOf(string)
             } catch (e: Exception) {
-                e.printStackTrace()
                 null
             }
         }
